@@ -47,7 +47,11 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
             top: toY(309),
             // width: toX(343.9997),
             // height: toY(65.5238),
-            child:Center(child: uiElements.inputField(onChange:registrationModel.onUserFirstNameChange,prefixIcon: CxUiElements.inputNameIcon,hintText:localise("enter_your_first_name"),hintStyle: const TextStyle(
+            child:Center(child: uiElements.inputField(
+                onChange:registrationModel.onUserFirstNameChange,
+                prefixIcon: CxUiElements.inputNameIcon,
+                hintText:localise("enter_your_first_name"),
+                hintStyle: const TextStyle(
               color: Color(0xFFC2C3CB),
               fontSize: 14,
               fontFamily: 'Poppins',
@@ -78,7 +82,7 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
             top: toY(488),
 
             child: Center(child: uiElements.inputField(keyboardType:TextInputType.emailAddress,
-                onChange:registrationModel.onPhoneNumberChange,
+                onChange:registrationModel.onMailAddressChange,
                 prefixIcon: CxUiElements.inputEmailIcon,
                 hintText:localise("enter_your_email"),
                 hintStyle: const TextStyle(

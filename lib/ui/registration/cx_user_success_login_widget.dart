@@ -41,7 +41,11 @@ class _CxUserSuccessLoginWidgetState extends FiBaseState<CxUserSuccessLoginWidge
               top: toY(198),
               left: 0,
               right: 0,
-              child: Center(child: Image(image: const AssetImage("assets/images/_success_login_icon.png"), width: toX(250), height: toX(250)))),
+              child: Center(child: Image(
+                  image: const AssetImage("assets/images/_success_login_icon.png"),
+                  width: toX(250),
+                  height: toX(250)))
+          ),
           Positioned(
               top: toY(507),
               left: 0,

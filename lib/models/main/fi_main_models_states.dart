@@ -4,5 +4,9 @@ enum FiApplicationStates {
   registrationState,//fname lname email
   verificationState,//loop
   userSuccessLoginState,
-  personalInformation, navigationScreen, mineTimeline, guidanceIntroState,//
+  userFailedLoginState,
+  personalInformation,
+  navigationScreen,
+  mineTimeline,
+  guidanceIntroState,
 }

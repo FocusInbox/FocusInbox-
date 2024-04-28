@@ -26,7 +26,7 @@ class CxAuthentication {
       logger.d("registerUser : $uri");
       response = CxBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
     } catch (err) {
-      response =                               CxBackendResponse();
+      response = CxBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
     }

@@ -25,13 +25,14 @@ class CxRegistrationModel extends FiModel {
   String? _userVerificationCode ;
   bool _isResendAllowed = false ;
   bool _isSendAllowed = false ;
-  String? _userPhone ;
+  //String? _userPhone ;
+  String? _mailAddress ;
   bool _verificationInProgress = false ;
   bool _resendCodeInProgress = false ;
   bool _isRegistationInProgress = false ;
-  String? _receivedSmsCode ;
-  List<String>? _digits ;
-  final TextEditingController _verificationSmsCodeController  =  TextEditingController(text:"0000");
+ // String? _receivedSmsCode ;
+ // List<String>? _digits ;
+  //final TextEditingController _verificationSmsCodeController  =  TextEditingController(text:"0000");
   CxUserRegistrationModel? _userRegistrationModel;
   CxRegistrationModel._internal();
 
@@ -53,41 +54,44 @@ class CxRegistrationModel extends FiModel {
     }) ;
   };
 
-  ValueChanged<String> get onPhoneNumberChange => (phonenumber) {
+  ValueChanged<String> get onMailAddressChange => (mailaddress) {
     update(callback:(){
-      _userPhone = phonenumber ;
+      _mailAddress = mailaddress ;
     }) ;
   };
-
-  bool get ifRegistrationAllowed => _isRegistationInProgress == false &&  _userFirstName != null && _userLastName != null && _userPhone != null && _userFirstName!.isNotEmpty  && _userLastName!.isNotEmpty && _userPhone!.isNotEmpty && _userFirstName!.length > 3 && _userPhone!.length > 5;
-
-/*  ValueChanged<String> get onOrganizationNameChange => (organizationname) {};
-  ValueChanged<Int> get onOrganizationPasswordChange => (organizationpassword) {};*/
+//TODO: check if the mail is legal
+  bool get ifRegistrationAllowed => _isRegistationInProgress == false &&  _userFirstName != null && _userLastName != null && _mailAddress != null && _userFirstName!.isNotEmpty  && _userLastName!.isNotEmpty && _mailAddress!.isNotEmpty && _userFirstName!.length > 3 && _mailAddress!.length > 5;
 
   bool get isRegistrationInProgress => _isRegistationInProgress ;
 
-  VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : () {
-      logger.d("Start user registration [$_userFirstName : $_userPhone]") ;
-      update(callback: () async{
 
+
+
+  VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : ()
+  {
+      logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
+      update(callback: () async{
         _isRegistationInProgress = true ;
-        _userPhone = _userPhone!.replaceAll("+","") ;
-        _userPhone = _userPhone!.replaceAll("(","") ;
-        _userPhone = _userPhone!.replaceAll(")","") ;
-        _userRegistrationModel = CxUserRegistrationModel(_userFirstName!, _userLastName!,_userPhone!,launchingModel.platform,launchingModel.fcmToken);
+        _userRegistrationModel = CxUserRegistrationModel(_userFirstName!, _userLastName!,_mailAddress!,launchingModel.platform,launchingModel.fcmToken);
         CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
         update(callback: (){
           _isRegistationInProgress = false ;
-          if(response.successful()) {
+          if(response.successful())
+          {
             applicationModel.currentState = FiApplicationStates.verificationState;
           }
+          else
+            {
+              //TODO
+            }
         });
 
       });
 
-  };
+  };//Checking the mail, and the send him to verification to confirm phone
 
-  VoidCallback? get onResendCode => () {
+/*  VoidCallback? get onResendCode => ()
+  {
     update(callback: () async {
       _resendCodeInProgress = true ;
       _isResendAllowed = false;
@@ -97,50 +101,68 @@ class CxRegistrationModel extends FiModel {
       if(response.successful()){
         applicationModel.currentState = FiApplicationStates.userSuccessLoginState ;
       }
-      stopVerifySmsCode();
+      //stopVerifySmsCode();
       startResendAllowTimer();
     });
-  };
+  };*/
 
+
+
+/*
   bool get resendCodeAllowed => _resendCodeInProgress == false && _isResendAllowed;
+*/
+
+
 
   VoidCallback? get onSendVerificationCode => (){
     update(callback: () async{
       _verificationInProgress = true ;
       CxUserVerificationModel ver = CxUserVerificationModel();
-      ver.phone = _userRegistrationModel?.phone ;
-      ver.verification = _userVerificationCode ;
-      CxBackendResponse response = await authenticationApi.verificationUser(ver) ;
+      ver.mail = _userRegistrationModel?.mail ;
+      //ver.verification = _userVerificationCode ;
+      CxBackendResponse response = await authenticationApi.verificationUser(ver) ;//TODO: REMOVE THE ARG ver
       if(response.successful()){
         applicationModel.currentContact = CxContact(type: CxContactPageType.current,user:await usersApi.loadUser(response.data!["token"])) ;
         await resources.storage.putString(kAccessNotificationToken, response.data!["token"]);
         applicationModel.currentState = FiApplicationStates.userSuccessLoginState ;
       }
+      else
+        {
+          //TODO : SEND TO FAILED WIDGET (REGISTRATION)
+        }
       update(callback: (){
         _verificationInProgress = false ;
       });
     });
   };
 
-  get sendVerificationIsAllowed => _verificationInProgress == false && _isSendAllowed;
+  get sendVerificationIsAllowed => _verificationInProgress == false ;
 
-  ValueChanged<String> get onInputVerificationModeComplete => (verificationCode){
+
+
+/*  ValueChanged<String> get onInputVerificationModeComplete => (verificationCode){
     update(callback: () {
-      _userVerificationCode = verificationCode ;
+     // _userVerificationCode = verificationCode ;
       _isSendAllowed = _userVerificationCode != null && _userVerificationCode!.isNotEmpty && _userVerificationCode!.length == 4 ;
     });
-  };
+  };*/
 
 
   bool get verificationInProgress => _verificationInProgress;
 
   bool get resendCodeInProgress => _resendCodeInProgress ;
 
+/*
   TextEditingController get verificationSmsCodeController => _verificationSmsCodeController;
+*/
 
-  List<String>? get digits {
+  /*List<String>? get digits {
     return _digits ;
-  }
+  }*/
+
+
+
+
 
 
   void onRegistrationBack() async {
@@ -148,37 +170,54 @@ class CxRegistrationModel extends FiModel {
     applicationModel.currentState = FiApplicationStates.registrationState;
   }
 
+
+
+
+
+
+
+
+
   void onVerificationBack() async {
     await Future.delayed(const Duration(seconds: 1));
     applicationModel.currentState = FiApplicationStates.verificationState;
   }
 
 
-  void onGuidanceIntroBack() async {
+/*  void onGuidanceIntroBack() async {
     await Future.delayed(const Duration(seconds: 1));
     applicationModel.currentState = FiApplicationStates.guidanceIntroState;
-  }
+  }*/
+
+
+
 
   VoidCallback get onStartRegistration => () {
     applicationModel.currentState = FiApplicationStates.registrationState;
   };
 
+
+
+
   VoidCallback get onStartVerification => () {
         applicationModel.currentState = FiApplicationStates.verificationState;
       };
+
+
+
 
   VoidCallback get onStartUserSuccessLogin => () {
     applicationModel.currentState = FiApplicationStates.userSuccessLoginState;
   };
 
 
-
+/*
   VoidCallback get onGuidanceIntroStateLogin => () {
     applicationModel.currentState = FiApplicationStates.guidanceIntroState;
-  };
+  };*/
 
 
-  String? get userPhone => _userPhone;
+  String? get mailAddress => _mailAddress;
   String? get userName => _userFirstName;
 
   startResendAllowTimer(){
@@ -192,7 +231,7 @@ class CxRegistrationModel extends FiModel {
               timer.cancel();
               _userVerificationCode = null ;
               _isResendAllowed = true;
-              _verificationSmsCodeController.clear() ;
+            //  _verificationSmsCodeController.clear() ;
             });
           } else {
             update(callback: () {
@@ -215,14 +254,14 @@ class CxRegistrationModel extends FiModel {
 
 
 
-  void stopVerifySmsCode() {
-
+  void stopVerifyCode()
+  {
     if(_isTimerStarted) {
        _resendCodeTimer?.cancel();
       _isTimerStarted = false ;
     }
   }
-
+/*
   void useSmsCode(String smsCode) {
 
     update(callback: (){
@@ -230,10 +269,10 @@ class CxRegistrationModel extends FiModel {
       if(_receivedSmsCode != null) {
         _receivedSmsCode = smsCode ;
         CharacterRange it = _receivedSmsCode!.characters.iterator;
-        _digits = <String>[];
+        //_digits = <String>[];
         if(it.moveNext()){
           do{
-            _digits!.add(it.current);
+           // _digits!.add(it.current);
           }
           while(it.moveNext());
           _userVerificationCode = smsCode ;
@@ -241,7 +280,7 @@ class CxRegistrationModel extends FiModel {
         }
       }
     });
-  }
+  }*/
 }
 
 CxRegistrationModel registrationModel = CxRegistrationModel();

@@ -9,12 +9,12 @@ part of 'fi_user_verification_model.dart';
 CxUserVerificationModel _$CxUserVerificationModelFromJson(
         Map<String, dynamic> json) =>
     CxUserVerificationModel()
-      ..verification = json['verification'] as String?
-      ..phone = json['phone'] as String?;
+      //..verification = json['verification'] as String?
+      ..mail = json['mail'] as String?;
 
 Map<String, dynamic> _$CxUserVerificationModelToJson(
         CxUserVerificationModel instance) =>
     <String, dynamic>{
-      'verification': instance.verification,
-      'phone': instance.phone,
+     // 'verification': instance.verification,
+      'mail': instance.mail,
     };

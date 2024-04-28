@@ -1,5 +1,3 @@
-/*
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,72 +33,83 @@ class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
   @override
   void dispose() {
     super.dispose();
-    registrationModel.stopVerifySmsCode();
-    registrationModel.verificationSmsCodeController.dispose();
+    registrationModel.stopVerifyCode();
+    //registrationModel.verificationSmsCodeController.dispose();
   }
 
   @override
   @protected
   Widget get content => Stack(
+        alignment: Alignment.center,
         children: [
           Positioned(
-              top: toY(162),
-              left: centerOnDisplayByWidth(toX(350)),
-              width: toX(350),
-              height: toY(502),
-              child: Container(
-                width: toX(350),
-                height: toY(502),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF141416),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(35),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x0C241F2F),
-                      blurRadius: 55.48,
-                      offset: Offset(0, 13.32),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
+              top: toY(277),
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Text(localise("whatsapp"),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: const Color.fromRGBO(255, 255, 255, 1),
+                        fontSize: toY(30),
+                        fontWeight: FontWeight.bold,
+                        height: 1.5)),
               )),
           Positioned(
-              top: toY(202),
-
-              width: display.width,
-              height: toX(28),
-              child: Center(child: Text(
-                localise("verify_phone_number"),
-                style: TextStyle(
-                  color: const Color(0xFFF9F8FF),
-                  fontSize: toY(22),
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: -0.88,
-                ),
-              ))),
+              top: toY(311),
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Text(localise("authentication_process"),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: const Color.fromRGBO(255, 255, 255, 1),
+                        fontSize: toY(25),
+                        fontWeight: FontWeight.bold,
+                        height: 1.5)),
+              )),
           Positioned(
-              top: toY(241),
-              width: display.width,
-              height: toX(21),
-              child:  Center(child: Text(
-                localise("we_sent_code"),
-                style: TextStyle(
-                  color: const Color(0xFFACADB9),
-                  fontSize: toY(14),
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
-                ),
-              ))),
+            top: toY(394.5), // Y position as specified
+            child: SizedBox(
+              height: toY(85), // Adjusted height
+              width: toX(85), // Adjusted width
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CircularProgressIndicator(
+                    value: 1.0, // Full circle background
+                    strokeWidth: 5,
+                    backgroundColor: Color(0xFF0677E8),
+                  ),
+                  CircularProgressIndicator(
+                    strokeWidth: 5,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFFA4C6E8)),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Positioned(
+              top: toY(528),
+              left: 0,
+              right: 0,
+              child: Text(
+                localise("we_sent_qr"),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: const Color.fromRGBO(0x94, 0x94, 0x94, 1.0),
+                    fontSize: toY(18),
+                    //  fontWeight: FontWeight.bold,
+                    height: 1.5),
+              )),
+          /* Positioned(
               top: toY(301),
               left: centerOnDisplayByWidth(toX(130)),
               width: toX(130),
               height: toX(23),
               child: Text(
-                registrationModel.userPhone ?? "",
+                registrationModel.mailAddress ?? "",
                 style:  TextStyle(
                   color: const Color(0xFFACADB9),
                   fontSize: toY(15),
@@ -152,8 +161,7 @@ class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
                   borderRadius: BorderRadius.circular(13),
                   obscureText: false,
                   onComplete: registrationModel.onInputVerificationModeComplete,
-                 ))
+                 ))*/
         ],
       );
 }
-*/

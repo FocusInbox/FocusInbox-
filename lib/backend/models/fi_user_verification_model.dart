@@ -5,8 +5,8 @@ part 'fi_user_verification_model.g.dart';
 
 @JsonSerializable()
 class CxUserVerificationModel {
-  String? verification ;
-  String? phone ;
+ // String? verification ;
+  String? mail ;
 
   String toJson()=> jsonEncode(_$CxUserVerificationModelToJson(this));
 }

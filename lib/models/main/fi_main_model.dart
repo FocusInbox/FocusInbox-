@@ -8,6 +8,8 @@ import '../../ui/launching/fi_launching_widget.dart';
 import '../../ui/navigationbar/contacts/fi_contacts.dart';
 import '../../ui/registration/cx_grant_permission_widget.dart';
 import '../../ui/registration/cx_registration_widget.dart';
+import '../../ui/registration/cx_verification_widget.dart';
+import '../../ui/registration/fi_user_failed_login.dart';
 import 'base/fi_model.dart';
 import 'fi_main_models_states.dart';
 import '../../ui/registration/cx_user_success_login_widget.dart';
@@ -19,9 +21,10 @@ class CxMainModel extends FiModel {
   final Map<FiApplicationStates, FiBaseWidget> _pages = {};
   bool _checkingPermissionState = false;
 
-  FiApplicationStates _currentState = FiApplicationStates.launchingState;
-  //CxApplicationStates _currentState = CxApplicationStates.filterPage;
- // FiApplicationStates _currentState = FiApplicationStates.launchingState;
+
+  FiApplicationStates _currentState = FiApplicationStates.verificationState;
+
+
   CxContact? currentContact;
 
   set currentState(FiApplicationStates value) {
@@ -41,8 +44,9 @@ class CxMainModel extends FiModel {
     _pages[FiApplicationStates.launchingState] = const CxLaunchingWidgetNew();
     _pages[FiApplicationStates.grantPermissionState] = const CxGrantPermissionWidget();
     _pages[FiApplicationStates.registrationState] = const CxRegistrationWidget();
-    //_pages[FiApplicationStates.verificationState] = const CxVerificationWidget();
+    _pages[FiApplicationStates.verificationState] = const CxVerificationWidget();
     _pages[FiApplicationStates.userSuccessLoginState] = const CxUserSuccessLoginWidget();
+    _pages[FiApplicationStates.userFailedLoginState] = const FiUserFailedLoginWidget();
   }
   factory CxMainModel() {
     return _instance;
