@@ -22,8 +22,10 @@ class CxAuthentication {
     CxBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
-      var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/registration');
+      ///var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/registration');
+      Uri uri = Uri.http('10.0.2.2:27345', '/user/registration');
       logger.d("registerUser : $uri");
+      //http.post(uri, body: model.toJson(), headers: defaultHeaders);
       response = CxBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
     } catch (err) {
       response = CxBackendResponse();
@@ -37,8 +39,9 @@ class CxAuthentication {
     CxBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
-      var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
-      logger.d("registerUser : $uri");
+     /// var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
+      Uri uri = Uri.http('10.0.2.2:27345', '/user/verification');
+      logger.d("VerificateUser : $uri");
       response = CxBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
     } catch (err) {
       response = CxBackendResponse();

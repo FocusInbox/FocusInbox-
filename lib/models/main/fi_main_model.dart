@@ -22,7 +22,7 @@ class CxMainModel extends FiModel {
   bool _checkingPermissionState = false;
 
 
-  FiApplicationStates _currentState = FiApplicationStates.verificationState;
+  FiApplicationStates _currentState = FiApplicationStates.grantPermissionState;
 
 
   CxContact? currentContact;

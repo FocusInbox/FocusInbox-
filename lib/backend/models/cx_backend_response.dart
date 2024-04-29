@@ -22,9 +22,7 @@ class CxBackendResponse {
       backendResponse.status = response.statusCode ;
       backendResponse.message = response.body ;
     }
-
     return backendResponse ;
   }
-
   bool successful()  => status == StatusCode.OK ;
 }

@@ -21,9 +21,7 @@ import '../utils/cx_ui_elements.dart';
 class CxLaunchingModel extends FiModel {
   static final CxLaunchingModel _instance = CxLaunchingModel._internal();
   String fcmToken = "";
-
   CxLaunchingModel._internal();
-
   factory CxLaunchingModel() {
     return _instance;
   }
@@ -82,10 +80,13 @@ class CxLaunchingModel extends FiModel {
     //   return;
     // }
 
+    resources.storage.remove(kAccessNotificationToken);//TODO:REMOVE IT, for testing
+
     String token = resources.storage.getString(kAccessNotificationToken);
     if (token.isEmpty) {
       applicationModel.currentState = FiApplicationStates.grantPermissionState;
-    } else {
+    }
+    else {
       await _continueLaunch();
     }
   }
@@ -104,6 +105,10 @@ class CxLaunchingModel extends FiModel {
     settings.updateData(applicationModel.currentContact!.user!);
     applicationModel.currentState = FiApplicationStates.navigationScreen;
   }
+
+
+
+
 
   reCheckPermissions() async {
     if (!await _checkPermissions()) {
@@ -141,7 +146,7 @@ class CxLaunchingModel extends FiModel {
       await initFirebaseMessaging();
       await contacts.load() ;
       //await audioUtils.initSpeech();
-     // await settings. load();
+    //  await settings. load();
     } catch (e, stack) {
       logger.d("Permissions $e $stack");
     }

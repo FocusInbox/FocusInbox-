@@ -24,7 +24,7 @@ class CxRegistrationModel extends FiModel {
   String? _userLastName ;
   String? _userVerificationCode ;
   bool _isResendAllowed = false ;
-  bool _isSendAllowed = false ;
+  //bool _isSendAllowed = false ;
   //String? _userPhone ;
   String? _mailAddress ;
   bool _verificationInProgress = false ;
@@ -88,29 +88,42 @@ class CxRegistrationModel extends FiModel {
 
       });
 
-  };//Checking the mail, and the send him to verification to confirm phone
+  };
 
-/*  VoidCallback? get onResendCode => ()
-  {
+ /* VoidCallback? get onResendCode => () {
     update(callback: () async {
       _resendCodeInProgress = true ;
       _isResendAllowed = false;
-      _timoutForEnableResendCode = 5 * 60;
+      _timoutForEnableResendCode = 5 * 60;///5*60
       CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
       _resendCodeInProgress = false ;
       if(response.successful()){
         applicationModel.currentState = FiApplicationStates.userSuccessLoginState ;
       }
-      //stopVerifySmsCode();
+     // stopVerifySmsCode();
       startResendAllowTimer();
     });
   };*/
+  VoidCallback? get onResendCode => () {
+    update(callback: () async {
+      _resendCodeInProgress = true;
+      _isResendAllowed = false;
+      _timoutForEnableResendCode = 5 * 60; // 5 minutes
+      CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
+      _resendCodeInProgress = false;
+      if (response.successful()) {
+        // Just log success or show a message, do not change application state.
+        logger.d("Resend successful, awaiting user verification.");
+      } else {
+        // Handle error case here, perhaps allowing for another resend attempt.
+        logger.d("Resend failed, please try again.");
+      }
+      startResendAllowTimer();
+    });
+  };
 
 
-
-/*
   bool get resendCodeAllowed => _resendCodeInProgress == false && _isResendAllowed;
-*/
 
 
 
@@ -120,7 +133,7 @@ class CxRegistrationModel extends FiModel {
       CxUserVerificationModel ver = CxUserVerificationModel();
       ver.mail = _userRegistrationModel?.mail ;
       //ver.verification = _userVerificationCode ;
-      CxBackendResponse response = await authenticationApi.verificationUser(ver) ;//TODO: REMOVE THE ARG ver
+      CxBackendResponse response = await authenticationApi.verificationUser(ver);//TODO: REMOVE THE ARG ver
       if(response.successful()){
         applicationModel.currentContact = CxContact(type: CxContactPageType.current,user:await usersApi.loadUser(response.data!["token"])) ;
         await resources.storage.putString(kAccessNotificationToken, response.data!["token"]);
@@ -128,7 +141,8 @@ class CxRegistrationModel extends FiModel {
       }
       else
         {
-          //TODO : SEND TO FAILED WIDGET (REGISTRATION)
+          resources.storage.remove(kAccessNotificationToken);
+          applicationModel.currentState = FiApplicationStates.userFailedLoginState ;
         }
       update(callback: (){
         _verificationInProgress = false ;
@@ -140,25 +154,9 @@ class CxRegistrationModel extends FiModel {
 
 
 
-/*  ValueChanged<String> get onInputVerificationModeComplete => (verificationCode){
-    update(callback: () {
-     // _userVerificationCode = verificationCode ;
-      _isSendAllowed = _userVerificationCode != null && _userVerificationCode!.isNotEmpty && _userVerificationCode!.length == 4 ;
-    });
-  };*/
-
-
   bool get verificationInProgress => _verificationInProgress;
 
   bool get resendCodeInProgress => _resendCodeInProgress ;
-
-/*
-  TextEditingController get verificationSmsCodeController => _verificationSmsCodeController;
-*/
-
-  /*List<String>? get digits {
-    return _digits ;
-  }*/
 
 
 
@@ -184,13 +182,6 @@ class CxRegistrationModel extends FiModel {
   }
 
 
-/*  void onGuidanceIntroBack() async {
-    await Future.delayed(const Duration(seconds: 1));
-    applicationModel.currentState = FiApplicationStates.guidanceIntroState;
-  }*/
-
-
-
 
   VoidCallback get onStartRegistration => () {
     applicationModel.currentState = FiApplicationStates.registrationState;
@@ -209,12 +200,6 @@ class CxRegistrationModel extends FiModel {
   VoidCallback get onStartUserSuccessLogin => () {
     applicationModel.currentState = FiApplicationStates.userSuccessLoginState;
   };
-
-
-/*
-  VoidCallback get onGuidanceIntroStateLogin => () {
-    applicationModel.currentState = FiApplicationStates.guidanceIntroState;
-  };*/
 
 
   String? get mailAddress => _mailAddress;
@@ -261,26 +246,7 @@ class CxRegistrationModel extends FiModel {
       _isTimerStarted = false ;
     }
   }
-/*
-  void useSmsCode(String smsCode) {
 
-    update(callback: (){
-      _receivedSmsCode = smsCode ;
-      if(_receivedSmsCode != null) {
-        _receivedSmsCode = smsCode ;
-        CharacterRange it = _receivedSmsCode!.characters.iterator;
-        //_digits = <String>[];
-        if(it.moveNext()){
-          do{
-           // _digits!.add(it.current);
-          }
-          while(it.moveNext());
-          _userVerificationCode = smsCode ;
-          _isSendAllowed = _userVerificationCode != null && _userVerificationCode!.isNotEmpty && _userVerificationCode!.length == 4 ;
-        }
-      }
-    });
-  }*/
 }
 
 CxRegistrationModel registrationModel = CxRegistrationModel();

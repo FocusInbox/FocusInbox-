@@ -28,6 +28,11 @@ class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
     super.initState();
     registrationModel.setState(this);
     registrationModel.startResendAllowTimer();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (registrationModel.onSendVerificationCode != null) {
+        registrationModel.onSendVerificationCode!.call();
+      }
+    });
   }
 
   @override
@@ -69,11 +74,11 @@ class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
                         height: 1.5)),
               )),
           Positioned(
-            top: toY(394.5), // Y position as specified
+            top: toY(394.5),
             child: SizedBox(
-              height: toY(85), // Adjusted height
-              width: toX(85), // Adjusted width
-              child: Stack(
+              height: toY(85),
+              width: toX(85),
+              child: const Stack(
                 fit: StackFit.expand,
                 children: [
                   CircularProgressIndicator(
@@ -103,65 +108,26 @@ class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
                     //  fontWeight: FontWeight.bold,
                     height: 1.5),
               )),
-          /* Positioned(
-              top: toY(301),
-              left: centerOnDisplayByWidth(toX(130)),
-              width: toX(130),
-              height: toX(23),
-              child: Text(
-                registrationModel.mailAddress ?? "",
-                style:  TextStyle(
-                  color: const Color(0xFFACADB9),
-                  fontSize: toY(15),
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: -0.30,
-                ),
-              )),
           Positioned(
-              top: toY(433),
-              left: toX(60),
-              width: toX(53),
+              top: toY(638),
+              left: toX(180),
+              width: toX(196),
               height: toX(22),
               child: Text(
                 registrationModel.resendTimerValue,
                 style:  TextStyle(
                   color: const Color(0xFFACADB9),
-                  fontSize: toY(14.39),
+                  fontSize: toY(20),
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w500,
                   letterSpacing: -0.29,
                 ),
               )),
+          /*
           Positioned(left: centerOnDisplayByWidth(toX(300)), top: toY(473), width: toX(300), height: toY(66), child: uiElements.button(localise("verify"), registrationModel.onSendVerificationCode, enabled: registrationModel.sendVerificationIsAllowed, progressVisible: registrationModel.verificationInProgress)),
-          Positioned(left: centerOnDisplayByWidth(toX(300)), top: toY(551), width: toX(300), height: toY(66), child: uiElements.button(localise("send_again"), registrationModel.onResendCode, enabled: registrationModel.resendCodeAllowed, progressVisible: registrationModel.resendCodeInProgress)),
-          Positioned(
-              top: toY(353),
-              left: centerOnDisplayByWidth(display.width - toX(60)),
-              width: display.width - toX(60),
-              height: toX(60),
-              child: CxPinCodeFields(
-                  length: 4,
-                  //controller: registrationModel.verificationSmsCodeController,
-                  keyboardType: TextInputType.number,
-                  fieldBorderStyle: CxFieldBorderStyle.square,
-                  responsive: false,
-                  borderColor: const Color(0xFFC2C3CB),
-                  fieldHeight: toX(60),
-                  fieldWidth: toX(60),
-                  digits: registrationModel.digits,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: toY(41.86),
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: -0.84,
-                  ),
-                  borderRadius: BorderRadius.circular(13),
-                  obscureText: false,
-                  onComplete: registrationModel.onInputVerificationModeComplete,
-                 ))*/
+         */
+          Positioned(left: centerOnDisplayByWidth(toX(300)), top: toY(740), width: toX(300), height: toY(66), child: uiElements.button(localise("send_again"), registrationModel.onResendCode, enabled: registrationModel.resendCodeAllowed, progressVisible: registrationModel.resendCodeInProgress)),
+
         ],
       );
 }
