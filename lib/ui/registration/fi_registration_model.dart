@@ -18,7 +18,7 @@ import '../navigationbar/contacts/fi_contacts.dart';
 class CxRegistrationModel extends FiModel {
   static final CxRegistrationModel _instance = CxRegistrationModel._internal();
   Timer? _resendCodeTimer;
-  int _timoutForEnableResendCode = 5 * 60;
+  int _timoutForEnableResendCode = 5 ;//5 * 60
   bool _isTimerStarted = false ;
   String? _userFirstName ;
   String? _userLastName ;
@@ -108,7 +108,7 @@ class CxRegistrationModel extends FiModel {
     update(callback: () async {
       _resendCodeInProgress = true;
       _isResendAllowed = false;
-      _timoutForEnableResendCode = 5 * 60; // 5 minutes
+      _timoutForEnableResendCode = 5 ; // 5 minutes
       CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
       _resendCodeInProgress = false;
       if (response.successful()) {
@@ -152,8 +152,6 @@ class CxRegistrationModel extends FiModel {
 
   get sendVerificationIsAllowed => _verificationInProgress == false ;
 
-
-
   bool get verificationInProgress => _verificationInProgress;
 
   bool get resendCodeInProgress => _resendCodeInProgress ;
@@ -169,9 +167,13 @@ class CxRegistrationModel extends FiModel {
   }
 
 
-
-
-
+/*
+  void onRegistrationBackFromFail() async {
+    await Future.delayed(const Duration(seconds: 1));
+    applicationModel.currentContac
+    applicationModel.currentState = FiApplicationStates.registrationState;
+  }
+*/
 
 
 
@@ -216,6 +218,7 @@ class CxRegistrationModel extends FiModel {
               timer.cancel();
               _userVerificationCode = null ;
               _isResendAllowed = true;
+              applicationModel.currentState = FiApplicationStates.userFailedLoginState ;
             //  _verificationSmsCodeController.clear() ;
             });
           } else {

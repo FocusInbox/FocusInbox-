@@ -6,13 +6,13 @@ import '../../ui/launching/fi_launching_model.dart';
 import '../../ui/launching/fi_launching_widget.dart';
 
 import '../../ui/navigationbar/contacts/fi_contacts.dart';
-import '../../ui/registration/cx_grant_permission_widget.dart';
-import '../../ui/registration/cx_registration_widget.dart';
-import '../../ui/registration/cx_verification_widget.dart';
+import '../../ui/registration/fi_grant_permission_widget.dart';
+import '../../ui/registration/fi_registration_widget.dart';
+import '../../ui/registration/fi_verification_widget.dart';
 import '../../ui/registration/fi_user_failed_login.dart';
 import 'base/fi_model.dart';
 import 'fi_main_models_states.dart';
-import '../../ui/registration/cx_user_success_login_widget.dart';
+import '../../ui/registration/fi_user_success_login_widget.dart';
 
 
 
@@ -22,7 +22,7 @@ class CxMainModel extends FiModel {
   bool _checkingPermissionState = false;
 
 
-  FiApplicationStates _currentState = FiApplicationStates.registrationState;
+  FiApplicationStates _currentState = FiApplicationStates.launchingState;
 
 
   CxContact? currentContact;

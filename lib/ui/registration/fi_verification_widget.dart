@@ -7,7 +7,7 @@ import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
 import '../utils/cx_ui_elements.dart';
-import 'cx_registration_model.dart';
+import 'fi_registration_model.dart';
 
 class CxVerificationWidget extends FiBaseWidget {
   const CxVerificationWidget({super.key});
@@ -126,7 +126,7 @@ class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
           /*
           Positioned(left: centerOnDisplayByWidth(toX(300)), top: toY(473), width: toX(300), height: toY(66), child: uiElements.button(localise("verify"), registrationModel.onSendVerificationCode, enabled: registrationModel.sendVerificationIsAllowed, progressVisible: registrationModel.verificationInProgress)),
          */
-          Positioned(left: centerOnDisplayByWidth(toX(300)), top: toY(740), width: toX(300), height: toY(66), child: uiElements.button(localise("send_again"), registrationModel.onResendCode, enabled: registrationModel.resendCodeAllowed, progressVisible: registrationModel.resendCodeInProgress)),
+         // Positioned(left: centerOnDisplayByWidth(toX(300)), top: toY(740), width: toX(300), height: toY(66), child: uiElements.button(localise("send_again"), registrationModel.onResendCode, enabled: registrationModel.resendCodeAllowed, progressVisible: registrationModel.resendCodeInProgress)),
 
         ],
       );

@@ -5,7 +5,7 @@ import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
 import '../launching/fi_launching_model.dart';
-import 'cx_registration_model.dart';
+import 'fi_registration_model.dart';
 
 class CxGrantPermissionWidget extends FiBaseWidget {
   const CxGrantPermissionWidget({Key? key}) : super(key: key);
