@@ -1,15 +1,15 @@
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../backend/models/cx_user.dart';
+import '../../../backend/models/fi_user.dart';
 import '../../../backend/models/fi_user_notification_settings.dart';
-import '../../../backend/users/cx_users.dart';
-import '../../../googleapis/cx_callendar_account.dart';
-import '../../../googleapis/cx_googleapi_manager.dart';
+import '../../../backend/users/fi_users.dart';
+import '../../../googleapis/fi_callendar_account.dart';
+import '../../../googleapis/fi_googleapi_manager.dart';
 import '../../../googleapis/fi_email_account.dart';
 import '../../../models/main/base/fi_model.dart';
 import '../../../models/main/fi_main_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
-import '../../../utils/list/cx_multi_list_action.dart';
+import '../../../utils/list/fi_multi_list_action.dart';
 
 class CxSettingsTabModel extends FiModel {
   static String kEmails = "kEmails";

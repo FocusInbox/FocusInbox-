@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'cx_user_registration_model.g.dart';
+part 'fi_user_registration_model.g.dart';
 
 @JsonSerializable()
 class CxUserRegistrationModel {

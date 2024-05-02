@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cx_backend_response.dart';
+part of 'fi_backend_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

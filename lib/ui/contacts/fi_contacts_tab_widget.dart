@@ -4,7 +4,7 @@ import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 import '../../utils/fi_display.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
-import 'cx_contacts_tab_model.dart';
+import 'fi_contacts_tab_model.dart';
 
 enum CxContactPageType {current, private, divider }
 

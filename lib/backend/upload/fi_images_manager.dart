@@ -7,12 +7,12 @@ import 'package:http_status_code/http_status_code.dart';
 import '../../utils/fi_image_data.dart';
 import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
-import '../config/cx_backend_config.dart';
-import '../models/cx_backend_response.dart';
+import '../config/fi_backend_config.dart';
+import '../models/fi_backend_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-import '../models/cx_download_image_model.dart';
+import '../models/fi_download_image_model.dart';
 
 enum CxImageType { user, group }
 

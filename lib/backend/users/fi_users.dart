@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:http_status_code/http_status_code.dart';
 import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
-import '../config/cx_backend_config.dart';
-import '../models/cx_backend_response.dart';
-import '../models/cx_user.dart';
+import '../config/fi_backend_config.dart';
+import '../models/fi_backend_response.dart';
+import '../models/fi_user.dart';
 import 'package:http/http.dart' as http;
-import '../models/cx_user_email.dart';
-import '../models/cx_user_phone.dart';
+import '../models/fi_user_email.dart';
+import '../models/fi_user_phone.dart';
 import '../models/fi_user_notification_settings.dart';
 
 class CxUsers {

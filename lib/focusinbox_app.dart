@@ -1,7 +1,7 @@
 
-import 'package:f_tests/ui/base/fi_base_state.dart';
-import 'package:f_tests/ui/base/fi_base_widget.dart';
-import 'package:f_tests/utils/fi_display.dart';
+import 'ui/base/fi_base_state.dart';
+import 'ui/base/fi_base_widget.dart';
+import 'utils/fi_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

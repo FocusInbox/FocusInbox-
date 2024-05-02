@@ -1,15 +1,13 @@
-
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../../models/main/base/fi_model.dart';
-import '../../../utils/fi_log.dart';
-import '../../base/fi_base_state.dart';
-import '../../contacts/cx_contacts_tab_widget.dart';
-import '../../launching/fi_launching_model.dart';
-import 'cx_contacts_page_widget.dart';
-import 'fi_contacts.dart';
+import '../../models/main/base/fi_model.dart';
+import '../../utils/fi_log.dart';
+import '../base/fi_base_state.dart';
+import '../launching/fi_launching_model.dart';
+import '../navigationbar/contacts/fi_contacts_page_widget.dart';
+import '../navigationbar/contacts/fi_contacts.dart';
+import 'fi_contacts_tab_widget.dart';
 
 
 
@@ -18,10 +16,10 @@ class CxContactsTabModel extends FiModel {
   final List<CxContact> _privateContacts = <CxContact>[];
   final List<CxContact> _searchedContacts = <CxContact>[];
   final List<CxContact> _notSharedContacts = <CxContact>[];
-  final List<CxContact> _sharedContacts = <CxContact>[];
-  final List<CxContact> _favoriteBusinessContacts = <CxContact>[];
-  final List<CxContact> _favoriteSharedContacts = <CxContact>[];
-  final List<CxContact> _favoriteOrganizationContacts = <CxContact>[];
+  //final List<CxContact> _sharedContacts = <CxContact>[];
+ // final List<CxContact> _favoriteBusinessContacts = <CxContact>[];
+ // final List<CxContact> _favoriteSharedContacts = <CxContact>[];
+  //final List<CxContact> _favoriteOrganizationContacts = <CxContact>[];
 
   final List<CxContact> _organizationContacts = <CxContact>[];
   List<CxContactsPageWidget> pages = <CxContactsPageWidget>[];
@@ -36,13 +34,13 @@ class CxContactsTabModel extends FiModel {
 
   bool get inSearch => _inSearch;
 
-  VoidCallback get stopSearch => () {
+/*  VoidCallback get stopSearch => () {
         updatePage(callback: () {
           _searchedContacts.clear();
           _inSearch = false;
           _searchController.text = "";
         });
-      };
+      };*/
 
 
 
@@ -56,7 +54,7 @@ class CxContactsTabModel extends FiModel {
     }
   }
 
-  updatePage({VoidCallback? callback}) => _states[currentType]?.updateState(callback: callback);
+ // updatePage({VoidCallback? callback}) => _states[currentType]?.updateState(callback: callback);
 
   updateAllPages({VoidCallback? callback}) {
     Iterator<FiBaseState> states = _states.values.iterator;
@@ -73,8 +71,8 @@ class CxContactsTabModel extends FiModel {
     return _instance;
   }
 
-  CxContactPageType get currentType {
-   /* switch (_currentPageIndex) {
+/*  CxContactPageType get currentType {
+    switch (_currentPageIndex) {
       case 1:
         return CxContactPageType.business;
       case 2:
@@ -84,30 +82,22 @@ class CxContactsTabModel extends FiModel {
     }
     if(_states.containsKey(CxContactPageType.addingToGroup)) {
       return CxContactPageType.addingToGroup;
-    }*/
+    }
     return CxContactPageType.private;
 
-  }
+  }*/
 
   int get privateContactsCount => _inSearch ? _searchedContacts.length : _privateContacts.length;
 
-/*  int get businessContactsCount => _inSearch ? _searchedContacts.length : _notSharedContacts.length;
+  int get businessContactsCount => _inSearch ? _searchedContacts.length : _notSharedContacts.length;
 
-  int get sharedContactsCount => _inSearch ? _searchedContacts.length : _sharedContacts.length;
+ // int get sharedContactsCount => _inSearch ? _searchedContacts.length : _sharedContacts.length;
 
-  int get organizationContactsCount => _inSearch ? _searchedContacts.length : _organizationContacts.length;*/
+  int get organizationContactsCount => _inSearch ? _searchedContacts.length : _organizationContacts.length;
 
-/*  int get favoritesCount {
-    switch (_currentPageIndex) {
-      case 1:
-        return _favoriteBusinessContacts.length;
-      case 2:
-        return _favoriteSharedContacts.length;
-      default:
-        return _favoriteOrganizationContacts.length;
-    }
-  }*/
 
+
+/*
   ValueChanged<String> get onSearch => (text) {
         _inSearch = text.trim().isNotEmpty;
         Iterable<CxContact>? searched;
@@ -150,6 +140,7 @@ class CxContactsTabModel extends FiModel {
           });
         }
       };
+*/
 
   set currentPageIndex(int currentPageIndex) {
     updateAllPages(callback: () {
@@ -189,8 +180,8 @@ class CxContactsTabModel extends FiModel {
 
     pages.add( CxContactsPageWidget(CxContactPageType.private));
    // pages.add( CxContactsPageWidget(CxContactPageType.business));
-    //pages.add( CxContactsPageWidget(CxContactPageType.shared));
-    //pages.add( CxContactsPageWidget(CxContactPageType.organization));
+   // pages.add( CxContactsPageWidget(CxContactPageType.shared));
+  //  pages.add( CxContactsPageWidget(CxContactPageType.organization));
 
     _searchController = TextEditingController();
   }
@@ -205,12 +196,11 @@ class CxContactsTabModel extends FiModel {
     if (_inSearch) {
       return _searchedContacts[index];
     }
-
         return _privateContacts[index];
 
   }
 
-  /*CxContact favoriteAtIndex(int index) {
+/*  CxContact favoriteAtIndex(int index) {
     switch (_currentPageIndex) {
       case 1:
         return _favoriteBusinessContacts[index];
@@ -219,8 +209,8 @@ class CxContactsTabModel extends FiModel {
       default:
         return _favoriteOrganizationContacts[index];
     }
-  }
-*/
+  }*/
+
 /*  List<CxContact> get favorites {
     switch (_currentPageIndex) {
       case 1:
@@ -230,13 +220,11 @@ class CxContactsTabModel extends FiModel {
       default:
         return _favoriteOrganizationContacts;
     }
-  }*/
+  }
 
-/*
   String get favoriteKey  => "favorite_$_currentPageIndex" ;
-*/
 
-/*  void setAsFavorite(CxContact contact) {
+  void setAsFavorite(CxContact contact) {
     if (!favorites.contains(contact)) {
       updatePage(callback: () {
         contact.isFavorite = true ;

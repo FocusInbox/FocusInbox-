@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'cx_user_phone.g.dart';
+part 'fi_user_phone.g.dart';
 @JsonSerializable()
 
 class CxUserPhone {

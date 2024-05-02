@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-part 'cx_backend_response.g.dart';
+part 'fi_backend_response.g.dart';
 
 @JsonSerializable()
 class CxBackendResponse {

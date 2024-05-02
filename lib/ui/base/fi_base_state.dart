@@ -130,8 +130,11 @@ class FiBaseState<T extends FiBaseWidget> extends State<T> {
   ///
   /// Will rebuild this widget
   updateState({VoidCallback? callback}){
+    print("Calling updateState ${State}"); // Debug output
     setState(() {
       callback?.call() ;
+      print("State updated ${State}"); // Confirm state update
+
     });
   }
 

@@ -6,8 +6,8 @@ import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 import 'package:image_picker/image_picker.dart';
 import '../fi_display.dart';
 import '../fi_image_data.dart';
-import 'cx_multi_list_collapsed_widget.dart';
-import 'cx_multi_list_expanded_widget.dart';
+import 'fi_multi_list_collapsed_widget.dart';
+import 'fi_multi_list_expanded_widget.dart';
 import 'dart:ui' as ui show Image;
 
 class CxMultiListItem extends StatefulWidget {

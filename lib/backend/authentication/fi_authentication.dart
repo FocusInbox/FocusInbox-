@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import '../../utils/fi_log.dart';
-import '../config/cx_backend_config.dart';
-import '../models/cx_backend_response.dart';
-import '../models/cx_user_registration_model.dart';
+import '../config/fi_backend_config.dart';
+import '../models/fi_backend_response.dart';
+import '../models/fi_user_registration_model.dart';
 import '../models/fi_user_verification_model.dart';
 
 class CxAuthentication {

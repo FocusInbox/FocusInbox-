@@ -2,7 +2,7 @@
 //import 'package:connectx/utils/cx_log.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'cx_callendar_account.dart';
+import 'fi_callendar_account.dart';
 import 'fi_email_account.dart';
 
 class CxEmailsManager {

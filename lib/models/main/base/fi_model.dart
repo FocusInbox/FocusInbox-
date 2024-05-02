@@ -7,6 +7,8 @@ class FiModel with WidgetsBindingObserver{
   FiBaseState? _modelState ;
 
   setState(FiBaseState? state){
+    print("Setting state in model: $state"); // Add debug output
+
     _modelState = state ;
     if (_modelState != null) {
       WidgetsBinding.instance.addObserver(this);
@@ -19,6 +21,7 @@ class FiModel with WidgetsBindingObserver{
 
   resetState(FiBaseState? state){
     if(state == _modelState){
+      print("Resetting state in model"); // Add debug output
       _modelState = null ;
     }
   }

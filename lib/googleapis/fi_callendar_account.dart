@@ -1,6 +1,6 @@
 //import 'package:connectx/utils/cx_log.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../backend/models/cx_user_email.dart';
+import '../backend/models/fi_user_email.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
 
 import 'fi_authentication_client.dart';

@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import '../../backend/authentication/fi_authentication.dart';
-import '../../backend/models/cx_backend_response.dart';
-import '../../backend/models/cx_user_registration_model.dart';
+import '../../backend/models/fi_backend_response.dart';
+import '../../backend/models/fi_user_registration_model.dart';
 import '../../backend/models/fi_user_verification_model.dart';
-import '../../backend/users/cx_users.dart';
+import '../../backend/users/fi_users.dart';
 import '../../models/main/base/fi_model.dart';
 import '../../models/main/fi_main_model.dart';
 import '../../models/main/fi_main_models_states.dart';
 import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
-import '../contacts/cx_contacts_tab_widget.dart';
+import '../contacts/fi_contacts_tab_widget.dart';
 import '../launching/fi_launching_model.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
 
@@ -59,7 +59,8 @@ class CxRegistrationModel extends FiModel {
       _mailAddress = mailaddress ;
     }) ;
   };
-//TODO: check if the mail is legal
+//TODO: check if the mail is legal and
+
   bool get ifRegistrationAllowed => _isRegistationInProgress == false &&  _userFirstName != null && _userLastName != null && _mailAddress != null && _userFirstName!.isNotEmpty  && _userLastName!.isNotEmpty && _mailAddress!.isNotEmpty && _userFirstName!.length > 3 && _mailAddress!.length > 5;
 
   bool get isRegistrationInProgress => _isRegistationInProgress ;
@@ -167,13 +168,26 @@ class CxRegistrationModel extends FiModel {
   }
 
 
-/*
+
   void onRegistrationBackFromFail() async {
-    await Future.delayed(const Duration(seconds: 1));
-    applicationModel.currentContac
-    applicationModel.currentState = FiApplicationStates.registrationState;
+    update(callback: ()
+    {
+      registrationModel.resetRegistrationState();
+      registrationModel.onStartRegistration();
+    });
   }
-*/
+
+
+  void resetRegistrationState() {
+    update(callback: () {
+      _userFirstName = '';
+      _userLastName = '';
+      _mailAddress = '';
+      _isRegistationInProgress = false;
+      _verificationInProgress = false;
+      _resendCodeInProgress = false;
+    });
+  }
 
 
 
@@ -211,8 +225,8 @@ class CxRegistrationModel extends FiModel {
     if(!_isTimerStarted) {
 
       const oneSec = Duration(seconds: 1);
-      _resendCodeTimer = Timer.periodic(oneSec,
-            (Timer timer) {
+      _resendCodeTimer = Timer.periodic(oneSec, (Timer timer)
+      {
           if (_timoutForEnableResendCode == 0) {
             update(callback: () {
               timer.cancel();

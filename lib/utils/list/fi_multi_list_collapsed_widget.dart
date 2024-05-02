@@ -5,7 +5,7 @@ import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 import 'dart:ui' as ui ;
 import '../fi_display.dart';
 import '../fi_image_data.dart';
-import 'cx_custom_extended_widget.dart';
+import 'fi_custom_extended_widget.dart';
 //ignore: must_be_immutable
 class CxMultiLisCollapsedWidget extends StatefulWidget {
   String? title;

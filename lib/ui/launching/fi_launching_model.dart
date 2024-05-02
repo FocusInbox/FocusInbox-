@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../backend/users/cx_users.dart';
+import '../../backend/users/fi_users.dart';
 import '../../firebase_options.dart';
 import '../../models/main/base/fi_model.dart';
 import '../../models/main/fi_main_model.dart';
@@ -12,11 +12,11 @@ import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
-import '../contacts/cx_contacts_tab_model.dart';
-import '../contacts/cx_contacts_tab_widget.dart';
+import '../contacts/fi_contacts_tab_model.dart';
+import '../contacts/fi_contacts_tab_widget.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
-import '../navigationbar/settings/cx_settings_tab_model.dart';
-import '../utils/cx_ui_elements.dart';
+import '../navigationbar/settings/fi_settings_tab_model.dart';
+import '../utils/fi_ui_elements.dart';
 
 class CxLaunchingModel extends FiModel {
   static final CxLaunchingModel _instance = CxLaunchingModel._internal();

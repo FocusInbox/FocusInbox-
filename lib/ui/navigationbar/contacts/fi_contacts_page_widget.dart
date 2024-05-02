@@ -5,9 +5,9 @@ import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
 import '../../base/fi_base_state.dart';
 import '../../base/fi_base_widget.dart';
-import '../../contacts/cx_contacts_tab_model.dart';
-import '../../contacts/cx_contacts_tab_widget.dart';
-import '../../utils/cx_ui_elements.dart';
+import '../../contacts/fi_contacts_tab_model.dart';
+import '../../contacts/fi_contacts_tab_widget.dart';
+import '../../utils/fi_ui_elements.dart';
 import 'fi_contacts.dart';
 
 class CxContactsPageWidget extends FiBaseWidget {

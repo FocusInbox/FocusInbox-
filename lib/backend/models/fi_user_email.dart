@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-part 'cx_user_email.g.dart';
+part 'fi_user_email.g.dart';
 @JsonSerializable()
 class CxUserEmail {
 

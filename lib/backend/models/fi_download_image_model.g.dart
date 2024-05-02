@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cx_download_image_model.dart';
+part of 'fi_download_image_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

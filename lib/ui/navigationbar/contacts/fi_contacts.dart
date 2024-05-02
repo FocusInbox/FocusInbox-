@@ -5,12 +5,12 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:string_validator/string_validator.dart';
 
-import '../../../backend/models/cx_user.dart';
-import '../../../backend/upload/cx_images_manager.dart';
+import '../../../backend/models/fi_user.dart';
+import '../../../backend/upload/fi_images_manager.dart';
 import '../../../utils/fi_image_data.dart';
 import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
-import '../../contacts/cx_contacts_tab_widget.dart';
+import '../../contacts/fi_contacts_tab_widget.dart';
 
 class CxContact {
   Contact? phoneContact;

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'cx_download_image_model.g.dart';
+part 'fi_download_image_model.g.dart';
 
 @JsonSerializable()
 class CxDownloadImageModel {

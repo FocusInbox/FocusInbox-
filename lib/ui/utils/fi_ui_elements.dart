@@ -15,7 +15,7 @@ import '../navigationbar/contacts/fi_contacts.dart';
 import 'dart:convert' as convert;
 import 'package:dotted_line/dotted_line.dart';
 
-import 'cx_keyboard_input_helper.dart';
+import 'fi_keyboard_input_helper.dart';
 
 typedef DynamicWidget = Widget Function();
 

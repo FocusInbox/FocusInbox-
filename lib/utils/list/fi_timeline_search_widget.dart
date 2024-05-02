@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 import '../../ui/timeline/base/fi_timeline_model.dart';
-import '../../ui/utils/cx_ui_elements.dart';
+import '../../ui/utils/fi_ui_elements.dart';
 import '../fi_display.dart';
 import '../fi_resources.dart';
-import 'cx_multi_list_expanded_widget.dart';
+import 'fi_multi_list_expanded_widget.dart';
 
 //ignore: must_be_immutable
 

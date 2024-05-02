@@ -1,4 +1,4 @@
-name: f_tests
+name: FocusInbox
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -166,16 +166,17 @@ flutter:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/fi_logo.png"
+  image_path_android: "assets/images/test_flogo.png"
+  image_path_ios: "assets/ios/test_flogo.png"
+  image_path_web: "assets/web/test_flogo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/fi_logo.png"
-    background_color: "#216C8A"
-    theme_color: "#216C8A"
+    background_color: "#020825"
+    theme_color: "#020825"
   windows:
     generate: true
-    image_path: "assets/images/fi_logo.png"
+    image_path: "assets/web/test_flogo.png"
     icon_size: 80 # min:48, max:256, default: 48
   macos:
     generate: true

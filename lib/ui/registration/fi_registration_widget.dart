@@ -5,7 +5,7 @@ import '../../utils/fi_display.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
-import '../utils/cx_ui_elements.dart';
+import '../utils/fi_ui_elements.dart';
 import 'fi_registration_model.dart';
 
 class CxRegistrationWidget extends FiBaseWidget {
@@ -19,8 +19,16 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
   @override
   void initState() {
     super.initState();
+   // registrationModel = CxRegistrationModel(); // Initialize the registration model
     registrationModel.setState(this);
   }
+
+  @override
+  void dispose() {
+    registrationModel.resetState(this); // Reset the state in the registration model when disposing
+    super.dispose();
+  }
+
 
   @override
   @protected
@@ -160,7 +168,7 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
     );
   }
 
-  Widget phoneLogin() {
+/*  Widget phoneLogin() {
     return Container(
         width: display.width,
         height:  display.height,
@@ -351,7 +359,7 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
                               color: Color.fromRGBO(255, 255, 255, 1),
                               fontSize: 38,
                               fontWeight: FontWeight.w500,
-                              height: 1.2 /*PERCENT not supported*/
+                              height: 1.2 *//*PERCENT not supported*//*
                               ),
                         )),
                   ]))),
@@ -367,10 +375,10 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
                   color: Color.fromRGBO(102, 102, 102, 1),
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
-                  height: 1.5 /*PERCENT not supported*/
+                  height: 1.5 *//*PERCENT not supported*//*
                   ),
             ),
           ),
         ]));
-  }
+  }*/
 }

@@ -4,8 +4,8 @@ import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 
 import '../fi_display.dart';
 import '../fi_resources.dart';
-import 'cx_multi_list_actions_data_source.dart';
-import 'cx_multi_list_expanded_widget.dart';
+import 'fi_multi_list_actions_data_source.dart';
+import 'fi_multi_list_expanded_widget.dart';
 
 //ignore: must_be_immutable
 class CxMultiListExpandedActionListWidget extends CxMultiListExpandedWidget {
