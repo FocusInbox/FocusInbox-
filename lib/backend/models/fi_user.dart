@@ -3,7 +3,7 @@ part 'fi_user.g.dart';
 
 @JsonSerializable()
 
-class CxUser {
+class FiUser {
   String? id ;
   String?  username  ;
   String? phonenumber ;
@@ -15,7 +15,7 @@ class CxUser {
   Map<String,dynamic>? settings ;
 
 
-  static CxUser fromJson(Map<String,dynamic> json) =>_$CxUserFromJson(json) ;
+  static FiUser fromJson(Map<String,dynamic> json) =>_$FiUserFromJson(json) ;
 
   bool get hasOrganization => organization?.isNotEmpty??false ;
 

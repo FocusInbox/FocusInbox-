@@ -11,14 +11,14 @@ import '../../../models/main/fi_main_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
 import '../../../utils/list/fi_multi_list_action.dart';
 
-class CxSettingsTabModel extends FiModel {
+class FiSettingsTabModel extends FiModel {
   static String kEmails = "kEmails";
 
-  static String kSocials = "kSocials";
+ // static String kSocials = "kSocials";
 
   static String kCalendar = "kSCalendar";
 
-  static String kFeedback = "kFeedback";
+  //static String kFeedback = "kFeedback";
 
   static String kNotificationManualTime = "kNotificationManualTime";
 
@@ -30,17 +30,17 @@ class CxSettingsTabModel extends FiModel {
 
   final Map<String, List<dynamic>> _values = {};
 
-  static final CxSettingsTabModel _instance = CxSettingsTabModel._internal();
+  static final FiSettingsTabModel _instance = FiSettingsTabModel._internal();
 
-  CxUserNotificationSettings? notificationSettings ;
+  FiUserNotificationSettings? notificationSettings ;
 
   VoidCallback? refreshNotification ;
 
-  CxSettingsTabModel._internal();
+  FiSettingsTabModel._internal();
 
-  factory CxSettingsTabModel() {
+  factory FiSettingsTabModel() {
     _instance._values[kEmails] = <dynamic>[];
-    _instance._values[kSocials] = <dynamic>[];
+    //_instance._values[kSocials] = <dynamic>[];
     _instance._values[kCalendar] = <dynamic>[];
 
     return _instance;
@@ -48,10 +48,10 @@ class CxSettingsTabModel extends FiModel {
 
   String get applicationVersionName => "1.0.0.0 DR1";
 
-  CxMultiListAction get emailAction {
-    final CxMultiListAction action = CxMultiListAction();
+  FiMultiListAction get emailAction {
+    final FiMultiListAction action = FiMultiListAction();
     action.action = () async {
-      CxEmailAccount? account = await googleApiManager.addEmail();
+      FiEmailAccount? account = await googleApiManager.addEmail();
       if (account != null) {
         action.add(account.email);
         _instance._values[kEmails]!.add(account);
@@ -61,10 +61,10 @@ class CxSettingsTabModel extends FiModel {
     return action;
   }
 
-  CxMultiListAction get calendarAction {
-    final CxMultiListAction action = CxMultiListAction();
+  FiMultiListAction get calendarAction {
+    final FiMultiListAction action = FiMultiListAction();
     action.action = () async {
-      CxCalendarAccount? account = await googleApiManager.addCalendar();
+      FiCalendarAccount? account = await googleApiManager.addCalendar();
       if (account != null) {
         action.add(account.email);
         _instance._values[kCalendar]!.add(account);
@@ -74,8 +74,8 @@ class CxSettingsTabModel extends FiModel {
     return action;
   }
 
-  CxMultiListAction get socialAction {
-    final CxMultiListAction action = CxMultiListAction();
+  FiMultiListAction get socialAction {
+    final FiMultiListAction action = FiMultiListAction();
     action.action = () async {
       // CxCalendarAccount? account = await googleApiManager.addCalendar();
       // if (account != null) {
@@ -88,18 +88,18 @@ class CxSettingsTabModel extends FiModel {
   }
 
   List<String> get emailsAsString {
-    List  accounts = _instance._values[kEmails]??<CxEmailAccount>[] ;
+    List  accounts = _instance._values[kEmails]??<FiEmailAccount>[] ;
     List<String> list = <String>[];
-    for(CxEmailAccount account in accounts) {
+    for(FiEmailAccount account in accounts) {
       list.add(account.email) ;
     }
     return list ;
   }
 
   List<String> get calendarsAsString {
-    List  accounts = _instance._values[kCalendar]??<CxEmailAccount>[] ;
+    List  accounts = _instance._values[kCalendar]??<FiEmailAccount>[] ;
     List<String> list = <String>[];
-    for(CxEmailAccount account in accounts) {
+    for(FiEmailAccount account in accounts) {
       list.add(account.email) ;
     }
     return list ;
@@ -107,12 +107,12 @@ class CxSettingsTabModel extends FiModel {
 
 
 
-  void addEmailAccount(CxEmailAccount cxEmailAccount) {
-    _instance._values[kEmails]?.add(cxEmailAccount) ;
+  void addEmailAccount(FiEmailAccount fiEmailAccount) {
+    _instance._values[kEmails]?.add(fiEmailAccount) ;
   }
 
-  void addCalendarAccount(CxEmailAccount cxEmailAccount) {
-    _instance._values[kCalendar]?.add(cxEmailAccount) ;
+  void addCalendarAccount(FiEmailAccount fiEmailAccount) {
+    _instance._values[kCalendar]?.add(fiEmailAccount) ;
   }
 
   void removeEmailAccount(String email){
@@ -123,26 +123,26 @@ class CxSettingsTabModel extends FiModel {
     _instance._values[kCalendar]?.removeWhere((element) => element.email == email) ;
   }
 
-  void updateData(CxUser user) {
+  void updateData(FiUser user) {
     if(user.emails.isNotEmpty){
       for(String email in user.emails) {
-        CxEmailAccount accountEmail = CxEmailAccount(dbEmail: email);
+        FiEmailAccount accountEmail = FiEmailAccount(dbEmail: email);
         _instance._values[kEmails]!.add(accountEmail);
       }
     }
 
     if(user.calendars.isNotEmpty){
       for(String email in user.calendars) {
-        CxEmailAccount accountEmail = CxEmailAccount(dbEmail: email);
+        FiEmailAccount accountEmail = FiEmailAccount(dbEmail: email);
         _instance._values[kCalendar]!.add(accountEmail);
       }
     }
 
     if(user.settings != null && user.settings!.isNotEmpty) {
-      notificationSettings = CxUserNotificationSettings.fromJson(user.settings!);
+      notificationSettings = FiUserNotificationSettings.fromJson(user.settings!);
     }
     else {
-      notificationSettings = CxUserNotificationSettings(allowedFrom: 0, allowedTo: 0, relatedToMe: false, any: false);
+      notificationSettings = FiUserNotificationSettings(allowedFrom: 0, allowedTo: 0, relatedToMe: false, any: false);
     }
 
     _notificationStates[kNotificationManualTime] = notificationSettings?.isManualTimeSet??false ;
@@ -151,12 +151,12 @@ class CxSettingsTabModel extends FiModel {
   }
 
   Future<void> load() async {
-    CxEmailAccount? accountEmail = await googleApiManager.loadEmail();
+    FiEmailAccount? accountEmail = await googleApiManager.loadEmail();
     if (accountEmail != null) {
       _instance._values[kEmails]!.add(accountEmail);
       await usersApi.addEmail(await accountEmail.toModel());
     }
-    CxCalendarAccount? accountCallendar = await googleApiManager.loadCalendar();
+    FiCalendarAccount? accountCallendar = await googleApiManager.loadCalendar();
     if (accountCallendar != null) {
       _instance._values[kCalendar]!.add(accountCallendar);
       await usersApi.addCalendar(await accountCallendar.toModel());
@@ -202,10 +202,10 @@ class CxSettingsTabModel extends FiModel {
       if (it.moveNext()) {
         do {
           dynamic current = it.current;
-          if (current is CxEmailAccount) {
+          if (current is FiEmailAccount) {
             items.add(current.email);
           }
-          if (current is CxCalendarAccount) {
+          if (current is FiCalendarAccount) {
             items.add(current.email );
           }
         } while (it.moveNext());
@@ -222,7 +222,7 @@ class CxSettingsTabModel extends FiModel {
   }
 
   void setNotificationState(String key, bool value) {
-    if(CxSettingsTabModel.kNotificationManualTime == key && !value){
+    if(FiSettingsTabModel.kNotificationManualTime == key && !value){
       notificationSettings?.allowedTo = 0 ;
       notificationSettings?.allowedFrom = 0 ;
     }
@@ -232,17 +232,17 @@ class CxSettingsTabModel extends FiModel {
     });
   }
 
-  bool get isManualTimeSetEnabled => _notificationStates[CxSettingsTabModel.kNotificationManualTime]??false ;
+  bool get isManualTimeSetEnabled => _notificationStates[FiSettingsTabModel.kNotificationManualTime]??false ;
 
   String valueAtIndex(String key, int index) {
     if (valuesCount(key) > index) {
       var item = _values[key]![index];
-      if (item is CxEmailAccount) {
-        CxEmailAccount account = item;
+      if (item is FiEmailAccount) {
+        FiEmailAccount account = item;
         return account.account != null ? account.account!.email : account.email ;
       }
-      if (item is CxCalendarAccount) {
-        CxCalendarAccount account = item;
+      if (item is FiCalendarAccount) {
+        FiCalendarAccount account = item;
         return account.account != null ? account.account!.email : account.email;
       }
       return item;
@@ -257,4 +257,4 @@ class CxSettingsTabModel extends FiModel {
 
 }
 
-CxSettingsTabModel settings = CxSettingsTabModel();
+FiSettingsTabModel settings = FiSettingsTabModel();

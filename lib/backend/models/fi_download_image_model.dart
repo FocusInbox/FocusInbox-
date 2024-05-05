@@ -2,9 +2,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'fi_download_image_model.g.dart';
 
 @JsonSerializable()
-class CxDownloadImageModel {
+class FiDownloadImageModel {
   String id ;
-  CxDownloadImageModel(this.id) ;
+  FiDownloadImageModel(this.id) ;
 
-  Map<String,dynamic> toJson() => _$CxDownloadImageModelToJson(this);
+  Map<String,dynamic> toJson() => _$FiDownloadImageModelToJson(this);
 }

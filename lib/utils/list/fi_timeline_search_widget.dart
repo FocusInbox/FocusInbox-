@@ -8,21 +8,21 @@ import 'fi_multi_list_expanded_widget.dart';
 
 //ignore: must_be_immutable
 
-enum CxTimelineSearchType {
+enum FiTimelineSearchType {
   timelineSearch,
   membersSearch
 }
 
-class CxTimelineSearchWidget extends CxMultiListExpandedWidget {
-  final CxTimelineModel model;
-  final CxTimelineSearchType type ;
-  CxTimelineSearchWidget({super.key, required this.model, required this.type,super.width, super.height});
+class FiTimelineSearchWidget extends FiMultiListExpandedWidget {
+  final FiTimelineModel model;
+  final FiTimelineSearchType type ;
+  FiTimelineSearchWidget({super.key, required this.model, required this.type,super.width, super.height});
 
   @override
-  State<StatefulWidget> createState() => _CxTimelineSearchState();
+  State<StatefulWidget> createState() => _FiTimelineSearchState();
 }
 
-class _CxTimelineSearchState extends State<CxTimelineSearchWidget> {
+class _FiTimelineSearchState extends State<FiTimelineSearchWidget> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -32,10 +32,10 @@ class _CxTimelineSearchState extends State<CxTimelineSearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.type == CxTimelineSearchType.timelineSearch){
+    if(widget.type == FiTimelineSearchType.timelineSearch){
       return buildTimelineSearch(context);
     }
-    else if(widget.type == CxTimelineSearchType.membersSearch){
+    else if(widget.type == FiTimelineSearchType.membersSearch){
       return buildMembersSearch(context);
     }
     else {
@@ -45,7 +45,7 @@ class _CxTimelineSearchState extends State<CxTimelineSearchWidget> {
 
   @override
   Widget buildTimelineSearch(BuildContext context) {
-    ConstraintId id = ConstraintId("_CxTimelineSearchState_$hashCode");
+    ConstraintId id = ConstraintId("_FiTimelineSearchState_$hashCode");
     return ConstraintLayout(
       width: display.width - 27,
       height: toY(80),

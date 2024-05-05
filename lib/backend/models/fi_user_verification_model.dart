@@ -4,9 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'fi_user_verification_model.g.dart';
 
 @JsonSerializable()
-class CxUserVerificationModel {
+class FiUserVerificationModel {
  // String? verification ;
   String? mail ;
 
-  String toJson()=> jsonEncode(_$CxUserVerificationModelToJson(this));
+  String toJson()=> jsonEncode(_$FiUserVerificationModelToJson(this));
 }

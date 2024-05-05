@@ -15,8 +15,8 @@ import '../contacts/fi_contacts_tab_widget.dart';
 import '../launching/fi_launching_model.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
 
-class CxRegistrationModel extends FiModel {
-  static final CxRegistrationModel _instance = CxRegistrationModel._internal();
+class FiRegistrationModel extends FiModel {
+  static final FiRegistrationModel _instance = FiRegistrationModel._internal();
   Timer? _resendCodeTimer;
   int _timoutForEnableResendCode = 5 ;//5 * 60
   bool _isTimerStarted = false ;
@@ -24,19 +24,14 @@ class CxRegistrationModel extends FiModel {
   String? _userLastName ;
   String? _userVerificationCode ;
   bool _isResendAllowed = false ;
-  //bool _isSendAllowed = false ;
-  //String? _userPhone ;
   String? _mailAddress ;
   bool _verificationInProgress = false ;
   bool _resendCodeInProgress = false ;
   bool _isRegistationInProgress = false ;
- // String? _receivedSmsCode ;
- // List<String>? _digits ;
-  //final TextEditingController _verificationSmsCodeController  =  TextEditingController(text:"0000");
-  CxUserRegistrationModel? _userRegistrationModel;
-  CxRegistrationModel._internal();
+  FiUserRegistrationModel? _userRegistrationModel;
+  FiRegistrationModel._internal();
 
-  factory CxRegistrationModel() {
+  factory FiRegistrationModel() {
     return _instance;
   }
 
@@ -59,9 +54,28 @@ class CxRegistrationModel extends FiModel {
       _mailAddress = mailaddress ;
     }) ;
   };
+
+/*  ValueChanged<String> get onMailAddressChange => (mailaddress) {
+    update(callback: () {
+      // Regular expression pattern to validate email
+      String pattern =
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})$';
+      RegExp regex = RegExp(pattern);
+
+      if (regex.hasMatch(mailaddress)) {
+        _mailAddress = mailaddress;
+      } else {
+        _mailAddress = null; // Or set it to '' if that works better with your logic
+        logger.d("Invalid email address");
+      }
+    });
+  };*/
+
+
+
 //TODO: check if the mail is legal and
 
-  bool get ifRegistrationAllowed => _isRegistationInProgress == false &&  _userFirstName != null && _userLastName != null && _mailAddress != null && _userFirstName!.isNotEmpty  && _userLastName!.isNotEmpty && _mailAddress!.isNotEmpty && _userFirstName!.length > 3 && _mailAddress!.length > 5;
+  bool get ifRegistrationAllowed => _isRegistationInProgress == false &&  _userFirstName != null && _userLastName != null && _mailAddress != null && _userFirstName!.isNotEmpty  && _userLastName!.isNotEmpty && _mailAddress!.isNotEmpty && _userFirstName!.length > 3;
 
   bool get isRegistrationInProgress => _isRegistationInProgress ;
 
@@ -73,8 +87,8 @@ class CxRegistrationModel extends FiModel {
       logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
       update(callback: () async{
         _isRegistationInProgress = true ;
-        _userRegistrationModel = CxUserRegistrationModel(_userFirstName!, _userLastName!,_mailAddress!,launchingModel.platform,launchingModel.fcmToken);
-        CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
+        _userRegistrationModel = FiUserRegistrationModel(_userFirstName!, _userLastName!,_mailAddress!,launchingModel.platform,launchingModel.fcmToken);
+        FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
         update(callback: (){
           _isRegistationInProgress = false ;
           if(response.successful())
@@ -83,7 +97,8 @@ class CxRegistrationModel extends FiModel {
           }
           else
             {
-              //TODO
+              resources.storage.remove(kAccessNotificationToken);
+              applicationModel.currentState = FiApplicationStates.userFailedLoginState;
             }
         });
 
@@ -91,32 +106,17 @@ class CxRegistrationModel extends FiModel {
 
   };
 
- /* VoidCallback? get onResendCode => () {
-    update(callback: () async {
-      _resendCodeInProgress = true ;
-      _isResendAllowed = false;
-      _timoutForEnableResendCode = 5 * 60;///5*60
-      CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
-      _resendCodeInProgress = false ;
-      if(response.successful()){
-        applicationModel.currentState = FiApplicationStates.userSuccessLoginState ;
-      }
-     // stopVerifySmsCode();
-      startResendAllowTimer();
-    });
-  };*/
+
   VoidCallback? get onResendCode => () {
     update(callback: () async {
       _resendCodeInProgress = true;
       _isResendAllowed = false;
       _timoutForEnableResendCode = 5 ; // 5 minutes
-      CxBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
+      FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
       _resendCodeInProgress = false;
       if (response.successful()) {
-        // Just log success or show a message, do not change application state.
         logger.d("Resend successful, awaiting user verification.");
       } else {
-        // Handle error case here, perhaps allowing for another resend attempt.
         logger.d("Resend failed, please try again.");
       }
       startResendAllowTimer();
@@ -131,19 +131,18 @@ class CxRegistrationModel extends FiModel {
   VoidCallback? get onSendVerificationCode => (){
     update(callback: () async{
       _verificationInProgress = true ;
-      CxUserVerificationModel ver = CxUserVerificationModel();
+      FiUserVerificationModel ver = FiUserVerificationModel();
       ver.mail = _userRegistrationModel?.mail ;
-      //ver.verification = _userVerificationCode ;
-      CxBackendResponse response = await authenticationApi.verificationUser(ver);//TODO: REMOVE THE ARG ver
+      FiBackendResponse response = await authenticationApi.verificationUser(ver);
       if(response.successful()){
-        applicationModel.currentContact = CxContact(type: CxContactPageType.current,user:await usersApi.loadUser(response.data!["token"])) ;
+        applicationModel.currentContact = FiContact(type: FiContactPageType.current,user:await usersApi.loadUser(response.data!["token"])) ;
         await resources.storage.putString(kAccessNotificationToken, response.data!["token"]);
         applicationModel.currentState = FiApplicationStates.userSuccessLoginState ;
       }
       else
         {
           resources.storage.remove(kAccessNotificationToken);
-          applicationModel.currentState = FiApplicationStates.userFailedLoginState ;
+          applicationModel.currentState = FiApplicationStates.userFailedLoginState;
         }
       update(callback: (){
         _verificationInProgress = false ;
@@ -172,8 +171,14 @@ class CxRegistrationModel extends FiModel {
   void onRegistrationBackFromFail() async {
     update(callback: ()
     {
-      registrationModel.resetRegistrationState();
-      registrationModel.onStartRegistration();
+      _userRegistrationModel?.firstName='';
+      _userRegistrationModel?.lastName='';
+      _userRegistrationModel?.mail='';
+      _timoutForEnableResendCode = 5 ;//TODO:5 * 60
+      _isRegistationInProgress = false;
+      _verificationInProgress = false;
+      _resendCodeInProgress = false;
+      applicationModel.currentState = FiApplicationStates.grantPermissionState;
     });
   }
 
@@ -266,4 +271,4 @@ class CxRegistrationModel extends FiModel {
 
 }
 
-CxRegistrationModel registrationModel = CxRegistrationModel();
+FiRegistrationModel registrationModel = FiRegistrationModel();

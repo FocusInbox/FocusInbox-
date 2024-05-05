@@ -10,12 +10,12 @@ import 'fi_multi_list_collapsed_widget.dart';
 import 'fi_multi_list_expanded_widget.dart';
 import 'dart:ui' as ui show Image;
 
-class CxMultiListItem extends StatefulWidget {
+class FiMultiListItem extends StatefulWidget {
   ValueChanged<bool>? _onCollapseExpandChange;
 
-  CxMultiLisCollapsedWidget collapsedWidget;
+  FiMultiLisCollapsedWidget collapsedWidget;
 
-  CxMultiListExpandedWidget? expandedWidget;
+  FiMultiListExpandedWidget? expandedWidget;
 
   bool _collapsed = true;
 
@@ -32,7 +32,7 @@ class CxMultiListItem extends StatefulWidget {
   bool enabled = true;
   bool isOpen = false ;
 
-  CxMultiListItem({super.key,
+  FiMultiListItem({super.key,
     required this.collapsedWidget,
     this.expandedWidget,
     this.autoUpdateTitle = false,
@@ -46,8 +46,8 @@ class CxMultiListItem extends StatefulWidget {
     expandedWidget?.fullExpandBackground = fullExpandBackground;
 
     if (autoUpdateTitle ?? false) {
-      if (expandedWidget != null && expandedWidget is CxMultiListExpandedInputTextWidget) {
-        CxMultiListExpandedInputTextWidget widget = expandedWidget as CxMultiListExpandedInputTextWidget;
+      if (expandedWidget != null && expandedWidget is FiMultiListExpandedInputTextWidget) {
+        FiMultiListExpandedInputTextWidget widget = expandedWidget as FiMultiListExpandedInputTextWidget;
         ValueChanged<String>? changer = widget.onChange;
         widget.onChange = (text) {
           changer?.call(text);
@@ -60,7 +60,7 @@ class CxMultiListItem extends StatefulWidget {
   ValueChanged<bool>? _onEnableChange;
 
   @override
-  State<StatefulWidget> createState() => _CxMultiListItemState();
+  State<StatefulWidget> createState() => _FiMultiListItemState();
 
   VoidCallback? onCollapsedItemClick;
 
@@ -82,7 +82,7 @@ class CxMultiListItem extends StatefulWidget {
   }
 }
 
-class _CxMultiListItemState extends State<CxMultiListItem>  {
+class _FiMultiListItemState extends State<FiMultiListItem>  {
   bool disposed = false;
 
   @override
@@ -144,7 +144,7 @@ class _CxMultiListItemState extends State<CxMultiListItem>  {
                     return;
                   }
                   if (widget.collapsedWidget.enableGalleryImageSet ?? false) {
-                    CxImageData? picture = await loadGalleryImage();
+                    FiImageData? picture = await loadGalleryImage();
                     if (picture != null) {
                       widget.collapsedWidget.updatePrefixImage(picture);
                     }
@@ -159,11 +159,11 @@ class _CxMultiListItemState extends State<CxMultiListItem>  {
     );
   }
 
-  Future<CxImageData?> loadGalleryImage() async {
+  Future<FiImageData?> loadGalleryImage() async {
     ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      return CxImageData(image: image).load();
+      return FiImageData(image: image).load();
     }
     return null;
   }

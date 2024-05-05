@@ -11,14 +11,14 @@ import '../base/fi_base_widget.dart';
 import '../utils/fi_ui_elements.dart';
 import 'fi_registration_model.dart';
 
-class CxUserSuccessLoginWidget extends FiBaseWidget {
-  const CxUserSuccessLoginWidget({super.key});
+class FiUserSuccessLoginWidget extends FiBaseWidget {
+  const FiUserSuccessLoginWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CxUserSuccessLoginWidgetState();
+  State<StatefulWidget> createState() => _FiUserSuccessLoginWidgetState();
 }
 
-class _CxUserSuccessLoginWidgetState extends FiBaseState<CxUserSuccessLoginWidget> {
+class _FiUserSuccessLoginWidgetState extends FiBaseState<FiUserSuccessLoginWidget> {
 
 
   @override

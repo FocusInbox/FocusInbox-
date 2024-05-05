@@ -7,17 +7,17 @@ part of 'fi_user_notification_settings.dart';
 // **************************************************************************
 
 
-CxUserNotificationSettings _$CxUserNotificationSettingsFromJson(
+FiUserNotificationSettings _$FiUserNotificationSettingsFromJson(
     Map<String, dynamic> json) =>
-    CxUserNotificationSettings(
+    FiUserNotificationSettings(
       allowedFrom: json['allowedfrom'] as int,
       allowedTo: json['allowedto'] as int,
       relatedToMe: json['relatedtome'] as bool,
       any: json['any'] as bool,
     );
 
-Map<String, dynamic> _$CxUserNotificationSettingsToJson(
-    CxUserNotificationSettings instance) =>
+Map<String, dynamic> _$FiUserNotificationSettingsToJson(
+    FiUserNotificationSettings instance) =>
     <String, dynamic>{
       'allowedfrom': instance.allowedFrom,
       'allowedto': instance.allowedTo,

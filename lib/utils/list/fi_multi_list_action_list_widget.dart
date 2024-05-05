@@ -8,8 +8,8 @@ import 'fi_multi_list_actions_data_source.dart';
 import 'fi_multi_list_expanded_widget.dart';
 
 //ignore: must_be_immutable
-class CxMultiListExpandedActionListWidget extends CxMultiListExpandedWidget {
-  CxMultiListActionDataSource? actionDataSource;
+class FiMultiListExpandedActionListWidget extends FiMultiListExpandedWidget {
+  FiMultiListActionDataSource? actionDataSource;
 
   String? actionText;
 
@@ -17,7 +17,7 @@ class CxMultiListExpandedActionListWidget extends CxMultiListExpandedWidget {
 
   bool keyBoardActive = true;
 
-  CxMultiListExpandedActionListWidget({super.key, this.actionDataSource, this.actionText, this.isAction, this.keyBoardActive = true}) {
+  FiMultiListExpandedActionListWidget({super.key, this.actionDataSource, this.actionText, this.isAction, this.keyBoardActive = true}) {
     int count = actionDataSource?.length ?? 0;
     if(count > 3) {
       count = 3 ;
@@ -26,10 +26,10 @@ class CxMultiListExpandedActionListWidget extends CxMultiListExpandedWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _CxMultiListExpandedActionListState();
+  State<StatefulWidget> createState() => _FiMultiListExpandedActionListState();
 }
 
-class _CxMultiListExpandedActionListState extends State<CxMultiListExpandedActionListWidget> {
+class _FiMultiListExpandedActionListState extends State<FiMultiListExpandedActionListWidget> {
   @override
   void initState() {
     widget.actionDataSource?.onUpdate = () {

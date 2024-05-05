@@ -6,7 +6,7 @@ part of 'fi_user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxUser _$CxUserFromJson(Map<String, dynamic> json) => CxUser()
+FiUser _$FiUserFromJson(Map<String, dynamic> json) => FiUser()
   ..id = json['id'] as String?
   ..username = json['username'] as String?
   ..phonenumber = json['phonenumber'] as String?
@@ -17,7 +17,7 @@ CxUser _$CxUserFromJson(Map<String, dynamic> json) => CxUser()
   ..information = json['information']
   ..settings = json['settings'] as Map<String, dynamic>?;
 
-Map<String, dynamic> _$CxUserToJson(CxUser instance) => <String, dynamic>{
+Map<String, dynamic> _$FiUserToJson(FiUser instance) => <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
       'phonenumber': instance.phonenumber,

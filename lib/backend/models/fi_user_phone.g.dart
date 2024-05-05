@@ -6,11 +6,11 @@ part of 'fi_user_phone.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxUserPhone _$CxUserPhoneFromJson(Map<String, dynamic> json) => CxUserPhone(
+FiUserPhone _$FiUserPhoneFromJson(Map<String, dynamic> json) => FiUserPhone(
       phone: json['phone'] as String,
     );
 
-Map<String, dynamic> _$CxUserPhoneToJson(CxUserPhone instance) =>
+Map<String, dynamic> _$FiUserPhoneToJson(FiUserPhone instance) =>
     <String, dynamic>{
       'phone': instance.phone,
     };

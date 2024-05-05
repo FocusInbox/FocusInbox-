@@ -6,9 +6,9 @@ part of 'fi_user_registration_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxUserRegistrationModel _$CxUserRegistrationModelFromJson(
+FiUserRegistrationModel _$FiUserRegistrationModelFromJson(
         Map<String, dynamic> json) =>
-    CxUserRegistrationModel(
+    FiUserRegistrationModel(
       json['firstName'] as String,
       json['lastName'] as String,
       json['mail'] as String,
@@ -16,8 +16,8 @@ CxUserRegistrationModel _$CxUserRegistrationModelFromJson(
       json['token'] as String,
     );
 
-Map<String, dynamic> _$CxUserRegistrationModelToJson(
-        CxUserRegistrationModel instance) =>
+Map<String, dynamic> _$FiUserRegistrationModelToJson(
+        FiUserRegistrationModel instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,

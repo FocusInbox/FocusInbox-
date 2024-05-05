@@ -12,14 +12,14 @@ import 'fi_launching_model.dart';
 
 
 
-class CxLaunchingWidgetNew extends FiBaseWidget {
-  const CxLaunchingWidgetNew({super.key});
+class FiLaunchingWidgetNew extends FiBaseWidget {
+  const FiLaunchingWidgetNew({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CxLaunchingState();
+  State<StatefulWidget> createState() => _FiLaunchingState();
 }
 
-class _CxLaunchingState extends FiBaseState<CxLaunchingWidgetNew>
+class _FiLaunchingState extends FiBaseState<FiLaunchingWidgetNew>
 {
   bool _isAnimateAllowed = true;
   double opacity = 1 ;

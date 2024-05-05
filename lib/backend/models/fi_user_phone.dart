@@ -2,9 +2,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'fi_user_phone.g.dart';
 @JsonSerializable()
 
-class CxUserPhone {
+class FiUserPhone {
   String phone ;
-  CxUserPhone({required this.phone});
+  FiUserPhone({required this.phone});
 
-  Map<String,dynamic> toJson() => _$CxUserPhoneToJson(this) ;
+  Map<String,dynamic> toJson() => _$FiUserPhoneToJson(this) ;
 }

@@ -8,7 +8,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../fi_display.dart';
 import '../fi_resources.dart';
 //ignore: must_be_immutable
-abstract class CxMultiListExpandedWidget extends StatefulWidget {
+abstract class FiMultiListExpandedWidget extends StatefulWidget {
   double? width;
 
   double? height;
@@ -20,13 +20,13 @@ abstract class CxMultiListExpandedWidget extends StatefulWidget {
   bool inFocus = false ;
   Color? fullExpandBackground ;
 
-  CxMultiListExpandedWidget({super.key, this.width, this.height,this.fullExpandBackground});
+  FiMultiListExpandedWidget({super.key, this.width, this.height,this.fullExpandBackground});
 
   @override
   State<StatefulWidget> createState();
 }
 //ignore: must_be_immutable
-class CxMultiListExpandedInputTextWidget extends CxMultiListExpandedWidget {
+class FiMultiListExpandedInputTextWidget extends FiMultiListExpandedWidget {
   bool? autofocus;
 
   bool? enabled;
@@ -59,13 +59,13 @@ class CxMultiListExpandedInputTextWidget extends CxMultiListExpandedWidget {
 
   VoidCallback? sufficsIconClick;
 
-  CxMultiListExpandedInputTextWidget({super.key, super.width, super.height, this.autofocus, this.enabled, this.focus, this.controller, this.onChange, this.hintStyle, this.ignoreMaxLine, this.maxLine, this.keyBoardType, this.backgroundColor, this.suffixIcon, this.sufficsIconClick, this.prefixIcon, this.hintText});
+  FiMultiListExpandedInputTextWidget({super.key, super.width, super.height, this.autofocus, this.enabled, this.focus, this.controller, this.onChange, this.hintStyle, this.ignoreMaxLine, this.maxLine, this.keyBoardType, this.backgroundColor, this.suffixIcon, this.sufficsIconClick, this.prefixIcon, this.hintText});
 
   @override
-  State<StatefulWidget> createState() => _CxMultiListExpandedInputTextWidgetState();
+  State<StatefulWidget> createState() => _FiMultiListExpandedInputTextWidgetState();
 }
 //ignore: must_be_immutable
-class _CxMultiListExpandedInputTextWidgetState extends State<CxMultiListExpandedInputTextWidget> {
+class _FiMultiListExpandedInputTextWidgetState extends State<FiMultiListExpandedInputTextWidget> {
   late StreamSubscription<bool> keyboardSubscription;
 
   @override
@@ -177,17 +177,17 @@ class _CxMultiListExpandedInputTextWidgetState extends State<CxMultiListExpanded
 
 typedef CustomWidgetBuilder = Widget Function(BuildContext context);
 //ignore: must_be_immutable
-class CxMultiListCustomExpandedWidget extends CxMultiListExpandedWidget {
+class FiMultiListCustomExpandedWidget extends FiMultiListExpandedWidget {
   CustomWidgetBuilder custom;
   VoidCallback? refresh ;
   ValueChanged<VoidCallback>? onRefreshInit ;
-  CxMultiListCustomExpandedWidget({super.key, required this.custom, required super.height,this.onRefreshInit});
+  FiMultiListCustomExpandedWidget({super.key, required this.custom, required super.height,this.onRefreshInit});
 
   @override
-  State<StatefulWidget> createState() => _CxMultiListCustomExpandedState();
+  State<StatefulWidget> createState() => _FiMultiListCustomExpandedState();
 }
 
-class _CxMultiListCustomExpandedState extends State<CxMultiListCustomExpandedWidget> {
+class _FiMultiListCustomExpandedState extends State<FiMultiListCustomExpandedWidget> {
   @override
   void initState() {
     widget.refresh = (){

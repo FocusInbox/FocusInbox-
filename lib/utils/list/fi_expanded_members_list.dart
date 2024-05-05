@@ -11,21 +11,21 @@ import 'fi_multi_list_expanded_widget.dart';
 typedef OnGroupListItemClickCallback = void Function(dynamic item);
 
 //ignore: must_be_immutable
-class CxMultiListExpandedMemberList extends CxMultiListExpandedWidget {
-  List<CxContact> members;
+class FiMultiListExpandedMemberList extends FiMultiListExpandedWidget {
+  List<FiContact> members;
   OnGroupListItemClickCallback callback;
 
-  CxMultiListExpandedMemberList({super.key, required this.members, required this.callback}){
+  FiMultiListExpandedMemberList({super.key, required this.members, required this.callback}){
     int rowsCount = (members.length /4).round() ;
     rowsCount = min(rowsCount, 3) ;
     height = rowsCount*toY(80) +  toY(80) ;
   }
 
   @override
-  State<StatefulWidget> createState() => _CxMultiListExpandedGroupsList();
+  State<StatefulWidget> createState() => _FiMultiListExpandedGroupsList();
 }
 
-class _CxMultiListExpandedGroupsList extends State<CxMultiListExpandedMemberList> {
+class _FiMultiListExpandedGroupsList extends State<FiMultiListExpandedMemberList> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -35,7 +35,7 @@ class _CxMultiListExpandedGroupsList extends State<CxMultiListExpandedMemberList
         crossAxisCount: 4,
       ),
       itemBuilder: (BuildContext context, int index) {
-        CxContact member = widget.members[index];
+        FiContact member = widget.members[index];
         ConstraintId logoId = ConstraintId("logo_${index}_${member.name}");
         return InkWell(
             onTap: () {

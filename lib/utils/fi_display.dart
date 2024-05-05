@@ -2,8 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'fi_resources.dart';
 
-class CxDisplay {
-  static final CxDisplay _instance = CxDisplay._internal();
+class FiDisplay {
+  static final FiDisplay _instance = FiDisplay._internal();
   late double width ;
   late double height ;
 
@@ -15,9 +15,9 @@ class CxDisplay {
 
   late double devicePixelRatio ;
 
-  CxDisplay._internal();
+  FiDisplay._internal();
 
-  factory CxDisplay(){
+  factory FiDisplay(){
     return _instance ;
   }
 
@@ -38,7 +38,7 @@ class CxDisplay {
   }
 }
 
-CxDisplay display = CxDisplay();
+FiDisplay display = FiDisplay();
 
 double toX(double value) => (display.width*value)/display.designWidth ;
 

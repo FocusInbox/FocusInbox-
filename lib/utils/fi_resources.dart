@@ -7,10 +7,10 @@ const String kPushNotificationTokenPermission = "user_push_notification_permissi
 const String kAccessNotificationToken = "user_access_token";
 const String kAccessSocialRegistered = "user_register_to_use_social";
 
-class CxPreferences {
+class FiPreferences {
   final SharedPreferences _preferences;
   static Map<String, dynamic>? customerInfo;
-  CxPreferences(this._preferences);
+  FiPreferences(this._preferences);
 
   ///
   /// Set string value in device storage. Sync mode
@@ -65,28 +65,28 @@ class CxPreferences {
   }
 }
 
-class CxResources {
-  static final CxResources _instance = CxResources._internal();
+class FiResources {
+  static final FiResources _instance = FiResources._internal();
 
   static final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>() ;
-  late CxPreferences storage ;
+  late FiPreferences storage ;
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey  ;
   BuildContext? get context => _navigatorKey.currentContext ;
 
-  CxResources._internal();
+  FiResources._internal();
 
 
 
-  factory CxResources(){
+  factory FiResources(){
     return _instance ;
   }
 
   Future<void> load() async{
-    storage = CxPreferences(await SharedPreferences.getInstance());
+    storage = FiPreferences(await SharedPreferences.getInstance());
   }
 }
 
-CxResources resources = CxResources();
+FiResources resources = FiResources();
 
 
 

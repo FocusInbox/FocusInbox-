@@ -11,11 +11,11 @@ import '../../navigationbar/contacts/fi_contacts.dart';
 
 
 
-class CxTimelineModel extends FiModel {
+class FiTimelineModel extends FiModel {
 
 
 
-  CxTimelineModel();
+  FiTimelineModel();
 
   TextEditingController _searchController = TextEditingController();
 
@@ -29,7 +29,7 @@ class CxTimelineModel extends FiModel {
 
   //List<CxGroup> get groups => groupsModel.groups;
 
-  List<CxContact> get members => <CxContact>[] ;
+  List<FiContact> get members => <FiContact>[] ;
 
   //final List<CxTimelineItem> _timelineItems = <CxTimelineItem>[] ;
 

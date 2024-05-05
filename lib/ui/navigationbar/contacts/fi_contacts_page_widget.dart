@@ -10,13 +10,13 @@ import '../../contacts/fi_contacts_tab_widget.dart';
 import '../../utils/fi_ui_elements.dart';
 import 'fi_contacts.dart';
 
-class CxContactsPageWidget extends FiBaseWidget {
-  final CxContactPageType type;
+class FiContactsPageWidget extends FiBaseWidget {
+  final FiContactPageType type;
   FiApplicationStates? _backState;
 
 //  CxGroup? targetGroup;
 
-  CxContactsPageWidget(this.type, {super.key});
+  FiContactsPageWidget(this.type, {super.key});
 
   @override
   setParams(params) {
@@ -31,7 +31,7 @@ class CxContactsPageWidget extends FiBaseWidget {
 
   @override
   Future<bool> get onWillPop {
-   /* if (type == CxContactPageType.addingToGroup) {
+   /* if (type == FiContactPageType.addingToGroup) {
       if (_backState == null) {
         applicationModel.currentState = CxApplicationStates.newGroup;
       } else {
@@ -42,12 +42,12 @@ class CxContactsPageWidget extends FiBaseWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _CxContactsPageState();
+  State<StatefulWidget> createState() => _FiContactsPageState();
 }
 
-class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
-  final List<CxContact> _selectedContacts = <CxContact>[];
-  final Map<CxContact, bool> _favoritesStates = {};
+class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
+  final List<FiContact> _selectedContacts = <FiContact>[];
+  final Map<FiContact, bool> _favoritesStates = {};
   final _scrollController1 = ScrollController();
   final _scrollController2 = ScrollController();
 
@@ -74,7 +74,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
             width: toX(32),
             height: toX(32),
             child: Visibility(
-                visible: widget.type == CxContactPageType.addingToGroup,
+                visible: widget.type == FiContactPageType.addingToGroup,
                 child: uiElements.backButton(() async {
                   await widget.onWillPop;
                 }))),*/
@@ -97,7 +97,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
             top: toY(137),
             left: toX(35),
             child: Visibility(
-                visible: widget.type == CxContactPageType.addingToGroup,
+                visible: widget.type == FiContactPageType.addingToGroup,
                 child: Center(
                     child: Text(
                   localise("click_to_add_remove_contact"),
@@ -110,7 +110,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
                 )))),*/
     /*    Positioned(
             left: toX(28),
-            top: toY(widget.type == CxContactPageType.addingToGroup ? 164 : 140),
+            top: toY(widget.type == FiContactPageType.addingToGroup ? 164 : 140),
             width: toX(359),
             height: toY(44),
             child: uiElements.inputField(
@@ -151,10 +151,10 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
               ))),*/
       /*  if ((contacts.favoritesCount > 0 || contactsCount > 0))
           Positioned(
-            top: toY(widget.type == CxContactPageType.addingToGroup ? 228 : 204),
+            top: toY(widget.type == FiContactPageType.addingToGroup ? 228 : 204),
             left: 0,
             width: display.width,
-            height: toY(480),//widget.type == CxContactPageType.addingToGroup ? 600 : 680),
+            height: toY(480),//widget.type == FiContactPageType.addingToGroup ? 600 : 680),
             child: _contactsList(),
           ),*/
 
@@ -162,7 +162,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
           bottom: toY(0),
           left: 0,
           width: display.width,
-          //height: toY(500),//widget.type == CxContactPageType.addingToGroup ? 600 : 680),
+          //height: toY(500),//widget.type == FiContactPageType.addingToGroup ? 600 : 680),
           child: uiElements.addItem(title: "Add Contact", onAdd: (){}),
         ),*/
       ],
@@ -171,7 +171,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
 
 /*
   Widget _contactsList() {
-    if (Flavors.isBusiness ? (widget.type != CxContactPageType.private && widget.type != CxContactPageType.addingToGroup) : widget.type != CxContactPageType.addingToGroup) {
+    if (Flavors.isBusiness ? (widget.type != FiContactPageType.private && widget.type != FiContactPageType.addingToGroup) : widget.type != FiContactPageType.addingToGroup) {
       return Scrollbar(
           controller: _scrollController1,
           thumbVisibility: true,
@@ -200,7 +200,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
               padding: EdgeInsets.only(left: toX(35), right: toX(35)),
               itemCount: contactsCount,
               itemBuilder: (BuildContext context, int index) {
-                CxContact contact = contacts.contactAtIndex(index, widget.type);
+                FiContact contact = contacts.contactAtIndex(index, widget.type);
                 return uiElements.contactRow(index, contact, favoriteVisible: false, addContactVisible: _selectedContacts.contains(contact), addUserKey: "user_added", onAddUserClick: () {
                   setState(() {
                     if (Flavors.isBusiness) {
@@ -274,7 +274,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
                     reverse: false,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      CxContact contact = contacts.favoriteAtIndex(index);
+                      FiContact contact = contacts.favoriteAtIndex(index);
                       return InkWell(
                           onTap: () {
                             if (removeButtonVisible(contact)) {
@@ -294,7 +294,7 @@ class _CxContactsPageState extends FiBaseState<CxContactsPageWidget> {
     );
   }*/
 
-  bool removeButtonVisible(CxContact contact) {
+  bool removeButtonVisible(FiContact contact) {
     if (_favoritesStates.containsValue(contact)) {
       bool removeVisible = _favoritesStates[contact]!;
       return removeVisible;

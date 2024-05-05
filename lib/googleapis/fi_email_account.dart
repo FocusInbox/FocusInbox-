@@ -4,13 +4,13 @@ import '../backend/models/fi_user_email.dart';
 import 'fi_authentication_client.dart';
 import 'package:googleapis/gmail/v1.dart' as gmail;
 
-class CxEmailAccount {
+class FiEmailAccount {
   GoogleSignInAccount? account;
   String? dbEmail ;
   late gmail.GmailApi _gmailApi;
 
 
-  CxEmailAccount({this.account,this.dbEmail});
+  FiEmailAccount({this.account,this.dbEmail});
 
   String get email {
     return dbEmail!= null && dbEmail!.trim().isNotEmpty ? dbEmail! : account?.email??"" ;
@@ -31,11 +31,11 @@ class CxEmailAccount {
     }
   }
 
-  Future<CxUserEmail> toModel() async {
+  Future<FiUserEmail> toModel() async {
 
     var headers = account!= null ? await account!.authHeaders : null;
 
-    CxUserEmail email = CxUserEmail(email: account != null? account!.email : this.email,headers:headers );
+    FiUserEmail email = FiUserEmail(email: account != null? account!.email : this.email,headers:headers );
     return email ;
   }
 }

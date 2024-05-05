@@ -5,11 +5,11 @@ import 'package:googleapis/calendar/v3.dart' as calendar;
 
 import 'fi_authentication_client.dart';
 
-class CxCalendarAccount {
+class FiCalendarAccount {
   GoogleSignInAccount? account;
   calendar.CalendarApi? _calendarApi ;
   String? dbEmail ;
-  CxCalendarAccount({this.account,this.dbEmail});
+  FiCalendarAccount({this.account,this.dbEmail});
 
   String get email {
     return dbEmail!= null && dbEmail!.trim().isNotEmpty ? dbEmail! : account?.email??"" ;
@@ -30,12 +30,12 @@ class CxCalendarAccount {
     }
   }
 
-  Future<CxUserEmail> toModel() async {
+  Future<FiUserEmail> toModel() async {
     if(account != null) {
       var headers = await account!.authHeaders;
-      CxUserEmail email = CxUserEmail(email: account!.email, headers: headers);
+      FiUserEmail email = FiUserEmail(email: account!.email, headers: headers);
       return email;
     }
-    return  CxUserEmail(email: email, headers: null);
+    return  FiUserEmail(email: email, headers: null);
   }
 }

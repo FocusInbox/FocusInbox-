@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 typedef CustomWidget = Widget Function(BuildContext context);
 
-class CxCustomExtendedWidget extends StatefulWidget{
+class FiCustomExtendedWidget extends StatefulWidget{
   final CustomWidget childBuilder;
 
-   CxCustomExtendedWidget({super.key,required this.childBuilder});
+   FiCustomExtendedWidget({super.key,required this.childBuilder});
 
   VoidCallback?  onRefresh;
 
   @override
-  State<StatefulWidget> createState() => _CxCustomExtendedWidgetState();
+  State<StatefulWidget> createState() => _FiCustomExtendedWidgetState();
 
   void update() {
     onRefresh?.call() ;
@@ -18,7 +18,7 @@ class CxCustomExtendedWidget extends StatefulWidget{
 
 }
 
-class _CxCustomExtendedWidgetState extends State<CxCustomExtendedWidget>{
+class _FiCustomExtendedWidgetState extends State<FiCustomExtendedWidget>{
 
   @override
   void initState() {

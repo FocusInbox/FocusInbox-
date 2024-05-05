@@ -8,24 +8,23 @@ import '../base/fi_base_widget.dart';
 import '../utils/fi_ui_elements.dart';
 import 'fi_registration_model.dart';
 
-class CxRegistrationWidget extends FiBaseWidget {
-  const CxRegistrationWidget({super.key});
+class FiRegistrationWidget extends FiBaseWidget {
+  const FiRegistrationWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CxRegistrationState();
+  State<StatefulWidget> createState() => _FiRegistrationState();
 }
 
-class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
+class _FiRegistrationState extends FiBaseState<FiRegistrationWidget> {
   @override
   void initState() {
     super.initState();
-   // registrationModel = CxRegistrationModel(); // Initialize the registration model
     registrationModel.setState(this);
   }
 
   @override
   void dispose() {
-    registrationModel.resetState(this); // Reset the state in the registration model when disposing
+  //  registrationModel.resetState(this); // Reset the state in the registration model when disposing
     super.dispose();
   }
 
@@ -36,7 +35,7 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
     return Stack(
       children: [
         Positioned(
-            left: 0,//centerOnDisplayByWidth(toX(336)),
+            left: 0,
             right:0,
             top: toY(171.81),
             child: Center(child:Text(localise("welcome_to"),
@@ -49,13 +48,12 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
                   letterSpacing: -1.52,
                     height: toY(1.2)
                 )))),
-        Positioned(
+     /*   Positioned(
             left: toX(35),
             right: toX(35),
             top: toY(309),
-            // width: toX(343.9997),
-            // height: toY(65.5238),
-            child:Center(child: uiElements.inputField(
+            child:Center(
+                child: uiElements.inputField(
                 onChange:registrationModel.onUserFirstNameChange,
                 prefixIcon: CxUiElements.inputNameIcon,
                 hintText:localise("enter_your_first_name"),
@@ -65,33 +63,62 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w500,
               letterSpacing: -0.28,
-            ))
-        )),
+            )
+            )
+        )),*/
         Positioned(
+  left: toX(35),
+  right: toX(35),
+  top: toY(309),
+  child: Center(
+    child: uiElements.inputFieldE(
+      onChange: registrationModel.onUserFirstNameChange,
+      prefixIcon: FiUiElements.inputNameIcon,
+      hintText: localise("enter_your_first_name"),
+      hintStyle: const TextStyle(
+        color: Color(0xFFC2C3CB),
+        fontSize: 14,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w500,
+        letterSpacing: -0.28,
+      ),
+      keyboardType: TextInputType.name, // Optionally specify the keyboard type for better user experience
+      inputType: InputType.firstName, // Specify the input type
+      context: context, // Pass the BuildContext necessary for SnackBar
+    )
+  )
+),
+  Positioned(
             left: toX(35),
             right: toX(35),
             top: toY(398),
-            // width: toX(343.9997),
-            // height: toY(65.5238),
-            child:Center(child: uiElements.inputField(onChange:registrationModel.onUserLastNameChange,
-                prefixIcon: CxUiElements.inputNameIcon,
-                hintText:localise("enter_your_last_name"),
-                hintStyle: const TextStyle(
-              color: Color(0xFFC2C3CB),
-              fontSize: 14,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w500,
-              letterSpacing: -0.28,
-            ))
-            )),
+            child: Center(
+                child: uiElements.inputFieldE(
+                  onChange: registrationModel.onUserLastNameChange,
+                  prefixIcon: FiUiElements.inputNameIcon,
+                  hintText: localise("enter_your_last_name"),
+                  hintStyle: const TextStyle(
+                    color: Color(0xFFC2C3CB),
+                    fontSize: 14,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.28,
+                  ),
+                  keyboardType: TextInputType.name, // Optionally specify the keyboard type for better user experience
+                  inputType: InputType.lastName, // Specify the input type
+                  context: context, // Pass the BuildContext necessary for SnackBar
+                )
+            )
+        ),
+
         Positioned(
             left: toX(35),
             right: toX(35),
             top: toY(488),
 
-            child: Center(child: uiElements.inputField(keyboardType:TextInputType.emailAddress,
+            child: Center(child: uiElements.inputFieldE(keyboardType:TextInputType.emailAddress,
                 onChange:registrationModel.onMailAddressChange,
-                prefixIcon: CxUiElements.inputEmailIcon,
+                prefixIcon: FiUiElements.inputEmailIcon,
                 hintText:localise("enter_your_email"),
                 hintStyle: const TextStyle(
               color: Color(0xFFC2C3CB),
@@ -99,7 +126,11 @@ class _CxRegistrationState extends FiBaseState<CxRegistrationWidget> {
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w500,
               letterSpacing: -0.28,
-            ))
+            ),
+              inputType: InputType.email, // Specify the input type
+              context: context,
+            )
+
         )),
         Positioned(
             left: display.width / 2 - toX(328) / 2,

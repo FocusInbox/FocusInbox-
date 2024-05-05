@@ -7,7 +7,7 @@ import '../fi_display.dart';
 import '../fi_image_data.dart';
 import 'fi_custom_extended_widget.dart';
 //ignore: must_be_immutable
-class CxMultiLisCollapsedWidget extends StatefulWidget {
+class FiMultiLisCollapsedWidget extends StatefulWidget {
   String? title;
   double? width;
   double? height;
@@ -25,14 +25,14 @@ class CxMultiLisCollapsedWidget extends StatefulWidget {
   bool? keepOriginalImageColor = false ;
   bool? enableGalleryImageSet ;
   VoidCallback? onRefresh ;
-  ValueChanged<CxImageData>? onImageChange ;
+  ValueChanged<FiImageData>? onImageChange ;
   Color? fullExpandBackground ;
   String _originalTitle = "" ;
   ValueChanged<bool>? onCollapseChange ;
   bool isDirectTapAllowed = false ;
   bool enabled = true ;
 
-  CxMultiLisCollapsedWidget({
+  FiMultiLisCollapsedWidget({
     super.key,
     this.title,
     this.width,
@@ -68,9 +68,9 @@ class CxMultiLisCollapsedWidget extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _CxMultiLisCollapsedWidgetState();
+  State<StatefulWidget> createState() => _FiMultiLisCollapsedWidgetState();
 
-  void updatePrefixImage(CxImageData image){
+  void updatePrefixImage(FiImageData image){
     if(image.buffer != null ) {
       prefixImageName = null;
       prefixImage = Image.memory(image.buffer!);
@@ -88,7 +88,7 @@ class CxMultiLisCollapsedWidget extends StatefulWidget {
   }
 }
 
-class _CxMultiLisCollapsedWidgetState extends State<CxMultiLisCollapsedWidget> {
+class _FiMultiLisCollapsedWidgetState extends State<FiMultiLisCollapsedWidget> {
 
 
   @override
@@ -108,8 +108,8 @@ class _CxMultiLisCollapsedWidgetState extends State<CxMultiLisCollapsedWidget> {
     };
     widget.onRefresh = (){
       setState(() {
-        if(widget.custom != null && widget.custom is CxCustomExtendedWidget){
-          CxCustomExtendedWidget c = widget.custom! as CxCustomExtendedWidget ;
+        if(widget.custom != null && widget.custom is FiCustomExtendedWidget){
+          FiCustomExtendedWidget c = widget.custom! as FiCustomExtendedWidget ;
           c.onRefresh?.call();
         }
       });

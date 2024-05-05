@@ -6,45 +6,45 @@ import '../models/fi_backend_response.dart';
 import '../models/fi_user_registration_model.dart';
 import '../models/fi_user_verification_model.dart';
 
-class CxAuthentication {
+class FiAuthentication {
 
-  static final CxAuthentication _instance = CxAuthentication._internal();
+  static final FiAuthentication _instance = FiAuthentication._internal();
 
-  CxAuthentication._internal();
+  FiAuthentication._internal();
 
-  factory CxAuthentication() {
+  factory FiAuthentication() {
     return _instance;
   }
 
   ///
   /// Start user registration
-  Future<CxBackendResponse> registerUser(CxUserRegistrationModel model) async {
-    CxBackendResponse? response;
+  Future<FiBackendResponse> registerUser(FiUserRegistrationModel model) async {
+    FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
       ///var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/registration');
       Uri uri = Uri.http('10.0.2.2:27345', '/user/registration');
       logger.d("registerUser : $uri");
       //http.post(uri, body: model.toJson(), headers: defaultHeaders);
-      response = CxBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
     } catch (err) {
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
     }
     return response;
   }
 
-  Future<CxBackendResponse> verificationUser(CxUserVerificationModel model) async {
-    CxBackendResponse? response;
+  Future<FiBackendResponse> verificationUser(FiUserVerificationModel model) async {
+    FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
      /// var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
       Uri uri = Uri.http('10.0.2.2:27345', '/user/verification');
       logger.d("VerificateUser : $uri");
-      response = CxBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
     } catch (err) {
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
     }
@@ -53,4 +53,4 @@ class CxAuthentication {
 
 }
 
-CxAuthentication authenticationApi = CxAuthentication() ;
+FiAuthentication authenticationApi = FiAuthentication() ;

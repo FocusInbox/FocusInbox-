@@ -7,23 +7,23 @@ import 'fi_multi_list_data_source.dart';
 import 'fi_multi_list_expanded_widget.dart';
 import 'fi_multi_list_item.dart';
 
-class CxMultiTypeList extends StatefulWidget {
+class FiMultiTypeList extends StatefulWidget {
   ScrollController? controller;
   bool? isSingleInputTypeEnabled ;
-  CxMultiListDataSource dataSource = CxMultiListDataSource();
+  FiMultiListDataSource dataSource = FiMultiListDataSource();
   List<int>? indexesOfItemsToForceVisibility = <int>[];
-  CxMultiTypeList({super.key, required this.dataSource, this.controller,this.indexesOfItemsToForceVisibility,this.isSingleInputTypeEnabled});
+  FiMultiTypeList({super.key, required this.dataSource, this.controller,this.indexesOfItemsToForceVisibility,this.isSingleInputTypeEnabled});
 
   @override
-  State<StatefulWidget> createState() => CxMultiTypeListState();
+  State<StatefulWidget> createState() => FiMultiTypeListState();
 
 
 }
 
-class CxMultiTypeListState extends State<CxMultiTypeList> {
+class FiMultiTypeListState extends State<FiMultiTypeList> {
   int expandedItemIndex = -1;
 
-  CxMultiListItem? expanded;
+  FiMultiListItem? expanded;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class CxMultiTypeListState extends State<CxMultiTypeList> {
         padding: EdgeInsets.zero,
         itemCount: widget.dataSource.length,
         itemBuilder: (BuildContext context, int index) {
-          CxMultiListItem item = widget.dataSource.itemAtIndex(index);
+          FiMultiListItem item = widget.dataSource.itemAtIndex(index);
 
           item.expandedWidget?.onKeyboardVisibilityChanged = (state) {
             if (!state) {
@@ -63,7 +63,7 @@ class CxMultiTypeListState extends State<CxMultiTypeList> {
           };
 
           if(widget.isSingleInputTypeEnabled??true) {
-            if (item.expandedWidget != null && item.expandedWidget is CxMultiListExpandedInputTextWidget) {
+            if (item.expandedWidget != null && item.expandedWidget is FiMultiListExpandedInputTextWidget) {
 
 
               item.expandedWidget!.onTextBoxClick = () {
@@ -98,7 +98,7 @@ class CxMultiTypeListState extends State<CxMultiTypeList> {
   void _onItemClick(int index) {
     if (widget.dataSource.isSingleMode) return;
 
-    CxMultiListItem clicked = widget.dataSource.itemAtIndex(index);
+    FiMultiListItem clicked = widget.dataSource.itemAtIndex(index);
     if (clicked == expanded) {
       expanded?.collapse();
       expanded = null;

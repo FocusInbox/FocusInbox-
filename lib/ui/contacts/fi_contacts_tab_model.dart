@@ -11,19 +11,19 @@ import 'fi_contacts_tab_widget.dart';
 
 
 
-class CxContactsTabModel extends FiModel {
-  static final CxContactsTabModel _instance = CxContactsTabModel._internal();
-  final List<CxContact> _privateContacts = <CxContact>[];
-  final List<CxContact> _searchedContacts = <CxContact>[];
-  final List<CxContact> _notSharedContacts = <CxContact>[];
-  //final List<CxContact> _sharedContacts = <CxContact>[];
- // final List<CxContact> _favoriteBusinessContacts = <CxContact>[];
- // final List<CxContact> _favoriteSharedContacts = <CxContact>[];
-  //final List<CxContact> _favoriteOrganizationContacts = <CxContact>[];
+class FiContactsTabModel extends FiModel {
+  static final FiContactsTabModel _instance = FiContactsTabModel._internal();
+  final List<FiContact> _privateContacts = <FiContact>[];
+  final List<FiContact> _searchedContacts = <FiContact>[];
+  final List<FiContact> _notSharedContacts = <FiContact>[];
+  //final List<FiContact> _sharedContacts = <FiContact>[];
+ // final List<FiContact> _favoriteBusinessContacts = <FiContact>[];
+ // final List<FiContact> _favoriteSharedContacts = <FiContact>[];
+  //final List<FiContact> _favoriteOrganizationContacts = <FiContact>[];
 
-  final List<CxContact> _organizationContacts = <CxContact>[];
-  List<CxContactsPageWidget> pages = <CxContactsPageWidget>[];
-  final Map<CxContactPageType, FiBaseState> _states = {};
+  final List<FiContact> _organizationContacts = <FiContact>[];
+  List<FiContactsPageWidget> pages = <FiContactsPageWidget>[];
+  final Map<FiContactPageType, FiBaseState> _states = {};
 
   late TextEditingController _searchController;
 
@@ -46,7 +46,7 @@ class CxContactsTabModel extends FiModel {
 
 
 
-  setPageState(CxContactPageType type, FiBaseState? state) {
+  setPageState(FiContactPageType type, FiBaseState? state) {
     if (state != null) {
       _states[type] = state;
     } else {
@@ -65,25 +65,25 @@ class CxContactsTabModel extends FiModel {
     }
   }
 
-  CxContactsTabModel._internal();
+  FiContactsTabModel._internal();
 
-  factory CxContactsTabModel() {
+  factory FiContactsTabModel() {
     return _instance;
   }
 
-/*  CxContactPageType get currentType {
+/*  FiContactPageType get currentType {
     switch (_currentPageIndex) {
       case 1:
-        return CxContactPageType.business;
+        return FiContactPageType.business;
       case 2:
-        return CxContactPageType.shared;
+        return FiContactPageType.shared;
       case 3:
-        return CxContactPageType.organization;
+        return FiContactPageType.organization;
     }
-    if(_states.containsKey(CxContactPageType.addingToGroup)) {
-      return CxContactPageType.addingToGroup;
+    if(_states.containsKey(FiContactPageType.addingToGroup)) {
+      return FiContactPageType.addingToGroup;
     }
-    return CxContactPageType.private;
+    return FiContactPageType.private;
 
   }*/
 
@@ -100,7 +100,7 @@ class CxContactsTabModel extends FiModel {
 /*
   ValueChanged<String> get onSearch => (text) {
         _inSearch = text.trim().isNotEmpty;
-        Iterable<CxContact>? searched;
+        Iterable<FiContact>? searched;
         logger.d("Searching: $text index $_currentPageIndex");
         switch (_currentPageIndex) {
           case 0:
@@ -164,13 +164,13 @@ class CxContactsTabModel extends FiModel {
       String initialLetter = "";
 
       for (var element in phoneContacts) {
-        CxContact contact = CxContact(type: CxContactPageType.private, phoneContact: element);
+        FiContact contact = FiContact(type: FiContactPageType.private, phoneContact: element);
         if (contact.valid) {
           contact.loadData(() {
             String current = contact.name.characters.first.toUpperCase();
             if (current != initialLetter) {
               initialLetter = current;
-              _privateContacts.add(CxContact(type: CxContactPageType.divider, divider: initialLetter));
+              _privateContacts.add(FiContact(type: FiContactPageType.divider, divider: initialLetter));
             }
             _privateContacts.add(contact);
           });
@@ -178,21 +178,21 @@ class CxContactsTabModel extends FiModel {
       }
     }
 
-    pages.add( CxContactsPageWidget(CxContactPageType.private));
-   // pages.add( CxContactsPageWidget(CxContactPageType.business));
-   // pages.add( CxContactsPageWidget(CxContactPageType.shared));
-  //  pages.add( CxContactsPageWidget(CxContactPageType.organization));
+    pages.add( FiContactsPageWidget(FiContactPageType.private));
+   // pages.add( FiContactsPageWidget(FiContactPageType.business));
+   // pages.add( FiContactsPageWidget(FiContactPageType.shared));
+  //  pages.add( FiContactsPageWidget(FiContactPageType.organization));
 
     _searchController = TextEditingController();
   }
 
   int get pageCount => pages.length;
 
-  CxContactsPageWidget pageAtIndex(int index) =>  pages[0] ;//index < pageCount ? pages[index] : pages[0];
+  FiContactsPageWidget pageAtIndex(int index) =>  pages[0] ;//index < pageCount ? pages[index] : pages[0];
 
   AssetImage get myImage => const AssetImage("assets/images/nb_man_icon.png");
 
-  CxContact contactAtIndex(int index, CxContactPageType type) {
+  FiContact contactAtIndex(int index, FiContactPageType type) {
     if (_inSearch) {
       return _searchedContacts[index];
     }
@@ -200,7 +200,7 @@ class CxContactsTabModel extends FiModel {
 
   }
 
-/*  CxContact favoriteAtIndex(int index) {
+/*  FiContact favoriteAtIndex(int index) {
     switch (_currentPageIndex) {
       case 1:
         return _favoriteBusinessContacts[index];
@@ -211,7 +211,7 @@ class CxContactsTabModel extends FiModel {
     }
   }*/
 
-/*  List<CxContact> get favorites {
+/*  List<FiContact> get favorites {
     switch (_currentPageIndex) {
       case 1:
         return _favoriteBusinessContacts;
@@ -224,7 +224,7 @@ class CxContactsTabModel extends FiModel {
 
   String get favoriteKey  => "favorite_$_currentPageIndex" ;
 
-  void setAsFavorite(CxContact contact) {
+  void setAsFavorite(FiContact contact) {
     if (!favorites.contains(contact)) {
       updatePage(callback: () {
         contact.isFavorite = true ;
@@ -244,7 +244,7 @@ class CxContactsTabModel extends FiModel {
 
     if(group.memberModels.isNotEmpty){
       for(CxGroupUserModel model in group.memberModels){
-        var contact = CxContact(type: CxContactPageType.organization, groupUserModel: model);
+        var contact = FiContact(type: FiContactPageType.organization, groupUserModel: model);
         if(group.type == CxGroupType.groupInOrganization) {
           if(!_exist(model.id,_organizationContacts)) {
             _organizationContacts.add(contact);
@@ -264,9 +264,9 @@ class CxContactsTabModel extends FiModel {
     }
   }*/
 
-/*  bool _exist(String id,List<CxContact> list){
+/*  bool _exist(String id,List<FiContact> list){
     return list.where((element) => (element.groupUserModel?.id??"") == id).isNotEmpty ;
   }*/
 }
 
-CxContactsTabModel contacts = CxContactsTabModel();
+FiContactsTabModel contacts = FiContactsTabModel();

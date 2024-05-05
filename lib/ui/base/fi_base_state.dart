@@ -10,7 +10,7 @@ class FiBaseState<T extends FiBaseWidget> extends State<T> {
 
 
   static BuildContext? currentContext ;
-  CxDialogWidget? _dialog ;
+  FiDialogWidget? _dialog ;
   StateSetter? dialogStateState ;
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class FiBaseState<T extends FiBaseWidget> extends State<T> {
   }
 
   @protected
-  showPopupDialog(CxDialogWidget dialog){
+  showPopupDialog(FiDialogWidget dialog){
     showDialog(
       context: currentContext!,
       builder: (BuildContext context) {
@@ -67,7 +67,7 @@ class FiBaseState<T extends FiBaseWidget> extends State<T> {
 
 
   @protected
-  showPopupInputDialog(CxDialogWidget dialog){
+  showPopupInputDialog(FiDialogWidget dialog){
     showDialog(
       context: currentContext!,
       builder: (BuildContext context) {

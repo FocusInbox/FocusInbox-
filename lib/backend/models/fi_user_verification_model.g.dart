@@ -6,14 +6,14 @@ part of 'fi_user_verification_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxUserVerificationModel _$CxUserVerificationModelFromJson(
+FiUserVerificationModel _$FiUserVerificationModelFromJson(
         Map<String, dynamic> json) =>
-    CxUserVerificationModel()
+    FiUserVerificationModel()
       //..verification = json['verification'] as String?
       ..mail = json['mail'] as String?;
 
-Map<String, dynamic> _$CxUserVerificationModelToJson(
-        CxUserVerificationModel instance) =>
+Map<String, dynamic> _$FiUserVerificationModelToJson(
+        FiUserVerificationModel instance) =>
     <String, dynamic>{
      // 'verification': instance.verification,
       'mail': instance.mail,

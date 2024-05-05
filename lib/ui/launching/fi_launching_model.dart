@@ -18,11 +18,11 @@ import '../navigationbar/contacts/fi_contacts.dart';
 import '../navigationbar/settings/fi_settings_tab_model.dart';
 import '../utils/fi_ui_elements.dart';
 
-class CxLaunchingModel extends FiModel {
-  static final CxLaunchingModel _instance = CxLaunchingModel._internal();
+class FiLaunchingModel extends FiModel {
+  static final FiLaunchingModel _instance = FiLaunchingModel._internal();
   String fcmToken = "";
-  CxLaunchingModel._internal();
-  factory CxLaunchingModel() {
+  FiLaunchingModel._internal();
+  factory FiLaunchingModel() {
     return _instance;
   }
 
@@ -94,7 +94,7 @@ class CxLaunchingModel extends FiModel {
   _continueLaunch() async
   {
     String token = resources.storage.getString(kAccessNotificationToken);
-    applicationModel.currentContact = CxContact(type: CxContactPageType.current, user: await usersApi.loadUser(token)); //await usersApi.loadUser(token) ;
+    applicationModel.currentContact = FiContact(type: FiContactPageType.current, user: await usersApi.loadUser(token)); //await usersApi.loadUser(token) ;
     if (applicationModel.currentContact == null || applicationModel.currentContact!.user == null) {
       applicationModel.currentState = FiApplicationStates.registrationState;
       return;
@@ -158,4 +158,4 @@ class CxLaunchingModel extends FiModel {
   }
 }
 
-CxLaunchingModel launchingModel = CxLaunchingModel();
+FiLaunchingModel launchingModel = FiLaunchingModel();

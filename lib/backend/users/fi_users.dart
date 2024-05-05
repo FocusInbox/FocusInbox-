@@ -10,24 +10,24 @@ import '../models/fi_user_email.dart';
 import '../models/fi_user_phone.dart';
 import '../models/fi_user_notification_settings.dart';
 
-class CxUsers {
-  static final CxUsers _instance = CxUsers._internal();
+class FiUsers {
+  static final FiUsers _instance = FiUsers._internal();
 
-  CxUsers._internal();
+  FiUsers._internal();
 
-  factory CxUsers() {
+  factory FiUsers() {
     return _instance;
   }
 
-  Future<CxUser?> loadUser(String token) async{
-    CxBackendResponse? response;
+  Future<FiUser?> loadUser(String token) async{
+    FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json',"Token":token};
       var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/information');
       logger.d("loadUser url : $uri");
-      response = CxBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(backendConfig.timeout));
+      response = FiBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(backendConfig.timeout));
       if(response.successful()){
-        CxUser user = CxUser.fromJson(response.data!) ;
+        FiUser user = FiUser.fromJson(response.data!) ;
         return user ;
       }
     } catch (err) {
@@ -36,18 +36,18 @@ class CxUsers {
     return null ;
   }
 
-  Future<CxBackendResponse> addEmail(CxUserEmail userEmail) async {
-    CxBackendResponse? response;
+  Future<FiBackendResponse> addEmail(FiUserEmail userEmail) async {
+    FiBackendResponse? response;
     try {
       String token = resources.storage.getString(kAccessNotificationToken);
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json',"Token":token};
       var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/email/add');
       logger.d("addEmail : $uri");
-      response = CxBackendResponse.fromHttpResponse(await http.post(uri,body: userEmail.toJson(), headers: defaultHeaders).timeout(backendConfig.timeout));
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri,body: userEmail.toJson(), headers: defaultHeaders).timeout(backendConfig.timeout));
       return response ;
     } catch (err) {
       logger.d("addEmail : $err");
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
       return response ;
@@ -55,18 +55,18 @@ class CxUsers {
   }
 
 
-  Future<CxBackendResponse> updateSettings(CxUserNotificationSettings settings) async {
-    CxBackendResponse? response;
+  Future<FiBackendResponse> updateSettings(FiUserNotificationSettings settings) async {
+    FiBackendResponse? response;
     try {
       String token = resources.storage.getString(kAccessNotificationToken);
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json',"Token":token};
       var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/settings/notification');
       logger.d("updateSettings : $uri");
-      response = CxBackendResponse.fromHttpResponse(await http.post(uri,body: settings.toJson(), headers: defaultHeaders).timeout(backendConfig.timeout));
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri,body: settings.toJson(), headers: defaultHeaders).timeout(backendConfig.timeout));
       return response ;
     } catch (err) {
       logger.d("updateSettings : $err");
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
       return response ;
@@ -91,18 +91,18 @@ class CxUsers {
     }
   }*/
 
-  Future<CxBackendResponse> addCalendar(CxUserEmail userEmail) async {
-    CxBackendResponse? response;
+  Future<FiBackendResponse> addCalendar(FiUserEmail userEmail) async {
+    FiBackendResponse? response;
     try {
       String token = resources.storage.getString(kAccessNotificationToken);
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json',"Token":token};
       var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/calendar/add');
       logger.d("addCalendar : $uri");
-      response = CxBackendResponse.fromHttpResponse(await http.post(uri,body: userEmail.toJson(), headers: defaultHeaders).timeout(backendConfig.timeout));
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri,body: userEmail.toJson(), headers: defaultHeaders).timeout(backendConfig.timeout));
       return response ;
     } catch (err) {
       logger.d("addCalendar : $err");
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
       return response ;
@@ -145,18 +145,18 @@ class CxUsers {
     }
   }*/
 
-  Future<CxBackendResponse> addPhone(CxUserPhone userPhone)async{
-    CxBackendResponse? response;
+  Future<FiBackendResponse> addPhone(FiUserPhone userPhone)async{
+    FiBackendResponse? response;
     try {
       String token = resources.storage.getString(kAccessNotificationToken);
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json',"Token":token};
       var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/settings/add/phone');
       logger.d("addPhone : $uri");
-      response = CxBackendResponse.fromHttpResponse(await http.post(uri,body:jsonEncode(userPhone.toJson()) , headers: defaultHeaders).timeout(backendConfig.timeout));
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri,body:jsonEncode(userPhone.toJson()) , headers: defaultHeaders).timeout(backendConfig.timeout));
       return response ;
     } catch (err) {
       logger.d("addPhone : $err");
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
       return response ;
@@ -164,4 +164,4 @@ class CxUsers {
   }
 }
 
-CxUsers usersApi = CxUsers();
+FiUsers usersApi = FiUsers();

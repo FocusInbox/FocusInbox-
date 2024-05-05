@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'fi_user_registration_model.g.dart';
 
 @JsonSerializable()
-class CxUserRegistrationModel {
+class FiUserRegistrationModel {
 
   String firstName ;
   String lastName ;
@@ -15,10 +15,10 @@ class CxUserRegistrationModel {
 
   @override
   String toString() {
-    return 'CxUserRegistrationModel{name: $firstName, mail: $mail, platform: $platform, token: $token}';
+    return 'FiUserRegistrationModel{name: $firstName, mail: $mail, platform: $platform, token: $token}';
   }
 
-  CxUserRegistrationModel(this.firstName,this.lastName, this.mail,this.platform,this.token);
+  FiUserRegistrationModel(this.firstName,this.lastName, this.mail,this.platform,this.token);
 
-  toJson() => jsonEncode(_$CxUserRegistrationModelToJson(this));
+  toJson() => jsonEncode(_$FiUserRegistrationModelToJson(this));
 }

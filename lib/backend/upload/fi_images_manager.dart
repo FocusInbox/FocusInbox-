@@ -14,21 +14,21 @@ import 'package:http_parser/http_parser.dart';
 
 import '../models/fi_download_image_model.dart';
 
-enum CxImageType { user, group }
+enum FiImageType { user, group }
 
-typedef CxImageDownloadCallback = void Function(Uint8List? item, Error? error);
+typedef FiImageDownloadCallback = void Function(Uint8List? item, Error? error);
 
-class CxImagesManager {
-  static final CxImagesManager _instance = CxImagesManager._internal();
+class FiImagesManager {
+  static final FiImagesManager _instance = FiImagesManager._internal();
 
-  CxImagesManager._internal();
+  FiImagesManager._internal();
 
-  factory CxImagesManager() {
+  factory FiImagesManager() {
     return _instance;
   }
 
-  Future<CxBackendResponse> uploadImage(String ownerId, CxImageData image) async {
-    CxBackendResponse? response;
+  Future<FiBackendResponse> uploadImage(String ownerId, FiImageData image) async {
+    FiBackendResponse? response;
     try {
       logger.d("upload image : $ownerId} path = ${image.image.path}");
       String token = resources.storage.getString(kAccessNotificationToken);
@@ -39,7 +39,7 @@ class CxImagesManager {
         ..fields["Owner"] = ownerId
         ..files.add(await http.MultipartFile.fromPath("image", image.image.path));
       var responseAnswer = await request.send();
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = responseAnswer.statusCode;
       response.message = "";
 
@@ -47,20 +47,20 @@ class CxImagesManager {
       return response;
     } catch (err, stack) {
       logger.d("create group : $err $stack");
-      response = CxBackendResponse();
+      response = FiBackendResponse();
       response.status = StatusCode.METHOD_FAILURE;
       response.message = err.toString();
       return response;
     }
   }
 
-  Future<bool> downloadImage(String imageId, CxImageDownloadCallback callback) async {
+  Future<bool> downloadImage(String imageId, FiImageDownloadCallback callback) async {
     try {
       String token = resources.storage.getString(kAccessNotificationToken);
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json', "Token": token};
       var uri = Uri(scheme: backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/images/download');
       var request = http.Request("Get", uri);
-      request.body = jsonEncode(CxDownloadImageModel(imageId).toJson());
+      request.body = jsonEncode(FiDownloadImageModel(imageId).toJson());
       request.headers.addAll(defaultHeaders);
       var response = await request.send();
       if (response.statusCode != 200) {
@@ -84,4 +84,4 @@ class CxImagesManager {
   }
 }
 
-CxImagesManager imagesApi = CxImagesManager();
+FiImagesManager imagesApi = FiImagesManager();

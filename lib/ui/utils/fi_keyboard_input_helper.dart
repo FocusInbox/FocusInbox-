@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class CxKeyboardHelper {
+class FiKeyboardHelper {
   FocusNode node = FocusNode();
   final ScrollController scrollController = ScrollController();
   final TextEditingController textEditingController = TextEditingController(text: "");

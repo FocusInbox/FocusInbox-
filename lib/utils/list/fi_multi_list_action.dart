@@ -2,11 +2,11 @@
 
 import 'package:flutter/cupertino.dart';
 
-class CxMultiListAction {
+class FiMultiListAction {
   VoidCallback? action ;
   ValueChanged<dynamic>? update ;
 
-  CxMultiListAction({ this.action});
+  FiMultiListAction({ this.action});
 
   add(String value) {
     update?.call(value) ;

@@ -46,14 +46,14 @@ class _TimePickerDataModel {
   _TimePickerDataModel({required this.value, required this.maxValue});
 }
 
-class CxSettingsTabWidget extends FiBaseWidget {
-  const CxSettingsTabWidget({super.key});
+class FiSettingsTabWidget extends FiBaseWidget {
+  const FiSettingsTabWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CxSettingsTabState();
+  State<StatefulWidget> createState() => _FiSettingsTabState();
 }
 
-class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
+class _FiSettingsTabState extends FiBaseState<FiSettingsTabWidget> {
   late StreamSubscription<bool> keyboardSubscription;
   Map<int, bool> expandedListController = {};
   _TimePickerDataModel? _hoursModel = _TimePickerDataModel(value: DateTime.now().hour, maxValue: 24);
@@ -62,7 +62,7 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
 
   _TimePickerDataModel? _secondsModel = _TimePickerDataModel(value: DateTime.now().second, maxValue: 60);
 
-  CxMultiListDataSource dataSources = CxMultiListDataSource();
+  FiMultiListDataSource dataSources = FiMultiListDataSource();
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
                 letterSpacing: 1.35,
               ),
             ))),
-        Positioned(top: toY(130), left: toX(0), right: toX(0), bottom: toY(30), child: CxMultiTypeList(dataSource: dataSources)),
+        Positioned(top: toY(130), left: toX(0), right: toX(0), bottom: toY(30), child: FiMultiTypeList(dataSource: dataSources)),
       ],
     );
   }
@@ -222,8 +222,8 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
 */
 
   initDataSourceForPersonal() {
-    dataSources.add(CxMultiListItem(
-      collapsedWidget: CxMultiLisCollapsedWidget(
+    dataSources.add(FiMultiListItem(
+      collapsedWidget: FiMultiLisCollapsedWidget(
         title: localise("personal_information"),
         prefixImageName: "info_big.png",
         sufficsImageName: "horizontal_menu_dots.png",
@@ -232,12 +232,12 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
     ));
 
 
-    dataSources.add(CxMultiListItem(
-      collapsedWidget: CxMultiLisCollapsedWidget(
+    dataSources.add(FiMultiListItem(
+      collapsedWidget: FiMultiLisCollapsedWidget(
         title: localise("notification_settings"),
         prefixImageName: "settings_notification.png",
       ),
-      expandedWidget:CxMultiListCustomExpandedWidget(
+      expandedWidget:FiMultiListCustomExpandedWidget(
         custom: notificationSettings,
         height: toY(250),
         onRefreshInit: (callback){
@@ -276,8 +276,8 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
       ),
     ));*/
 
-    dataSources.add(CxMultiListItem(
-      collapsedWidget: CxMultiLisCollapsedWidget(
+    dataSources.add(FiMultiListItem(
+      collapsedWidget: FiMultiLisCollapsedWidget(
           title: localise("logout_from_account"),
           prefixImageName: "settings_logout.png",
           sufficsImageName: "horizontal_menu_dots.png",
@@ -382,7 +382,7 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
                     ),
                   ),
                 ))),
-        Positioned(top: toY(25), left: toX(304), width: toX(51), height: toY(31), child: _switch(CxSettingsTabModel.kNotificationManualTime)),
+        Positioned(top: toY(25), left: toX(304), width: toX(51), height: toY(31), child: _switch(FiSettingsTabModel.kNotificationManualTime)),
         Positioned(
             top: toY(80),
             width: display.width,
@@ -404,7 +404,7 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
                 letterSpacing: 1.05,
               ),
             )),
-        Positioned(top: toY(100), left: toX(304), width: toX(51), height: toY(31), child: _switch(CxSettingsTabModel.kNotificationRelatedToMe)),
+        Positioned(top: toY(100), left: toX(304), width: toX(51), height: toY(31), child: _switch(FiSettingsTabModel.kNotificationRelatedToMe)),
         Positioned(
             left: toX(90),
             top: toY(167),
@@ -418,7 +418,7 @@ class _CxSettingsTabState extends FiBaseState<CxSettingsTabWidget> {
                 letterSpacing: 1.05,
               ),
             )),
-        Positioned(top: toY(157), left: toX(304), width: toX(51), height: toY(31), child: _switch(CxSettingsTabModel.kNotificationAny)),
+        Positioned(top: toY(157), left: toX(304), width: toX(51), height: toY(31), child: _switch(FiSettingsTabModel.kNotificationAny)),
       ],
     );
   }

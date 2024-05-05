@@ -7,19 +7,19 @@ import '../base/fi_base_widget.dart';
 import '../launching/fi_launching_model.dart';
 import 'fi_registration_model.dart';
 
-class CxGrantPermissionWidget extends FiBaseWidget {
-  const CxGrantPermissionWidget({Key? key}) : super(key: key);
+class FiGrantPermissionWidget extends FiBaseWidget {
+  const FiGrantPermissionWidget({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CxGrantPermissionStateWidget();
+  State<StatefulWidget> createState() => _FiGrantPermissionStateWidget();
 }
 
-class _CxGrantPermissionStateWidget
-    extends FiBaseState<CxGrantPermissionWidget> {
+class _FiGrantPermissionStateWidget
+    extends FiBaseState<FiGrantPermissionWidget> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState();//check this
     registrationModel.setState(this);
   }
 

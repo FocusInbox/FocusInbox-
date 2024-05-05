@@ -12,12 +12,12 @@ import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
 import '../../contacts/fi_contacts_tab_widget.dart';
 
-class CxContact {
+class FiContact {
   Contact? phoneContact;
   List<Contact>? duplicates;
   Image? _avatar;
 
-  CxContactPageType type;
+  FiContactPageType type;
   String divider = "";
   bool isFavorite = false;
   String? _firstName;
@@ -26,16 +26,16 @@ class CxContact {
 
   //String? convertedFirstName ;
   //String? convertedLastName ;
-  CxImageData? _image;
+  FiImageData? _image;
 
   bool aggregated = false;
 
   //Map<String, List<CxConvertedValue>> convertedData = {};
 
-  CxUser? user;
+  FiUser? user;
 
-  CxContact(
-      {this.phoneContact, required this.type, CxUser? user, this.divider = ""}) {
+  FiContact(
+      {this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
     if (user != null) {
       this.user = user;
       List<String> names = user.username!.split(" ");
@@ -130,7 +130,7 @@ class CxContact {
     return _lastName!;
   }
 
-  bool get isDivider => type == CxContactPageType.divider;
+  bool get isDivider => type == FiContactPageType.divider;
 
   String get phoneNumber =>
       actualListPhones.isNotEmpty ? actualListPhones.first.value ?? "" : "";
@@ -215,7 +215,7 @@ class CxContact {
       decodeImageFromList(phoneContact!.avatar!, (image) {
         logger.d("Image decoded!");
         _avatar = image;
-        _image = CxImageData(image: XFile.fromData(phoneContact!.avatar!),
+        _image = FiImageData(image: XFile.fromData(phoneContact!.avatar!),
             buffer: phoneContact!.avatar!);
         completion.call();
       });
@@ -274,7 +274,7 @@ class CxContact {
     decodeImageFromList(buffer, (image) {
       logger.d("Image decoded!");
       _avatar = image;
-      _image = CxImageData(image: file, buffer: buffer);
+      _image = FiImageData(image: file, buffer: buffer);
       completion?.call();
     });
   }

@@ -6,14 +6,14 @@ part of 'fi_download_image_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxDownloadImageModel _$CxDownloadImageModelFromJson(
+FiDownloadImageModel _$FiDownloadImageModelFromJson(
         Map<String, dynamic> json) =>
-    CxDownloadImageModel(
+    FiDownloadImageModel(
       json['id'] as String,
     );
 
-Map<String, dynamic> _$CxDownloadImageModelToJson(
-        CxDownloadImageModel instance) =>
+Map<String, dynamic> _$FiDownloadImageModelToJson(
+        FiDownloadImageModel instance) =>
     <String, dynamic>{
       'id': instance.id,
     };

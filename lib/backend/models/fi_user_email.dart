@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 part 'fi_user_email.g.dart';
 @JsonSerializable()
-class CxUserEmail {
+class FiUserEmail {
 
   String? email ;
 
@@ -12,7 +12,7 @@ class CxUserEmail {
   Map<String,dynamic>? headers ;
 
   String? token ;
-  CxUserEmail({this.email,this.headers}){
+  FiUserEmail({this.email,this.headers}){
     token = headers?["Authorization"]??"" ;
     if(token!= null && token!.isNotEmpty){
       List<String> parts = token!.split(" ") ;
@@ -22,6 +22,6 @@ class CxUserEmail {
     }
   }
 
-  String toJson() => jsonEncode(_$CxUserEmailToJson(this)) ;
+  String toJson() => jsonEncode(_$FiUserEmailToJson(this)) ;
 
 }

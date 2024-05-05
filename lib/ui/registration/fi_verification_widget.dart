@@ -9,8 +9,8 @@ import '../base/fi_base_widget.dart';
 import '../utils/fi_ui_elements.dart';
 import 'fi_registration_model.dart';
 
-class CxVerificationWidget extends FiBaseWidget {
-  const CxVerificationWidget({super.key});
+class FiVerificationWidget extends FiBaseWidget {
+  const FiVerificationWidget({super.key});
 
   @override
   Future<bool> get onWillPop {
@@ -19,10 +19,10 @@ class CxVerificationWidget extends FiBaseWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _CxVerificationWidgetState();
+  State<StatefulWidget> createState() => _FiVerificationWidgetState();
 }
 
-class _CxVerificationWidgetState extends FiBaseState<CxVerificationWidget> {
+class _FiVerificationWidgetState extends FiBaseState<FiVerificationWidget> {
   @override
   void initState() {
     super.initState();

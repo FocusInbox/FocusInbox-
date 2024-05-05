@@ -1,9 +1,9 @@
-class CxBackendConfig {
-  static final CxBackendConfig _instance = CxBackendConfig._internal();
+class FiBackendConfig {
+  static final FiBackendConfig _instance = FiBackendConfig._internal();
 
-  CxBackendConfig._internal();
+  FiBackendConfig._internal();
 
-  factory CxBackendConfig() {
+  factory FiBackendConfig() {
     return _instance;
   }
 
@@ -23,4 +23,4 @@ class CxBackendConfig {
 
 }
 
-CxBackendConfig backendConfig = CxBackendConfig();
+FiBackendConfig backendConfig = FiBackendConfig();

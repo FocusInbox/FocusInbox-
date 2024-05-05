@@ -2,20 +2,20 @@ import 'dart:ui';
 
 import 'fi_multi_list_item.dart';
 
-class CxMultiListDataSource {
+class FiMultiListDataSource {
   int _single = -1 ;
   bool _showSingle = false ;
 
-  final List<CxMultiListItem> _items = <CxMultiListItem>[];
+  final List<FiMultiListItem> _items = <FiMultiListItem>[];
   int get length => _showSingle ? 1 : _items.length ;
 
   bool get isSingleMode => _showSingle;
 
   bool get isNotEmpty => _items.isNotEmpty;
 
-  add(CxMultiListItem item) => _items.add(item) ;
+  add(FiMultiListItem item) => _items.add(item) ;
 
-  insert(int index ,CxMultiListItem item){
+  insert(int index ,FiMultiListItem item){
     if(_items.length > index){
       _items.removeAt(index);
     }
@@ -34,7 +34,7 @@ class CxMultiListDataSource {
     }
   }
 
-  CxMultiListItem itemAtIndex(int index) {
+  FiMultiListItem itemAtIndex(int index) {
     if(_showSingle){
       return _items[_single];
     }

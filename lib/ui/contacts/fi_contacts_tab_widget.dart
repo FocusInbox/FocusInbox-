@@ -6,16 +6,16 @@ import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
 import 'fi_contacts_tab_model.dart';
 
-enum CxContactPageType {current, private, divider }
+enum FiContactPageType {current, private, divider }
 
-class CxContactsTabWidget extends FiBaseWidget {
-  const CxContactsTabWidget({super.key});
+class FiContactsTabWidget extends FiBaseWidget {
+  const FiContactsTabWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CxContactsTabState();
+  State<StatefulWidget> createState() => _FiContactsTabState();
 }
 
-class _CxContactsTabState extends FiBaseState<CxContactsTabWidget> {
+class _FiContactsTabState extends FiBaseState<FiContactsTabWidget> {
   int _selectedIndex = 0;
   final CarouselController _buttonCarouselController = CarouselController();
 

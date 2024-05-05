@@ -15,7 +15,9 @@ import '../navigationbar/contacts/fi_contacts.dart';
 import 'dart:convert' as convert;
 import 'package:dotted_line/dotted_line.dart';
 
+import '../registration/fi_debouncer.dart';
 import 'fi_keyboard_input_helper.dart';
+enum InputType { email, firstName, lastName, generic }
 
 typedef DynamicWidget = Widget Function();
 
@@ -28,6 +30,9 @@ class ButtonWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _ButtonWidgetState();
 
 
+}
+class ValidatingController extends TextEditingController {
+  bool isValid = false;
 }
 
 class _ButtonWidgetState extends State<ButtonWidget> {
@@ -53,19 +58,17 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
 }
 
-class CxUiElements {
-  static final CxUiElements _instance = CxUiElements._internal();
+class FiUiElements {
+  static final FiUiElements _instance = FiUiElements._internal();
 
-  CxUiElements._internal();
+  FiUiElements._internal();
 
   static const Image inputNameIcon = Image(image: AssetImage("assets/images/_inputNameIcon.png"));
-
-  static const Image inputPhoneNumberIcon = Image(image: AssetImage("assets/images/_inputPhoneNumberIcon.png"));
   static const Image inputEmailIcon = Image(image: AssetImage("assets/images/email_input.png"));
   static const Image lockIcon = Image(image: AssetImage("assets/images/lock_icon.png"));
   static const Image eyeOffIcon = Image(image: AssetImage("assets/images/eye_off_icon.png"));
 
-  factory CxUiElements() {
+  factory FiUiElements() {
     return _instance;
   }
 
@@ -97,6 +100,81 @@ class CxUiElements {
       ),
     );
   }
+  final _debouncer = Debouncer(milliseconds: 400);
+
+  Widget inputFieldE({
+    FocusNode? focusNode,
+    TextEditingController? controller,
+    Color? backgroundColor,
+    double? borderRadius,
+    Widget? suffixIcon,
+    Widget? prefixIcon,
+    String? hintText,
+    TextStyle? hintStyle,
+    ValueChanged<String>? onChange,
+    TextInputType? keyboardType,
+    VoidCallback? sufficsIconClick,
+    VoidCallback? preficsIconClick,
+    int? maxLine = 1,
+    BuildContext? context, // Context for SnackBar
+    InputType inputType = InputType.generic, // Use this to determine the type of input
+  }) {
+    return TextFormField(
+      focusNode: focusNode,
+      controller: controller,
+      onChanged: (value) {
+        if (onChange != null) {
+          onChange(value);
+          _debouncer.run(() {
+            if (inputType == InputType.email) {
+              // Email validation regex pattern
+              String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+              RegExp regex = RegExp(pattern);
+              if (!regex.hasMatch(value) && context != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Invalid email address'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            } else if (inputType == InputType.firstName ||
+                inputType == InputType.lastName) {
+              // Check if the name length is less than 4 characters
+              if (value.length < 4) {
+                ScaffoldMessenger.of(context!).showSnackBar(
+                  SnackBar(content: Text('${inputType == InputType.firstName ? "First" : "Last"} name must be at least 3 characters long'), duration: Duration(seconds: 2),),
+                );
+              }
+            }
+          });
+        }
+      },
+      style: hintStyle,
+      textAlign: TextAlign.left,
+      maxLines: maxLine,
+      minLines: 1,
+      keyboardType: keyboardType ?? TextInputType.text,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        isCollapsed: false,
+        filled: true,
+        fillColor: backgroundColor ?? const Color(0xff292C35),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 12.84),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 12.84),
+        ),
+        suffixIcon: suffixIcon != null ? InkWell(onTap: sufficsIconClick, child: suffixIcon) : null,
+        prefixIcon: prefixIcon != null ? InkWell(onTap: preficsIconClick, child: prefixIcon) : null,
+        hintText: hintText,
+        hintStyle: hintStyle,
+      ),
+    );
+  }
+
+
 
   Widget inputFieldNoBorder({bool enabled = true, VoidCallback? onTap, Key? key, bool autofocus = false, FocusNode? focus, TextEditingController? controller, Color? backgroundColor, double? borderRadius, Widget? suffixIcon, Widget? prefixIcon, String? hintText, TextStyle? hintStyle, ValueChanged<String>? onChange, TextInputType? keyboardType, VoidCallback? sufficsIconClick, VoidCallback? preficsIconClick, int? maxLine = 1, bool ignoreMaxLine = false}) {
     return GestureDetector(
@@ -399,7 +477,7 @@ class CxUiElements {
         ));
   }
 
-  Widget avatar(CxContact contact, {double radius = 50, Color color = Colors.white, Color foregroundColor = const Color(0xFF666666), double fontSize = 18, bool changeAllowed = false, ValueChanged<XFile>? onImageChange}) {
+  Widget avatar(FiContact contact, {double radius = 50, Color color = Colors.white, Color foregroundColor = const Color(0xFF666666), double fontSize = 18, bool changeAllowed = false, ValueChanged<XFile>? onImageChange}) {
     if (contact.avatar != null) {
       return GestureDetector(
           onTap: () async {
@@ -576,7 +654,7 @@ class CxUiElements {
     );
   }
 
-  Widget contactRow(int index, CxContact contact, {String favoriteKey = "", bool favoriteVisible = false, String addUserKey = "", bool addContactVisible = false, VoidCallback? onFavoriteClick, VoidCallback? onAddUserClick, VoidCallback? onItemClick}) {
+  Widget contactRow(int index, FiContact contact, {String favoriteKey = "", bool favoriteVisible = false, String addUserKey = "", bool addContactVisible = false, VoidCallback? onFavoriteClick, VoidCallback? onAddUserClick, VoidCallback? onItemClick}) {
     ConstraintId avatarId = ConstraintId("avatarId_$index");
     ConstraintId titleId = ConstraintId("titleId_$index");
     ConstraintId sharedById = ConstraintId("sharedById_$index");
@@ -645,7 +723,7 @@ class CxUiElements {
         ));
   }
 
-  Widget favoriteWidget(CxContact contact, {bool removeButtonVisible = false, VoidCallback? onRemoveClick}) {
+  Widget favoriteWidget(FiContact contact, {bool removeButtonVisible = false, VoidCallback? onRemoveClick}) {
     String name = contact.name;
     List<String> names = name.split(" ");
     if (names.length > 1) {
@@ -759,10 +837,10 @@ class CxUiElements {
         ));
   }
 
-  CxDialogWidget errorWidget(String text) {
+  FiDialogWidget errorWidget(String text) {
     ConstraintId horizontal = ConstraintId("horizontal");
     ConstraintId textId = ConstraintId("textId");
-    return CxDialogWidget(
+    return FiDialogWidget(
         Container(
           width: toX(327),
           height: toY(143),
@@ -1012,7 +1090,7 @@ class CxUiElements {
     );
   }
 
-  Widget inputTextForm(int index, String hintText, TextInputType inputType, ValueChanged onChange, String suffixName, {VoidCallback? onSuffixClick, TextEditingController? controller, CxKeyboardHelper? helper, VoidCallback? onFormTap}) {
+  Widget inputTextForm(int index, String hintText, TextInputType inputType, ValueChanged onChange, String suffixName, {VoidCallback? onSuffixClick, TextEditingController? controller, FiKeyboardHelper? helper, VoidCallback? onFormTap}) {
     //helper?.inputEnabled = itemIndexInFocus == index;
 
     return uiElements.inputFieldNoBorder(
@@ -1370,7 +1448,7 @@ class CxUiElements {
   }
 }
 
-CxUiElements uiElements = CxUiElements();
+FiUiElements uiElements = FiUiElements();
 
 const kBackState = "backState";
 

@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'fi_user_notification_settings.g.dart';
 @JsonSerializable()
-class CxUserNotificationSettings {
+class FiUserNotificationSettings {
   @JsonKey(name: "allowedfrom")
   int allowedFrom ;
   @JsonKey(name: "allowedto")
@@ -11,7 +11,7 @@ class CxUserNotificationSettings {
   @JsonKey(name: "any")
   bool any ;
 
-  CxUserNotificationSettings({required this.allowedFrom, required this.allowedTo,required this.relatedToMe,required this.any});
+  FiUserNotificationSettings({required this.allowedFrom, required this.allowedTo,required this.relatedToMe,required this.any});
 
   @JsonKey(includeToJson: false,includeFromJson: false)
   String get allowedFromToString {
@@ -53,7 +53,7 @@ class CxUserNotificationSettings {
     return "$hour:$minutes";
   }
 
-  Map<String,dynamic> toJson() => _$CxUserNotificationSettingsToJson(this) ;
+  Map<String,dynamic> toJson() => _$FiUserNotificationSettingsToJson(this) ;
 
-  static CxUserNotificationSettings fromJson(Map<String,dynamic> json) => _$CxUserNotificationSettingsFromJson(json) ;
+  static FiUserNotificationSettings fromJson(Map<String,dynamic> json) => _$FiUserNotificationSettingsFromJson(json) ;
 }

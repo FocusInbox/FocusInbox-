@@ -1,7 +1,7 @@
 import 'package:logger/logger.dart';
 import 'package:flutter/foundation.dart';
 
-class CxLogFilter extends LogFilter {
+class FiLogFilter extends LogFilter {
   @override
   bool shouldLog(LogEvent event) {
     if (kDebugMode) {
@@ -20,9 +20,9 @@ class CxLogFilter extends LogFilter {
   }
 }
 
-class CxLog {
+class FiLog {
   final Logger _logger = Logger(
-    filter: CxLogFilter(),
+    filter: FiLogFilter(),
     // Use the default LogFilter (-> only log in debug mode)
     printer: PrettyPrinter(),
     // Use the PrettyPrinter to format and print log
@@ -35,5 +35,5 @@ class CxLog {
 Logger logger = createLogger();
 
 Logger createLogger() {
-  return CxLog().logger;
+  return FiLog().logger;
 }

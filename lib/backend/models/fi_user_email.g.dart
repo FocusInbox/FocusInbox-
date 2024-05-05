@@ -6,11 +6,11 @@ part of 'fi_user_email.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxUserEmail _$CxUserEmailFromJson(Map<String, dynamic> json) => CxUserEmail(
+FiUserEmail _$FiUserEmailFromJson(Map<String, dynamic> json) => FiUserEmail(
       email: json['email'] as String?,
     )..token = json['token'] as String?;
 
-Map<String, dynamic> _$CxUserEmailToJson(CxUserEmail instance) =>
+Map<String, dynamic> _$FiUserEmailToJson(FiUserEmail instance) =>
     <String, dynamic>{
       'email': instance.email,
       'token': instance.token,

@@ -6,19 +6,19 @@ import 'dart:convert' as convert;
 part 'fi_backend_response.g.dart';
 
 @JsonSerializable()
-class CxBackendResponse {
+class FiBackendResponse {
   int? status;
   String? message;
   Map<String,dynamic>? data ;
 
-  static CxBackendResponse fromHttpResponse(http.Response response){
-    CxBackendResponse? backendResponse  ;
+  static FiBackendResponse fromHttpResponse(http.Response response){
+    FiBackendResponse? backendResponse  ;
     if(response.statusCode == StatusCode.OK) {
       var json = convert.jsonDecode(response.body) as Map<String, dynamic>;
-      backendResponse =_$CxBackendResponseFromJson(json);
+      backendResponse =_$FiBackendResponseFromJson(json);
     }
     else {
-      backendResponse = CxBackendResponse();
+      backendResponse = FiBackendResponse();
       backendResponse.status = response.statusCode ;
       backendResponse.message = response.body ;
     }

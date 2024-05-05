@@ -5,16 +5,16 @@ import 'package:flutter/cupertino.dart';
 
 import 'fi_multi_list_action.dart';
 
-class CxMultiListActionDataSource {
+class FiMultiListActionDataSource {
 
   List<String>? items ;
-  CxMultiListAction action ;
+  FiMultiListAction action ;
   ValueChanged<dynamic>? delete ;
   int get length => items?.length??0 ;
 
   VoidCallback? onUpdate ;
 
-  CxMultiListActionDataSource({required this.action,this.items,this.delete}){
+  FiMultiListActionDataSource({required this.action,this.items,this.delete}){
     action.update = (value){
       add(value);
     };

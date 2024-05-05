@@ -5,16 +5,16 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'fi_callendar_account.dart';
 import 'fi_email_account.dart';
 
-class CxEmailsManager {
+class FiEmailsManager {
 
 
 
-  static final CxEmailsManager _instance = CxEmailsManager._internal();
+  static final FiEmailsManager _instance = FiEmailsManager._internal();
 
-  CxEmailsManager._internal();
+  FiEmailsManager._internal();
   late GoogleSignIn _googleEmailSignIn ;
   late GoogleSignIn _googleCalendarSignIn ;
-  factory CxEmailsManager() {
+  factory FiEmailsManager() {
     _instance._googleEmailSignIn = GoogleSignIn(
       scopes: [
         'https://mail.google.com/',
@@ -33,11 +33,11 @@ class CxEmailsManager {
     return _instance;
   }
 
-  Future<CxCalendarAccount?> loadCalendar() async{
+  Future<FiCalendarAccount?> loadCalendar() async{
     try{
       GoogleSignInAccount? account =   await _googleCalendarSignIn.signIn();
       if(account != null){
-        return CxCalendarAccount(account:account) ;
+        return FiCalendarAccount(account:account) ;
       }
     }
     catch(err,stack){
@@ -46,11 +46,11 @@ class CxEmailsManager {
     return null ;
   }
 
-  Future<CxEmailAccount?> loadEmail() async{
+  Future<FiEmailAccount?> loadEmail() async{
     try{
       GoogleSignInAccount? account =   await _googleEmailSignIn.signIn();
       if(account != null){
-        return CxEmailAccount(account: account) ;
+        return FiEmailAccount(account: account) ;
       }
     }
     catch(err,stack){
@@ -59,14 +59,14 @@ class CxEmailsManager {
     return null ;
   }
 
-  Future<CxCalendarAccount?> addCalendar() async {
+  Future<FiCalendarAccount?> addCalendar() async {
     try {
       if(await _googleCalendarSignIn.isSignedIn()) {
         _googleCalendarSignIn.disconnect() ;
       }
       GoogleSignInAccount? account =   await _googleCalendarSignIn.signIn();
       if(account != null){
-        return CxCalendarAccount(account:account) ;
+        return FiCalendarAccount(account:account) ;
       }
     } catch (err, stack) {
       //logger.d("CxEmailsManager: $err\n$stack");
@@ -74,14 +74,14 @@ class CxEmailsManager {
     return null ;
   }
 
-  Future<CxEmailAccount?> addEmail() async {
+  Future<FiEmailAccount?> addEmail() async {
     try {
       if(await _googleEmailSignIn.isSignedIn()) {
         _googleEmailSignIn.disconnect() ;
       }
       GoogleSignInAccount? account =   await _googleEmailSignIn.signIn();
       if(account != null){
-        return  CxEmailAccount(account:account) ;
+        return  FiEmailAccount(account:account) ;
       }
     } catch (err, stack) {
     //  logger.d("CxEmailsManager: $err\n$stack");
@@ -95,11 +95,11 @@ class CxEmailsManager {
     }
   }
 
-  void removeEmail(CxEmailAccount email) {
+  void removeEmail(FiEmailAccount email) {
     if (email.account !=null && email.account!.email == email.email){
       _googleEmailSignIn.disconnect() ;
     }
   }
 }
 
-CxEmailsManager googleApiManager = CxEmailsManager();
+FiEmailsManager googleApiManager = FiEmailsManager();
