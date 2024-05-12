@@ -9,12 +9,12 @@ part of 'fi_user_verification_model.dart';
 FiUserVerificationModel _$FiUserVerificationModelFromJson(
         Map<String, dynamic> json) =>
     FiUserVerificationModel()
-      //..verification = json['verification'] as String?
+      ..verification = json['verification'] as String?
       ..mail = json['mail'] as String?;
 
 Map<String, dynamic> _$FiUserVerificationModelToJson(
         FiUserVerificationModel instance) =>
     <String, dynamic>{
-     // 'verification': instance.verification,
+      'verification': instance.verification,
       'mail': instance.mail,
     };

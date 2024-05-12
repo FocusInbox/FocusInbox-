@@ -5,7 +5,7 @@ part 'fi_user_verification_model.g.dart';
 
 @JsonSerializable()
 class FiUserVerificationModel {
- // String? verification ;
+  String? verification ;
   String? mail ;
 
   String toJson()=> jsonEncode(_$FiUserVerificationModelToJson(this));
