@@ -75,12 +75,7 @@ class FiLaunchingModel extends FiModel {
     await resources.load();
 
 
-    // if (!await _checkPermissions()) {
-    //   applicationModel.currentState = CxApplicationStates.grantPermissionState;
-    //   return;
-    // }
-
-    resources.storage.remove(kAccessNotificationToken);//TODO:REMOVE IT, for testing
+    resources.storage.remove(kAccessNotificationToken);//TODO :REMOVE IT, for testing
 
     String token = resources.storage.getString(kAccessNotificationToken);
     if (token.isEmpty) {

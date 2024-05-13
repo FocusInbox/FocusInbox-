@@ -9,16 +9,16 @@ class FiUserRegistrationModel {
 
   String firstName ;
   String lastName ;
-  String mail ;
+  String email ;
   int platform ;
   String token ;
 
   @override
   String toString() {
-    return 'FiUserRegistrationModel{name: $firstName, mail: $mail, platform: $platform, token: $token}';
+    return 'FiUserRegistrationModel{name: $firstName, email: $email, platform: $platform, token: $token}';
   }
 
-  FiUserRegistrationModel(this.firstName,this.lastName, this.mail,this.platform,this.token);
+  FiUserRegistrationModel(this.firstName,this.lastName, this.email,this.platform,this.token);
 
   toJson() => jsonEncode(_$FiUserRegistrationModelToJson(this));
 }

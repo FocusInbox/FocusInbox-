@@ -7,6 +7,7 @@ part 'fi_user_verification_model.g.dart';
 class FiUserVerificationModel {
   String? verification ;
   String? mail ;
+  String? uuid ;
 
   String toJson()=> jsonEncode(_$FiUserVerificationModelToJson(this));
 }

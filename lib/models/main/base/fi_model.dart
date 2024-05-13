@@ -6,6 +6,11 @@ class FiModel with WidgetsBindingObserver{
 
   FiBaseState? _modelState ;
 
+
+  set modelState(FiBaseState? state) {
+    setState(state);
+  }
+
   setState(FiBaseState? state){
     print("Setting state in model: $state"); // Add debug output
 

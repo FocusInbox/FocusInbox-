@@ -34,7 +34,7 @@ class FiContact {
 
   FiUser? user;
 
-  FiContact(
+/*  FiContact(
       {this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
     if (user != null) {
       this.user = user;
@@ -46,15 +46,21 @@ class FiContact {
       else {
         _firstName = user.username!;
       }
-      if (user.phonenumber != null) {
+     *//* if (user.phonenumber != null) {
         actualListPhones.add(Item(label: "phone", value: user.phonenumber!));
-      }
+      }*//*
+      actualListPhones.add(Item(label: "email", value: user.email));
 
-      if (user.emails.isNotEmpty) {
-        for (String email in user.emails) {
-          actualListPhones.add(Item(label: "email", value: email));
-        }
-      }
+
+    }
+  }*/
+  FiContact({this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
+    if (user != null) {
+      this.user = user;
+      List<String> names = user.username?.split(" ") ?? [];
+      _firstName = names.isNotEmpty ? names[0] : null;
+      _lastName = names.length > 1 ? names[1] : null;
+      actualListPhones.add(Item(label: "email", value: user.email));
     }
   }
 
@@ -63,7 +69,6 @@ class FiContact {
 
   List<Item> actualListPhones = <Item>[];
   List<Item> actualListEmails = <Item>[];
-  List<Item> actualListSocial = <Item>[];
 
   String get name {
     return phoneContact?.displayName ?? user?.username ?? firstName;
@@ -175,7 +180,7 @@ class FiContact {
   }
 
 
-  List<String> get calendarsAsString {
+/*  List<String> get calendarsAsString {
     List<String> all = <String>[];
     if (user != null) {
       Iterator<dynamic> it = user!.calendars.iterator;
@@ -187,8 +192,8 @@ class FiContact {
       }
     }
     return all;
-  }
-
+  }*/
+/*
   List<String> get whatsappAccountsAsString {
     List<String> all = <String>[];
     Iterator<Item> it = actualListSocial.iterator;
@@ -201,7 +206,7 @@ class FiContact {
       while (it.moveNext());
     }
     return all;
-  }
+  }*/
 
 
   String phoneAtIndex(int index) => actualListPhones[index].value ?? "";

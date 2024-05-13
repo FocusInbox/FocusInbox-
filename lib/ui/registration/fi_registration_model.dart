@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'package:FocusInbox/ui/base/fi_base_state.dart';
+import 'package:FocusInbox/ui/base/fi_base_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http_status_code/http_status_code.dart';
 import '../../backend/authentication/fi_authentication.dart';
 import '../../backend/models/fi_backend_response.dart';
+import '../../backend/models/fi_user.dart';
 import '../../backend/models/fi_user_registration_model.dart';
 import '../../backend/models/fi_user_verification_model.dart';
 import '../../backend/users/fi_users.dart';
@@ -15,11 +18,12 @@ import '../../utils/fi_resources.dart';
 import '../contacts/fi_contacts_tab_widget.dart';
 import '../launching/fi_launching_model.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
+import 'fi_registration_widget.dart';
 
 class FiRegistrationModel extends FiModel {
   static final FiRegistrationModel _instance = FiRegistrationModel._internal();
   Timer? _resendCodeTimer;
-  int _timoutForEnableResendCode = 5*60;//5 * 60
+  int _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
   bool _isTimerStarted = false ;
   String? _userFirstName ;
   String? _userLastName ;
@@ -39,21 +43,15 @@ class FiRegistrationModel extends FiModel {
 
 
   ValueChanged<String> get onUserFirstNameChange => (username) {
-    update(callback:(){
-      _userFirstName = username ;
-    }) ;
+        _userFirstName = username ;
   };
 
   ValueChanged<String> get onUserLastNameChange => (username) {
-    update(callback:(){
       _userLastName = username ;
-    }) ;
   };
 
   ValueChanged<String> get onMailAddressChange => (mailaddress) {
-    update(callback:(){
       _mailAddress = mailaddress ;
-    }) ;
   };
 
 /*  ValueChanged<String> get onMailAddressChange => (mailaddress) {
@@ -81,18 +79,21 @@ class FiRegistrationModel extends FiModel {
 
 
 
-
-  VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : ()
+/*  VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : ()
   {
-      logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
-      update(callback: () async{
+       logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
+          update(callback: () async{
         _isRegistationInProgress = true ;
         _userRegistrationModel = FiUserRegistrationModel(_userFirstName!, _userLastName!,_mailAddress!,launchingModel.platform,launchingModel.fcmToken);
         FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
-        update(callback: (){
+        update(callback: () async {
           _isRegistationInProgress = false ;
           if(response.successful())
           {
+          //  response.data!["username"] = (_userFirstName! + _userLastName!);
+            response.data!["email"] = _mailAddress;
+            response.data!["token"] = _userRegistrationModel?.token; // Make sure this exists and is filled
+            applicationModel.currentContact = FiContact(type: FiContactPageType.current, user:FiUser.fromJson(response.data!));
             applicationModel.currentState = FiApplicationStates.verificationState;
           }
           else
@@ -104,6 +105,29 @@ class FiRegistrationModel extends FiModel {
 
       });
 
+  };*/
+  VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : ()
+  {
+    logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
+    update(callback: () async{
+      _isRegistationInProgress = true ;
+      _userRegistrationModel = FiUserRegistrationModel(_userFirstName!, _userLastName!,_mailAddress!,launchingModel.platform,launchingModel.fcmToken);
+      FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
+      update(callback: (){
+        _isRegistationInProgress = false ;
+        if(response.successful())
+        {
+          applicationModel.currentState = FiApplicationStates.verificationState;
+        }
+        else
+        {
+          resources.storage.remove(kAccessNotificationToken);
+          applicationModel.currentState = FiApplicationStates.userFailedLoginState;
+        }
+      });
+
+    });
+
   };
 
 
@@ -111,7 +135,7 @@ class FiRegistrationModel extends FiModel {
     update(callback: () async {
       _resendCodeInProgress = true;
       _isResendAllowed = false;
-      _timoutForEnableResendCode = 5*60 ; // 5 minutes
+      _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
       FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
       _resendCodeInProgress = false;
       if (response.successful()) {
@@ -127,48 +151,22 @@ class FiRegistrationModel extends FiModel {
   bool get resendCodeAllowed => _resendCodeInProgress == false && _isResendAllowed;
 
 
-
-/*
-  VoidCallback? get onSendVerificationCode => (){
-    update(callback: () async{
-      _verificationInProgress = true ;
-      FiUserVerificationModel ver = FiUserVerificationModel();
-     // ver.mail = _userRegistrationModel?.mail ;
-      ver.verification = _userRegistrationModel?.token;
-      FiBackendResponse response = await authenticationApi.verificationUser(ver);
-      if(response.successful()){
-        applicationModel.currentContact = FiContact(type: FiContactPageType.current,user:await usersApi.loadUser(response.data!["token"])) ;
-        await resources.storage.putString(kAccessNotificationToken, response.data!["token"]);
-        applicationModel.currentState = FiApplicationStates.userSuccessLoginState ;
-      }
-      else
-        {
-          resources.storage.remove(kAccessNotificationToken);
-          applicationModel.currentState = FiApplicationStates.userFailedLoginState;
-        }
-      update(callback: (){
-        _verificationInProgress = false ;
-      });
-    });
-  };
-*/
-
-  VoidCallback? get onSendVerificationCode => () {
+  VoidCallback? get onSendVerificationCode => ()  {
     update(callback: () async {
       _verificationInProgress = true;
       bool verified = false;
 
+      applicationModel.currentContact = FiContact(
+          type: FiContactPageType.current,
+          user: await usersApi.loadUser(_userRegistrationModel!.email)
+      );
+
       while (!verified) {
         FiUserVerificationModel ver = FiUserVerificationModel();
-        ver.verification = _userRegistrationModel?.token;
-        FiBackendResponse response = await authenticationApi.verificationUser(ver);
-
+       // ver.mail = _userRegistrationModel?.;
+        FiBackendResponse response = await authenticationApi.verificationUser(applicationModel.currentContact?.user?.email);
         if (response.successful()) {
-          applicationModel.currentContact = FiContact(
-              type: FiContactPageType.current,
-              user: await usersApi.loadUser(response.data!["token"])
-          );
-          await resources.storage.putString(kAccessNotificationToken, response.data!["token"]);
+         resources.storage.putString(kAccessNotificationToken,  applicationModel.currentContact!.user!.token);
           applicationModel.currentState = FiApplicationStates.userSuccessLoginState;
           verified = true;
         } else if (response.status != StatusCode.OK) {
@@ -182,6 +180,32 @@ class FiRegistrationModel extends FiModel {
       });
     });
   };
+
+  /*VoidCallback? get onSendVerificationCode => () {
+    update(callback: () async {
+      _verificationInProgress = true;
+      bool verified = false;
+
+      while (!verified) {
+        FiUserVerificationModel ver = FiUserVerificationModel();
+        ver.verification = _userRegistrationModel?.token;
+        ver.mail = _userRegistrationModel?.mail;
+        FiBackendResponse response = await authenticationApi.verificationUser(ver);
+
+        if (response.successful()) {
+          await resources.storage.putString(kAccessNotificationToken, applicationModel.currentContact!.user!.token);
+          applicationModel.currentState = FiApplicationStates.userSuccessLoginState;
+          verified = true;
+        } else if (response.status != StatusCode.OK) {
+          await Future.delayed(Duration(seconds: 10));  // Wait for 10 seconds before trying again
+        }
+      }
+
+      update(callback: () {
+        _verificationInProgress = false;
+      });
+    });
+  };*/
 
 
 
@@ -204,29 +228,15 @@ class FiRegistrationModel extends FiModel {
 
 
 
+
   void onRegistrationBackFromFail() async {
     update(callback: ()
     {
-      _userRegistrationModel?.firstName='';
-      _userRegistrationModel?.lastName='';
-      _userRegistrationModel?.mail='';
-      _timoutForEnableResendCode = 5*60;
+      _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
       _isRegistationInProgress = false;
       _verificationInProgress = false;
       _resendCodeInProgress = false;
-      applicationModel.currentState = FiApplicationStates.grantPermissionState;
-    });
-  }
-
-
-  void resetRegistrationState() {
-    update(callback: () {
-      _userFirstName = '';
-      _userLastName = '';
-      _mailAddress = '';
-      _isRegistationInProgress = false;
-      _verificationInProgress = false;
-      _resendCodeInProgress = false;
+      applicationModel.currentState = FiApplicationStates.registrationState;
     });
   }
 

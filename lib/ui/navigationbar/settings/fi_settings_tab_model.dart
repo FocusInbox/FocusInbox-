@@ -124,19 +124,18 @@ class FiSettingsTabModel extends FiModel {
   }
 
   void updateData(FiUser user) {
-    if(user.emails.isNotEmpty){
-      for(String email in user.emails) {
-        FiEmailAccount accountEmail = FiEmailAccount(dbEmail: email);
-        _instance._values[kEmails]!.add(accountEmail);
-      }
+    if(user.email.isNotEmpty){
+      FiEmailAccount accountEmail = FiEmailAccount(dbEmail: user.email);
+      _instance._values[kEmails]!.add(accountEmail);
+
     }
 
-    if(user.calendars.isNotEmpty){
+  /*  if(user.calendars.isNotEmpty){
       for(String email in user.calendars) {
         FiEmailAccount accountEmail = FiEmailAccount(dbEmail: email);
         _instance._values[kCalendar]!.add(accountEmail);
       }
-    }
+    }*/
 
     if(user.settings != null && user.settings!.isNotEmpty) {
       notificationSettings = FiUserNotificationSettings.fromJson(user.settings!);

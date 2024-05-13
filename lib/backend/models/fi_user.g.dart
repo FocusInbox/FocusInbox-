@@ -7,24 +7,23 @@ part of 'fi_user.dart';
 // **************************************************************************
 
 FiUser _$FiUserFromJson(Map<String, dynamic> json) => FiUser()
-  ..id = json['id'] as String?
+  ..uuid = json['uuid'] as String?
+  ..token = (json['token'] as String?)!
   ..username = json['username'] as String?
-  ..phonenumber = json['phonenumber'] as String?
-  ..organization = json['organization'] as Map<String, dynamic>?
-  ..emails = json['emails'] as List<dynamic>
-  ..calendars = json['calendars'] as List<dynamic>
-  ..groups = json['groups'] as List<dynamic>
-  ..information = json['information']
+  //..phonenumber = json['phonenumber'] as String?
+  ..email = json['email'] as String
+  //..calendars = json['calendars'] as List<dynamic>
+ // ..information = json['information']
   ..settings = json['settings'] as Map<String, dynamic>?;
 
 Map<String, dynamic> _$FiUserToJson(FiUser instance) => <String, dynamic>{
-      'id': instance.id,
-      'username': instance.username,
-      'phonenumber': instance.phonenumber,
-      'organization': instance.organization,
-      'emails': instance.emails,
-      'calendars': instance.calendars,
-      'groups': instance.groups,
-      'information': instance.information,
+  'uuid': instance.uuid,
+  'token': instance.token,
+  'username': instance.username,
+   //   'phonenumber': instance.phonenumber,
+      'email': instance.email,
+   //   'calendars': instance.calendars,
+      //'information': instance.information,
       'settings': instance.settings,
-    };
+
+};

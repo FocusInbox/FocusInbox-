@@ -11,7 +11,7 @@ FiUserRegistrationModel _$FiUserRegistrationModelFromJson(
     FiUserRegistrationModel(
       json['firstName'] as String,
       json['lastName'] as String,
-      json['mail'] as String,
+      json['email'] as String,
       json['platform'] as int,
       json['token'] as String,
     );
@@ -21,7 +21,7 @@ Map<String, dynamic> _$FiUserRegistrationModelToJson(
     <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,
-      'mail': instance.mail,
+      'email': instance.email,
       'platform': instance.platform,
       'token': instance.token,
     };

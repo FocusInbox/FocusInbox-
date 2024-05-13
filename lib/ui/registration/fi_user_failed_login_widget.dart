@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
-
+import'fi_registration_widget.dart';
 import '../../models/main/fi_main_model.dart';
 import '../../models/main/fi_main_models_states.dart';
 import '../../utils/fi_display.dart';
@@ -24,11 +24,12 @@ class _FiUserFailedLoginWidgetState extends FiBaseState<FiUserFailedLoginWidget>
   void initState() {
     super.initState();
     registrationModel.setState(this);
+
   }
 
   @override
   void dispose() {
-    registrationModel.setState(null);
+  //  registrationModel.setState(this);
     super.dispose();
   }
 

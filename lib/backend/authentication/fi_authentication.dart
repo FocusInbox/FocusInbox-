@@ -18,7 +18,8 @@ class FiAuthentication {
 
   ///
   /// Start user registration
-  Future<FiBackendResponse> registerUser(FiUserRegistrationModel model) async {
+  Future<FiBackendResponse> registerUser(FiUserRegistrationModel model) async
+  {
     FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
@@ -38,12 +39,33 @@ class FiAuthentication {
     return response;
   }
 
-  Future<FiBackendResponse> verificationUser(FiUserVerificationModel model) async {
+ /* Future<FiBackendResponse> verificationUser(FiUserVerificationModel model) async {
     FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
      /// var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
       Uri uri = Uri.http('10.0.2.2:27345',  '/user/get_status', {'uuid': model.mail});
+      //Uri uri = Uri.http('172.20.10.4:3000', '/user/get_status', {'uuid': model.verification});
+
+      logger.d("VerificateUser : $uri");
+      // response = FiBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(const Duration(seconds: 10)));
+      var httpResponse = await http.get(uri, headers: defaultHeaders).timeout(const Duration(seconds: 100));
+
+      response = FiBackendResponse.fromHttpResponse(httpResponse);
+    }
+    catch (err) {
+      response = FiBackendResponse();
+      response.status = StatusCode.METHOD_FAILURE;
+      response.message = err.toString();
+    }
+    return response;
+  }*/
+  Future<FiBackendResponse> verificationUser(String? uuid) async {
+    FiBackendResponse? response;
+    try {
+      Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
+     /// var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
+      Uri uri = Uri.http('10.0.2.2:27345',  '/user/get_status', {'uuid': uuid});
       //Uri uri = Uri.http('172.20.10.4:3000', '/user/get_status', {'uuid': model.verification});
 
       logger.d("VerificateUser : $uri");
