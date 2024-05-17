@@ -1,14 +1,9 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'package:FocusInbox/ui/base/fi_base_state.dart';
-import 'package:FocusInbox/ui/base/fi_base_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http_status_code/http_status_code.dart';
 import '../../backend/authentication/fi_authentication.dart';
 import '../../backend/models/fi_backend_response.dart';
-import '../../backend/models/fi_user.dart';
 import '../../backend/models/fi_user_registration_model.dart';
-import '../../backend/models/fi_user_verification_model.dart';
 import '../../backend/users/fi_users.dart';
 import '../../models/main/base/fi_model.dart';
 import '../../models/main/fi_main_model.dart';
@@ -18,16 +13,15 @@ import '../../utils/fi_resources.dart';
 import '../contacts/fi_contacts_tab_widget.dart';
 import '../launching/fi_launching_model.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
-import 'fi_registration_widget.dart';
 
 class FiRegistrationModel extends FiModel {
   static final FiRegistrationModel _instance = FiRegistrationModel._internal();
+
   Timer? _resendCodeTimer;
-  int _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
+  int _timoutForEnableResendCode = 5*60 ; //TODO: 5 * 60
   bool _isTimerStarted = false ;
   String? _userFirstName ;
   String? _userLastName ;
-  String? _userVerificationCode ;
   bool _isResendAllowed = false ;
   String? _mailAddress ;
   bool _verificationInProgress = false ;
@@ -36,12 +30,26 @@ class FiRegistrationModel extends FiModel {
   FiUserRegistrationModel? _userRegistrationModel;
   FiRegistrationModel._internal();
 
+
+
+  //////////////////////////////////////////
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  ///////////////////////////////////////////
+
+
+
   factory FiRegistrationModel() {
     return _instance;
   }
-
-
-
+///////////////////////////////////////////
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+  }
+///////////////////////////////////////////
   ValueChanged<String> get onUserFirstNameChange => (username) {
         _userFirstName = username ;
   };
@@ -54,22 +62,6 @@ class FiRegistrationModel extends FiModel {
       _mailAddress = mailaddress ;
   };
 
-/*  ValueChanged<String> get onMailAddressChange => (mailaddress) {
-    update(callback: () {
-      // Regular expression pattern to validate email
-      String pattern =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})$';
-      RegExp regex = RegExp(pattern);
-
-      if (regex.hasMatch(mailaddress)) {
-        _mailAddress = mailaddress;
-      } else {
-        _mailAddress = null; // Or set it to '' if that works better with your logic
-        logger.d("Invalid email address");
-      }
-    });
-  };*/
-
 
 
 
@@ -79,33 +71,7 @@ class FiRegistrationModel extends FiModel {
 
 
 
-/*  VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : ()
-  {
-       logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
-          update(callback: () async{
-        _isRegistationInProgress = true ;
-        _userRegistrationModel = FiUserRegistrationModel(_userFirstName!, _userLastName!,_mailAddress!,launchingModel.platform,launchingModel.fcmToken);
-        FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!) ;
-        update(callback: () async {
-          _isRegistationInProgress = false ;
-          if(response.successful())
-          {
-          //  response.data!["username"] = (_userFirstName! + _userLastName!);
-            response.data!["email"] = _mailAddress;
-            response.data!["token"] = _userRegistrationModel?.token; // Make sure this exists and is filled
-            applicationModel.currentContact = FiContact(type: FiContactPageType.current, user:FiUser.fromJson(response.data!));
-            applicationModel.currentState = FiApplicationStates.verificationState;
-          }
-          else
-            {
-              resources.storage.remove(kAccessNotificationToken);
-              applicationModel.currentState = FiApplicationStates.userFailedLoginState;
-            }
-        });
 
-      });
-
-  };*/
   VoidCallback? get onRegistrationStart => !ifRegistrationAllowed ? null : ()
   {
     logger.d("Start user registration [$_userFirstName : $_mailAddress]") ;
@@ -135,7 +101,7 @@ class FiRegistrationModel extends FiModel {
     update(callback: () async {
       _resendCodeInProgress = true;
       _isResendAllowed = false;
-      _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
+      _timoutForEnableResendCode = 5 * 60 ; //TODO: 5 * 60
       FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
       _resendCodeInProgress = false;
       if (response.successful()) {
@@ -162,16 +128,14 @@ class FiRegistrationModel extends FiModel {
       );
 
       while (!verified) {
-        FiUserVerificationModel ver = FiUserVerificationModel();
-       // ver.mail = _userRegistrationModel?.;
-        FiBackendResponse response = await authenticationApi.verificationUser(applicationModel.currentContact?.user?.email);
+        FiBackendResponse response = await authenticationApi.verificationUser(applicationModel.currentContact?.user?.uuid);
         if (response.successful()) {
          resources.storage.putString(kAccessNotificationToken,  applicationModel.currentContact!.user!.token);
           applicationModel.currentState = FiApplicationStates.userSuccessLoginState;
           verified = true;
         } else if (response.status != StatusCode.OK) {
           // Implement your waiting logic here - potentially including a sleep or backoff
-          await Future.delayed(Duration(seconds: 10));  // Wait for 10 seconds before trying again
+          await Future.delayed(const Duration(seconds: 10));  // Wait for 10 seconds before trying again
         }
       }
 
@@ -181,31 +145,6 @@ class FiRegistrationModel extends FiModel {
     });
   };
 
-  /*VoidCallback? get onSendVerificationCode => () {
-    update(callback: () async {
-      _verificationInProgress = true;
-      bool verified = false;
-
-      while (!verified) {
-        FiUserVerificationModel ver = FiUserVerificationModel();
-        ver.verification = _userRegistrationModel?.token;
-        ver.mail = _userRegistrationModel?.mail;
-        FiBackendResponse response = await authenticationApi.verificationUser(ver);
-
-        if (response.successful()) {
-          await resources.storage.putString(kAccessNotificationToken, applicationModel.currentContact!.user!.token);
-          applicationModel.currentState = FiApplicationStates.userSuccessLoginState;
-          verified = true;
-        } else if (response.status != StatusCode.OK) {
-          await Future.delayed(Duration(seconds: 10));  // Wait for 10 seconds before trying again
-        }
-      }
-
-      update(callback: () {
-        _verificationInProgress = false;
-      });
-    });
-  };*/
 
 
 
@@ -232,7 +171,7 @@ class FiRegistrationModel extends FiModel {
   void onRegistrationBackFromFail() async {
     update(callback: ()
     {
-      _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
+      _timoutForEnableResendCode = 5 * 60 ; //TODO: 5 * 60
       _isRegistationInProgress = false;
       _verificationInProgress = false;
       _resendCodeInProgress = false;
@@ -281,7 +220,6 @@ class FiRegistrationModel extends FiModel {
           if (_timoutForEnableResendCode == 0) {
             update(callback: () {
               timer.cancel();
-              _userVerificationCode = null ;
               _isResendAllowed = true;
               applicationModel.currentState = FiApplicationStates.userFailedLoginState ;
             //  _verificationSmsCodeController.clear() ;

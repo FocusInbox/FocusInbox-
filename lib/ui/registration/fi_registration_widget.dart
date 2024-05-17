@@ -33,6 +33,7 @@ class _FiRegistrationState extends FiBaseState<FiRegistrationWidget> {
   Widget get content {
     return Stack(
       children: [
+
         Positioned(
             left: 0,
             right:0,
@@ -54,6 +55,7 @@ class _FiRegistrationState extends FiBaseState<FiRegistrationWidget> {
   top: toY(309),
   child: Center(
     child: uiElements.inputFieldE(
+      controller: registrationModel.firstNameController,
       onChange: registrationModel.onUserFirstNameChange,
       prefixIcon: FiUiElements.inputNameIcon,
       hintText: localise("enter_your_first_name"),
@@ -76,6 +78,7 @@ class _FiRegistrationState extends FiBaseState<FiRegistrationWidget> {
             top: toY(398),
             child: Center(
                 child: uiElements.inputFieldE(
+                  controller: registrationModel.lastNameController,
                   onChange: registrationModel.onUserLastNameChange,
                   prefixIcon: FiUiElements.inputNameIcon,
                   hintText: localise("enter_your_last_name"),
@@ -99,7 +102,8 @@ class _FiRegistrationState extends FiBaseState<FiRegistrationWidget> {
             top: toY(488),
 
             child: Center(child: uiElements.inputFieldE(keyboardType:TextInputType.emailAddress,
-                onChange:registrationModel.onMailAddressChange,
+              controller: registrationModel.emailController,
+              onChange:registrationModel.onMailAddressChange,
                 prefixIcon: FiUiElements.inputEmailIcon,
                 hintText:localise("enter_your_email"),
                 hintStyle: const TextStyle(

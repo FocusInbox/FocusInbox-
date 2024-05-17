@@ -1684,6 +1684,9 @@ class FiUiElements {
     return _instance;
   }
 
+
+
+
   Widget inputField({FocusNode? focusNode, TextEditingController? controller, Color? backgroundColor, double? borderRadius, Widget? suffixIcon, Widget? prefixIcon, String? hintText, TextStyle? hintStyle, ValueChanged<String>? onChange, TextInputType? keyboardType, VoidCallback? sufficsIconClick, VoidCallback? preficsIconClick, int? maxLine = 1}) {
     return TextFormField(
       focusNode: focusNode,
@@ -1731,6 +1734,7 @@ class FiUiElements {
     BuildContext? context, // Context for SnackBar
     InputType inputType = InputType.generic, // Use this to determine the type of input
   }) {
+    controller ??= TextEditingController();
     return TextFormField(
       focusNode: focusNode,
       controller: controller,

@@ -8,7 +8,7 @@ part of 'fi_backend_response.dart';
 
 FiBackendResponse _$FiBackendResponseFromJson(Map<String, dynamic> json) =>
     FiBackendResponse()
-      ..status = json['status'] as int?
+      ..status = json['status'] is int ? json['status'] as int? : int.tryParse(json['status'].toString())
       ..message = json['message'] as String?
       ..data = json['data'] as Map<String, dynamic>?;
 
