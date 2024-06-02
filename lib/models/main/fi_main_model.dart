@@ -5,7 +5,8 @@ import '../../ui/base/fi_base_widget.dart';
 import '../../ui/launching/fi_launching_model.dart';
 import '../../ui/launching/fi_launching_widget.dart';
 
-import '../../ui/navigationbar/contacts/fi_contacts.dart';
+import '../../ui/navigationbar/contacts/fi_contact.dart';
+import '../../ui/navigationbar/cx_navigation_bar_widget.dart';
 import '../../ui/registration/fi_grant_permission_widget.dart';
 import '../../ui/registration/fi_registration_widget.dart';
 import '../../ui/registration/fi_verification_widget.dart';
@@ -47,6 +48,8 @@ class FiMainModel extends FiModel {
     _pages[FiApplicationStates.verificationState] = const FiVerificationWidget();
     _pages[FiApplicationStates.userSuccessLoginState] = const FiUserSuccessLoginWidget();
     _pages[FiApplicationStates.userFailedLoginState] = const FiUserFailedLoginWidget();
+    _pages[FiApplicationStates.navigationScreen] = const FiNavigationBarWidget();
+
   }
   factory FiMainModel() {
     return _instance;

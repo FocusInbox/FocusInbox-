@@ -10,9 +10,9 @@ import '../../models/main/fi_main_model.dart';
 import '../../models/main/fi_main_models_states.dart';
 import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
-import '../contacts/fi_contacts_tab_widget.dart';
 import '../launching/fi_launching_model.dart';
-import '../navigationbar/contacts/fi_contacts.dart';
+import '../navigationbar/contacts/fi_contact.dart';
+import '../navigationbar/contacts/fi_contacts_tab_widget.dart';
 
 class FiRegistrationModel extends FiModel {
   static final FiRegistrationModel _instance = FiRegistrationModel._internal();

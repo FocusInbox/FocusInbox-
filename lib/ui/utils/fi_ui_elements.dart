@@ -12,7 +12,7 @@ import '../../utils/fi_display.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../dialogs/fi_dialog.dart';
-import '../navigationbar/contacts/fi_contacts.dart';
+import '../navigationbar/contacts/fi_contact.dart';
 import 'dart:convert' as convert;
 import 'package:dotted_line/dotted_line.dart';
 
@@ -1623,7 +1623,7 @@ import '../../utils/fi_display.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../dialogs/fi_dialog.dart';
-import '../navigationbar/contacts/fi_contacts.dart';
+import '../navigationbar/contacts/fi_contact.dart';
 import 'dart:convert' as convert;
 import 'package:dotted_line/dotted_line.dart';
 

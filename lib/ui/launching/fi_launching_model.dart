@@ -12,9 +12,9 @@ import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
-import '../contacts/fi_contacts_tab_model.dart';
-import '../contacts/fi_contacts_tab_widget.dart';
-import '../navigationbar/contacts/fi_contacts.dart';
+import '../navigationbar/contacts/fi_contact.dart';
+import '../navigationbar/contacts/fi_contacts_tab_model.dart';
+import '../navigationbar/contacts/fi_contacts_tab_widget.dart';
 import '../navigationbar/settings/fi_settings_tab_model.dart';
 import '../utils/fi_ui_elements.dart';
 
@@ -149,7 +149,9 @@ class FiLaunchingModel extends FiModel {
 
   Future<void> askPermission() async {
     await loadModules() ;
-    applicationModel.currentState = FiApplicationStates.registrationState;
+  //  applicationModel.currentState = FiApplicationStates.registrationState;
+      applicationModel.currentState = FiApplicationStates.navigationScreen;
+
   }
 }
 

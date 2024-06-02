@@ -8,5 +8,5 @@ enum FiApplicationStates {
   personalInformation,
   navigationScreen,
   mineTimeline,
-  guidanceIntroState,
+  guidanceIntroState, customGroupsList, myZones, meetingMenu, groupTimeline, newGroup, addUsersToGroup, timelineFilter, notificationActionWidget, contactDetails,
 }

@@ -7,7 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import '../../../models/main/base/fi_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
 import '../../../utils/fi_resources.dart';
-import '../../navigationbar/contacts/fi_contacts.dart';
+import '../../../utils/list/cx_expanded_groups_list.dart';
+import '../../groups/cx_group.dart';
+import '../../groups/cx_groups_model.dart';
+import '../../navigationbar/contacts/fi_contact.dart';
 
 
 
@@ -27,11 +30,11 @@ class FiTimelineModel extends FiModel {
 
   String get occupation => "COO - Jhonson Control" ;
 
-  //List<CxGroup> get groups => groupsModel.groups;
+  List<FiGroup> get groups => groupsModel.groups;
 
   List<FiContact> get members => <FiContact>[] ;
 
-  //final List<CxTimelineItem> _timelineItems = <CxTimelineItem>[] ;
+ // final List<CxTimelineItem> _timelineItems = <CxTimelineItem>[] ;
 
 
 
@@ -40,6 +43,7 @@ class FiTimelineModel extends FiModel {
   VoidCallback get showFullTimeline => (){};
 
   VoidCallback get showOutgoingInteractionOnly => (){};
+  OnGroupListItemClickCallback get showGroupTimeline => (item){};
 
 
   VoidCallback get showIncomingInteractionOnly => (){};

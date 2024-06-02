@@ -1,16 +1,14 @@
 import 'dart:ui';
-
 import 'package:contacts_service/contacts_service.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:string_validator/string_validator.dart';
-
+import '../../../backend/models/fi_group_user_model.dart';
 import '../../../backend/models/fi_user.dart';
 import '../../../backend/upload/fi_images_manager.dart';
 import '../../../utils/fi_image_data.dart';
 import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
-import '../../contacts/fi_contacts_tab_widget.dart';
+import 'fi_contacts_tab_widget.dart';
 
 class FiContact {
   Contact? phoneContact;
@@ -22,38 +20,18 @@ class FiContact {
   bool isFavorite = false;
   String? _firstName;
   String? _lastName;
+  String? _name;
   String? convertedTitle;
 
-  //String? convertedFirstName ;
-  //String? convertedLastName ;
+  String? convertedFirstName ;
+  String? convertedLastName ;
   FiImageData? _image;
 
   bool aggregated = false;
 
-  //Map<String, List<CxConvertedValue>> convertedData = {};
-
   FiUser? user;
+  FiGroupUserModel? groupUserModel ;
 
-/*  FiContact(
-      {this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
-    if (user != null) {
-      this.user = user;
-      List<String> names = user.username!.split(" ");
-      if (names.length > 1) {
-        _firstName = names[0];
-        _lastName = names[1];
-      }
-      else {
-        _firstName = user.username!;
-      }
-     *//* if (user.phonenumber != null) {
-        actualListPhones.add(Item(label: "phone", value: user.phonenumber!));
-      }*//*
-      actualListPhones.add(Item(label: "email", value: user.email));
-
-
-    }
-  }*/
   FiContact({this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
     if (user != null) {
       this.user = user;
@@ -64,14 +42,17 @@ class FiContact {
     }
   }
 
-
   XFile? get avatarImageFile => _image?.image;
 
   List<Item> actualListPhones = <Item>[];
   List<Item> actualListEmails = <Item>[];
 
   String get name {
-    return phoneContact?.displayName ?? user?.username ?? firstName;
+    if (_name != null) {
+      return _name!;
+    }
+    _name = phoneContact?.displayName ?? user?.username ?? '';
+    return _name!;
   }
 
   String get title {
@@ -82,57 +63,64 @@ class FiContact {
     return convertedTitle ?? localise("title");
   }
 
-
   void setFirstName(String value) {
-
+    _firstName = value;
   }
 
   void setLastName(String value) {
-
+    _lastName = value;
   }
 
   String get firstName {
+    if (_firstName != null) {
+      return _firstName!;
+    }
     if (user != null && user!.username != null) {
       if (user!.username!.split(" ").length > 1) {
-        return user!.username!.split(" ")[0];
+        _firstName = user!.username!.split(" ")[0];
+        return _firstName!;
       }
     }
 
     if (phoneContact != null && phoneContact!.givenName != null &&
         phoneContact!.givenName!.isNotEmpty) {
       _firstName = phoneContact!.givenName!;
+      return _firstName!;
     }
-    if (_firstName == null) {
-      List<String> array = name.split(" ");
-      if (array.length > 1) {
-        _firstName = array.first;
-      } else {
-        _firstName = name;
-      }
+
+    List<String> array = name.split(" ");
+    if (array.length > 1) {
+      _firstName = array.first;
+    } else {
+      _firstName = name;
     }
-    return _firstName!;
+    return _firstName ?? '';
   }
 
   String get lastName {
+    if (_lastName != null) {
+      return _lastName!;
+    }
     if (user != null && user!.username != null) {
       if (user!.username!.split(" ").length > 1) {
-        return user!.username!.split(" ")[1];
+        _lastName = user!.username!.split(" ")[1];
+        return _lastName!;
       }
     }
 
     if (phoneContact != null && phoneContact!.familyName != null &&
         phoneContact!.familyName!.isNotEmpty) {
-      _firstName = phoneContact!.familyName!;
+      _lastName = phoneContact!.familyName!;
+      return _lastName!;
     }
-    if (_lastName == null) {
-      List<String> array = name.split(" ");
-      if (array.length > 1) {
-        _lastName = array.last;
-      } else {
-        _lastName = "";
-      }
+
+    List<String> array = name.split(" ");
+    if (array.length > 1) {
+      _lastName = array.last;
+    } else {
+      _lastName = '';
     }
-    return _lastName!;
+    return _lastName ?? '';
   }
 
   bool get isDivider => type == FiContactPageType.divider;
@@ -146,6 +134,9 @@ class FiContact {
   }
 
   int get phonesCount => actualListPhones.length;
+
+  FiGroupUserModel? model ;
+
   bool isShared = false;
   String? id;
 
@@ -179,8 +170,7 @@ class FiContact {
     return all;
   }
 
-
-/*  List<String> get calendarsAsString {
+  List<String> get calendarsAsString {
     List<String> all = <String>[];
     if (user != null) {
       Iterator<dynamic> it = user!.calendars.iterator;
@@ -192,22 +182,7 @@ class FiContact {
       }
     }
     return all;
-  }*/
-/*
-  List<String> get whatsappAccountsAsString {
-    List<String> all = <String>[];
-    Iterator<Item> it = actualListSocial.iterator;
-    if (it.moveNext()) {
-      do {
-        if (it.current.value != null) {
-          all.add(it.current.value!);
-        }
-      }
-      while (it.moveNext());
-    }
-    return all;
-  }*/
-
+  }
 
   String phoneAtIndex(int index) => actualListPhones[index].value ?? "";
 
@@ -228,10 +203,9 @@ class FiContact {
       completion.call();
     }
 
- /*   convertedFirstName = firstName;
+    convertedFirstName = firstName;
     convertedLastName = lastName;
     convertedTitle = title;
-    convertedCompany = company;*/
   }
 
   Image? get avatar => _avatar;
@@ -289,13 +263,10 @@ class FiContact {
       await imagesApi.uploadImage(id!, _image!);
     }
   }
-}
 
-
-/*  CxGroupUserModel get fromPhoneContact {
-    CxGroupUserModel model = CxGroupUserModel ();
+  FiGroupUserModel get fromPhoneContact {
+    FiGroupUserModel model = FiGroupUserModel ();
     if(phoneContact != null){
-
       model.title = phoneContact!.jobTitle??"" ;
       if( (phoneContact!.givenName?.isEmpty??true) && (phoneContact!.familyName?.isEmpty??true) ){
         if(phoneContact?.displayName?.isEmpty??true){
@@ -329,16 +300,8 @@ class FiContact {
 
       model.socials ??= <String>[];
       model.socials!.clear() ;
-      if (actualListSocial.isNotEmpty) {
-        for(Item item in actualListSocial){
-          model.emails!.add(item.value!) ;
-        }
-      }
       model.company = phoneContact!.company??"" ;
-
-
     }
     return model ;
-  }*/
-
-
+  }
+}

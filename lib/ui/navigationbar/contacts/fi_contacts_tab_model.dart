@@ -6,10 +6,10 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../models/main/base/fi_model.dart';
 import '../../../utils/fi_log.dart';
 import '../../base/fi_base_state.dart';
-import '../../contacts/fi_contacts_tab_widget.dart';
+import 'fi_contacts_tab_widget.dart';
 import '../../launching/fi_launching_model.dart';
 import 'fi_contacts_page_widget.dart';
-import 'fi_contacts.dart';
+import 'fi_contact.dart';
 
 
 
@@ -119,7 +119,7 @@ class FiContactsTabModel extends FiModel {
               logger.d("Searching in private contacts count ${searched.length}");
             }
             break;
-          case 1:
+        /*  case 1:
             {
               searched = _notSharedContacts.where((element) => element.name.toLowerCase().contains(text.toLowerCase()) || element.phoneNumber.toLowerCase().contains(text.toLowerCase()));
             }
@@ -133,7 +133,7 @@ class FiContactsTabModel extends FiModel {
             {
               searched = _organizationContacts.where((element) => element.name.toLowerCase().contains(text.toLowerCase()) || element.phoneNumber.toLowerCase().contains(text.toLowerCase()));
             }
-            break;
+            break;*/
         }
 
         if (_inSearch && searched != null && searched.isNotEmpty) {
@@ -146,7 +146,7 @@ class FiContactsTabModel extends FiModel {
         } else {
           updatePage(callback: () {
             _searchedContacts.clear();
-            _searchController.text = "";
+          //  _searchController.text = "";
           });
         }
       };
@@ -170,30 +170,70 @@ class FiContactsTabModel extends FiModel {
         }
         return 0;
       });
+
+      Map<String, List<Contact>> contactMap = {};
       String initialLetter = "";
 
       for (var element in phoneContacts) {
-        FiContact contact = FiContact(type: FiContactPageType.private, phoneContact: element);
-        if (contact.valid) {
-          contact.loadData(() {
-            String current = contact.name.characters.first.toUpperCase();
-            if (current != initialLetter) {
-              initialLetter = current;
-              _privateContacts.add(FiContact(type: FiContactPageType.divider, divider: initialLetter));
-            }
-            _privateContacts.add(contact);
-          });
+        if (element.phones != null && element.phones!.isNotEmpty) {
+          String phoneNumber = element.phones!.first.value ?? "";
+          if (contactMap.containsKey(phoneNumber)) {
+            contactMap[phoneNumber]!.add(element);
+          } else {
+            contactMap[phoneNumber] = [element];
+          }
         }
       }
+
+      List<FiContact> mergedContacts = [];
+      contactMap.forEach((phoneNumber, contacts) {
+        if (contacts.isNotEmpty) {
+          String mergedName = contacts.map((c) => c.displayName).where((name) => name != null).join(", ");
+          Contact mergedContact = contacts.first;
+          mergedContact.displayName = mergedName;
+          mergedContacts.add(FiContact(type: FiContactPageType.private, phoneContact: mergedContact));
+        }
+      });
+
+      mergedContacts.sort((a, b) {
+        if (a.phoneContact!.displayName != null && b.phoneContact!.displayName != null) {
+          return a.phoneContact!.displayName!.toLowerCase().compareTo(b.phoneContact!.displayName!.toLowerCase());
+        }
+        return 0;
+      });
+
+      _privateContacts.clear();
+      initialLetter = "";
+      for (var contact in mergedContacts) {
+        contact.loadData(() {
+          String current = contact.name.characters.first.toUpperCase();
+          if (current != initialLetter) {
+            initialLetter = current;
+            _privateContacts.add(FiContact(type: FiContactPageType.divider, divider: initialLetter));
+          }
+          _privateContacts.add(contact);
+        });
+      }
+
+      // Clean up dividers that are no longer needed
+      for (int i = _privateContacts.length - 1; i >= 0; i--) {
+        if (_privateContacts[i].type == FiContactPageType.divider) {
+          if (i == _privateContacts.length - 1 || _privateContacts[i + 1].type == FiContactPageType.divider) {
+            _privateContacts.removeAt(i);
+          }
+        }
+      }
+
+      pages.add(FiContactsPageWidget(FiContactPageType.private));
+      _searchController = TextEditingController();
     }
-
-    pages.add( FiContactsPageWidget(FiContactPageType.private));
-   // pages.add( FiContactsPageWidget(FiContactPageType.business));
-    //pages.add( FiContactsPageWidget(FiContactPageType.shared));
-    //pages.add( FiContactsPageWidget(FiContactPageType.organization));
-
-    _searchController = TextEditingController();
   }
+
+
+
+
+
+
 
   int get pageCount => pages.length;
 

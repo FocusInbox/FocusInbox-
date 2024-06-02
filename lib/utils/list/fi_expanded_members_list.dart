@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
-import '../../ui/navigationbar/contacts/fi_contacts.dart';
+import '../../ui/navigationbar/contacts/fi_contact.dart';
 import '../../ui/utils/fi_ui_elements.dart';
 import '../fi_display.dart';
 import 'fi_multi_list_expanded_widget.dart';
