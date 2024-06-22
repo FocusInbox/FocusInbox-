@@ -149,8 +149,8 @@ class FiLaunchingModel extends FiModel {
 
   Future<void> askPermission() async {
     await loadModules() ;
-  //  applicationModel.currentState = FiApplicationStates.registrationState;
-      applicationModel.currentState = FiApplicationStates.navigationScreen;
+    applicationModel.currentState = FiApplicationStates.registrationState;
+    //  applicationModel.currentState = FiApplicationStates.navigationScreen;
 
   }
 }

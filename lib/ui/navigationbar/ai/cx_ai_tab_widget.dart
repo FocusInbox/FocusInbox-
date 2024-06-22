@@ -110,7 +110,7 @@ class CxAiTabState extends FiBaseState<CxAiTabWidget> with SingleTickerProviderS
                 height: 1,
               ),
             )),
-        if (!ai.inChat) Positioned(top: toY(_keyboardIsOpen ? 100 : 178), left: centerOnDisplayByWidth(165), width: toX(139), height: toX(164), child: Image(image: const AssetImage("assets/images/ai_man_big.png"), width: toX(139), height: toX(164))),
+        if (!ai.inChat) Positioned(top: toY(_keyboardIsOpen ? 100 : 178), left: centerOnDisplayByWidth(165), width: toX(139), height: toX(164), child: Image(image: const AssetImage("assets/images/AlexAI.png"), width: toX(139), height: toX(164))),
         if (!ai.inChat)
           Positioned(
               top: toY(_keyboardIsOpen ? 310 : 419),

@@ -1,8 +1,4 @@
-
-
 import 'package:flutter/cupertino.dart';
-
-
 import '../../../backend/ai/cx_ai_api.dart';
 import '../../../backend/models/cx_ai_prompt.dart';
 import '../../../models/main/base/fi_model.dart';

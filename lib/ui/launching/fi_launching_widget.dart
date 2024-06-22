@@ -34,6 +34,7 @@ class _FiLaunchingState extends FiBaseState<FiLaunchingWidgetNew>
   Future<void> _changeOpacity() async{
     if(_isAnimateAllowed) {
       await Future.delayed(const Duration(milliseconds: 500));
+
       if(_isAnimateAllowed) {
         setState(() {
           opacity -= 0.1;
@@ -92,7 +93,17 @@ class _FiLaunchingState extends FiBaseState<FiLaunchingWidgetNew>
           right: toX(105),
           top: toY(305),
           bottom: toY(205),
-          child: const Image(image: AssetImage("assets/images/man_splash.png"),fit: BoxFit.fill,),),
+          child: const Image(image: AssetImage("assets/images/alex_splash.png"),fit: BoxFit.fill,),),
+     /*   Positioned(
+          left: toX(105),
+          right: toX(105),
+          top: toY(305),
+          bottom: toY(205),
+          child: Container(
+            color: Colors.red, // Change this to any color
+          ),
+        ),*/
+
         Positioned(
           //left: toX(45),
           top: toY(735),
